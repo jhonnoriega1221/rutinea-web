@@ -3,6 +3,7 @@
   "singleQuote": false,
   "semi": true,
   "trailingComma": "none",
+  "tailwindFunctions": ["hlm", "cva", "classes"],
   "overrides": [
     {
       "files": "*.html",
