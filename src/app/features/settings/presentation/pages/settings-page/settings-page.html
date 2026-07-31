@@ -1,1 +1,46 @@
-<p>settings-page works!</p>
+<main class="mx-auto max-w-[1000px]">
+  <p class="text-2xl font-bold mb-4">Settings</p>
+
+  <p class="font-semibold mb-2">Appearance</p>
+  <hlm-card class="card-shadow mb-6">
+    <div hlmCardContent class="flex justify-between">
+      <div class="flex gap-4">
+        <ng-icon name="lucideContrast" class="my-auto w-[20px]! h-[20px]!" />
+        <div>
+          <label>Theme</label>
+          <p class="text-card-foreground/40 text-sm">Set your theme preference</p>
+        </div>
+      </div>
+      <hlm-toggle-group variant="outline" value="all">
+        <button hlmToggleGroupItem value="system" aria-label="Toggle system">
+          <ng-icon name="lucideLaptop2" class="mt-0.5 w-[16px]! h-[16px]!" /> System
+        </button>
+        <button hlmToggleGroupItem value="light" aria-label="Toggle light">
+          <ng-icon name="lucideSun" class="mt-0.5 w-[16px]! h-[16px]!" /> Light
+        </button>
+        <button hlmToggleGroupItem value="dark" aria-label="Toggle dark">
+          <ng-icon name="lucideMoon" class="mt-0.5 w-[16px]! h-[16px]!" /> Dark
+        </button>
+      </hlm-toggle-group>
+    </div>
+  </hlm-card>
+
+  <p class="font-semibold mb-2">About</p>
+  <hlm-card class="card-shadow">
+    <div hlmCardContent class="flex flex-col justify-center gap-2 py-4">
+      <img
+        src="/assets/images/habits_logo.png"
+        alt="Logo"
+        class="w-24 h-24 object-contain mx-auto"
+      />
+      <p class="text-center font-medium text-lg">Habits App</p>
+      <p class="text-center text-neutral-500 text-sm">v1.0.0</p>
+
+      <p class="text-xs text-center mt-3">2026 Made By Jhon Noriega</p>
+      <p class="text-xs text-center">
+        Source code available on
+        <a href="https://github.com/jhonnoriega/habits" target="_blank" class="underline text-blue-600">GitHub</a>
+      </p>
+    </div>
+  </hlm-card>
+</main>
