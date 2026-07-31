@@ -1,5 +1,6 @@
-<div class="flex px-8 py-10 gap-4 h-screen">
-  <app-main-navbar />
+<div class="flex p-8 gap-4 h-screen">
+  <app-main-navbar-desktop class="hidden sm:flex" />
+  <app-main-navbar-mobile class="sm:hidden" />
   <section class="flex-1">
     <router-outlet />
   </section>
