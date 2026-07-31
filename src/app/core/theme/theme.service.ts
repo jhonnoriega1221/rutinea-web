@@ -14,7 +14,11 @@ export class ThemeService {
   }
 
   getPreferredTheme(): ThemeMode {
-    let saved = localStorage.getItem(this.storageKey) as ThemeMode;
+    const saved = localStorage.getItem(this.storageKey) as ThemeMode;
+    if (saved !== "dark" && saved !== "light" && saved !== "system") {
+      this.setTheme("system");
+      return "system";
+    }
     return saved;
   }
 
@@ -27,10 +31,6 @@ export class ThemeService {
 
     localStorage.setItem(this.storageKey, "system");
     this.applyTheme(this.systemTheme);
-  }
-
-  private getSystemTheme(): "light" | "dark" {
-    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   }
 
   private applyTheme(theme: ThemeMode) {
