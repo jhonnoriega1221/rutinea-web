@@ -1,0 +1,9 @@
+.settings-theme-toggle button[data-state="on"] {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-color: var(--primary-border);
+}
+
+.settings-theme-toggle button[data-state="on"] ng-icon {
+  color: var(--primary-foreground);
+}

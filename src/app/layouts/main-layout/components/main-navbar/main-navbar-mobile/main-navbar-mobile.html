@@ -1,7 +1,7 @@
 <section class="navbar-container">
   <div class="navbar-body">
     @for (bottomItem of items; track $index) {
-      <button
+      <a
         hlmBtn
         variant="ghost"
         class="navbar-item"
@@ -10,10 +10,10 @@
         routerLinkActive="is-active"
       >
         <ng-icon class="navbar-item-icon" [name]="bottomItem.icon" />
-        <label class="navbar-item-label">
+        <p class="navbar-item-label">
           {{ bottomItem.title }}
-        </label>
-      </button>
+        </p>
+      </a>
     }
   </div>
 </section>
