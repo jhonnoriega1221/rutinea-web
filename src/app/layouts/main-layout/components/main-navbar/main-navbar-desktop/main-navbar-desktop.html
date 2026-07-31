@@ -1,43 +1,45 @@
-<section class="sidebar">
-  <div class="sidebar-header">
-    <img
-      src="/assets/images/habits_logo.png"
-      alt="Logo"
-      class="w-14.5 h-18 mx-auto object-contain p-2"
-    />
-  </div>
-  <div class="sidebar-body">
-    <div class="sidebar-top">
-      @for (topItem of topItems; track $index) {
-        <a
-          [hlmTooltip]="topItem.title"
-          position="right"
-          hlmBtn
-          variant="ghost"
-          size="icon-lg"
-          [routerLink]="topItem.url"
-          routerLinkActive="is-active"
-          [routerLinkActiveOptions]="{ exact: topItem.url === '/' }"
-        >
-          <ng-icon class="w-5! h-5!" [name]="topItem.icon" />
-        </a>
-      }
+<section class="sidebar-overlay">
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <img
+        src="/assets/images/habits_logo.png"
+        alt="Logo"
+        class="w-14.5 h-18 mx-auto object-contain p-2"
+      />
     </div>
-    <div class="sidebar-bottom">
-      @for (bottomItem of bottomItems; track $index) {
-        <a
-          hlmBtn
-          [hlmTooltip]="bottomItem.title"
-          position="right"
-          variant="ghost"
-          size="icon-lg"
-          [routerLink]="bottomItem.url"
-          routerLinkActive="is-active"
-          [routerLinkActiveOptions]="{ exact: bottomItem.url === '/' }"
-        >
-          <ng-icon class="w-5! h-5!" [name]="bottomItem.icon" />
-        </a>
-      }
+    <div class="sidebar-body">
+      <div class="sidebar-top">
+        @for (topItem of topItems; track $index) {
+          <a
+            [hlmTooltip]="topItem.title"
+            position="right"
+            hlmBtn
+            variant="ghost"
+            size="icon-lg"
+            [routerLink]="topItem.url"
+            routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{ exact: topItem.url === '/' }"
+          >
+            <ng-icon class="w-5! h-5!" [name]="topItem.icon" />
+          </a>
+        }
+      </div>
+      <div class="sidebar-bottom">
+        @for (bottomItem of bottomItems; track $index) {
+          <a
+            hlmBtn
+            [hlmTooltip]="bottomItem.title"
+            position="right"
+            variant="ghost"
+            size="icon-lg"
+            [routerLink]="bottomItem.url"
+            routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{ exact: bottomItem.url === '/' }"
+          >
+            <ng-icon class="w-5! h-5!" [name]="bottomItem.icon" />
+          </a>
+        }
+      </div>
     </div>
   </div>
 </section>

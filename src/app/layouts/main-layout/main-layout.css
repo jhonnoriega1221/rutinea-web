@@ -1,0 +1,17 @@
+.layout-shell {
+  display: flex;
+  min-height: 100vh;
+  padding-top: 24px;
+  padding-bottom: calc(var(--bottombar-height) + var(--bottombar-padding) + 24px);
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+@media (min-width: 640px) {
+  .layout-shell {
+    padding-left: calc(var(--sidebar-width) + var(--sidebar-padding) + 28px);
+    padding-right: 28px;
+    padding-top: 32px;
+    padding-bottom: 24px;
+  }
+}

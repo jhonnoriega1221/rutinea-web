@@ -12,11 +12,15 @@
   --font-sans:
     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
     sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-
   --radius: 0.625rem;
+  --sidebar-width: 72px;
+  --sidebar-padding: 20px;
+  --bottombar-height: 64px;
+  --bottombar-padding: 18px;
+
   --background: oklch(94.504% 0.03066 173.807);
   --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
+  --card: oklch(98.302% 0.00684 175.312);
   --card-shadow: 0 12px 20px oklch(61.462% 0.1267 158.328 / 0.25);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
