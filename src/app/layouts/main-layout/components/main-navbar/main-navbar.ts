@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { RouterLink } from "@angular/router";
+import { RouterLink, RouterLinkActive } from "@angular/router";
 
 import { HlmButtonImports } from "@spartan-ng/helm/button";
 import { HlmTooltipImports } from "@spartan-ng/helm/tooltip";
@@ -10,7 +10,7 @@ import { getMainNavigationItems } from "../../../../core/navigation/domain/main-
 
 @Component({
   selector: "app-main-navbar",
-  imports: [HlmButtonImports, HlmTooltipImports, NgIcon, RouterLink],
+  imports: [HlmButtonImports, HlmTooltipImports, NgIcon, RouterLink, RouterLinkActive],
   templateUrl: "./main-navbar.html",
   styleUrl: "./main-navbar.css",
   viewProviders: [

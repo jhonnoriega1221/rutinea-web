@@ -11,6 +11,22 @@ export const routes: Routes = [
         pathMatch: "full",
         loadComponent: () =>
           import("./features/home/presentation/pages/home-page/home-page").then((m) => m.HomePage)
+      },
+      {
+        path: "settings",
+        pathMatch: "full",
+        loadComponent: () =>
+          import("./features/settings/presentation/pages/settings-page/settings-page").then(
+            (m) => m.SettingsPage
+          )
+      },
+      {
+        path: "habits",
+        pathMatch: "full",
+        loadComponent: () =>
+          import("./features/habits/presentation/pages/habits-page/habits-page").then(
+            (m) => m.HabitsPage
+          )
       }
     ]
   }

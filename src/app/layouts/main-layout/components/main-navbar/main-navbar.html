@@ -16,6 +16,8 @@
           variant="ghost"
           size="icon-lg"
           [routerLink]="topItem.url"
+          routerLinkActive="is-active"
+          [routerLinkActiveOptions]="{ exact: topItem.url === '/' }"
         >
           <ng-icon class="w-5! h-5!" [name]="topItem.icon" />
         </a>
@@ -30,6 +32,8 @@
           variant="ghost"
           size="icon-lg"
           [routerLink]="bottomItem.url"
+          routerLinkActive="is-active"
+          [routerLinkActiveOptions]="{ exact: bottomItem.url === '/' }"
         >
           <ng-icon class="w-5! h-5!" [name]="bottomItem.icon" />
         </a>

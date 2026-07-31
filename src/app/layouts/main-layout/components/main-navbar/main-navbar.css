@@ -5,14 +5,31 @@
   max-height: 100%;
   overflow: hidden;
   border-radius: 1rem;
-  background: var(--card);
+  background: var(--sidebar);
   width: 72px;
+  box-shadow: var(--sidebar-shadow);
+}
+
+.sidebar a:hover{
+  background: var(--sidebar-hover);
+}
+
+.sidebar ng-icon {
+  color: var(--sidebar-foreground);
+}
+
+.sidebar a.is-active {
+  color: var(--sidebar-primary-foreground);
+}
+
+.sidebar a.is-active ng-icon {
+  color: var(--sidebar-primary-foreground);
 }
 
 .sidebar-header {
   flex-shrink: 0;
   height: 80px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--sidebar-border);
 }
 
 .sidebar-body {
