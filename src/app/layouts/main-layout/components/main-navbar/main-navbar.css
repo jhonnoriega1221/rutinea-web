@@ -10,7 +10,7 @@
   box-shadow: var(--sidebar-shadow);
 }
 
-.sidebar a:hover{
+.sidebar a:hover {
   background: var(--sidebar-hover);
 }
 
