@@ -17,7 +17,9 @@
       "@spartan-ng/helm/tooltip": ["./libs/ui/tooltip/src/index.ts"],
       "@spartan-ng/helm/card": ["./libs/ui/card/src/index.ts"],
       "@spartan-ng/helm/toggle-group": ["./libs/ui/toggle-group/src/index.ts"],
-      "@spartan-ng/helm/toggle": ["./libs/ui/toggle/src/index.ts"]
+      "@spartan-ng/helm/toggle": ["./libs/ui/toggle/src/index.ts"],
+      "@spartan-ng/helm/dialog": ["./libs/ui/dialog/src/index.ts"],
+      "@spartan-ng/helm/drawer": ["./libs/ui/drawer/src/index.ts"]
     }
   },
   "angularCompilerOptions": {
