@@ -5,13 +5,16 @@ import {
   provideBrowserGlobalErrorListeners
 } from "@angular/core";
 import { provideRouter } from "@angular/router";
+import { APP_ICONS } from "./shared/components/icons/app-icons";
 import { ThemeService } from "./core/theme/theme.service";
 import { routes } from "./app.routes";
+import { provideIcons } from "@ng-icons/core";
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
+    provideIcons(APP_ICONS),
     provideAppInitializer(() => {
       const themeService = inject(ThemeService);
       themeService.initialize();

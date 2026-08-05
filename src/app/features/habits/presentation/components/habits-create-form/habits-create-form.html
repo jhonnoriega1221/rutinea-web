@@ -1,0 +1,99 @@
+<form
+  [formRoot]="form"
+  id="form-habit-creation"
+  class="w-full sm:w-100 max-w-full min-w-20 box-border p-6"
+>
+  <hlm-field-group>
+    <div class="flex flex-row">
+      <hlm-field class="w-[60px]">
+        <label hlmFieldLabel for="icon">Icon</label>
+        <app-icon-selector id="icon" [formField]="form.icon" />
+        @for (error of form.name().errors(); track $index) {
+          <hlm-field-error [validator]="error.kind">
+            {{ error.message }}
+          </hlm-field-error>
+        }
+      </hlm-field>
+      <hlm-field>
+        <label hlmFieldLabel for="name">Habit name</label>
+        <input
+          id="name"
+          hlmInput
+          placeholder="Drink a glass of water"
+          autocomplete="off"
+          [formField]="form.name"
+        />
+        @for (error of form.name().errors(); track $index) {
+          <hlm-field-error [validator]="error.kind">
+            {{ error.message }}
+          </hlm-field-error>
+        }
+      </hlm-field>
+    </div>
+    <hlm-field>
+      <label hlmFieldLabel for="category">Category</label>
+
+      <hlm-select id="category" [formField]="form.category">
+        <hlm-select-trigger buttonId="category" class="w-full">
+          <hlm-select-value />
+        </hlm-select-trigger>
+        <hlm-select-content *hlmSelectPortal>
+          <hlm-select-group>
+            <hlm-select-item value="no_category">No category</hlm-select-item>
+          </hlm-select-group>
+        </hlm-select-content>
+      </hlm-select>
+
+      @for (error of form.name().errors(); track $index) {
+        <hlm-field-error [validator]="error.kind">
+          {{ error.message }}
+        </hlm-field-error>
+      }
+    </hlm-field>
+    <hlm-field>
+      <label hlmFieldLabel for="description">Habit description</label>
+      <textarea
+        hlmTextarea
+        id="description"
+        class="min-h-32"
+        placeholder="Write about this habit"
+        [formField]="form.description"
+      ></textarea>
+
+      @for (error of form.description().errors(); track $index) {
+        <hlm-field-error [validator]="error.kind">
+          {{ error.message }}
+        </hlm-field-error>
+      }
+    </hlm-field>
+    <hlm-field>
+      <label hlmFieldLabel for="frequency">Habit frequency</label>
+      <hlm-toggle-group
+        class="flex justify-center align-middle"
+        aria-labelledby="frequency-label"
+        id="frequency"
+        type="multiple"
+        variant="outline"
+        spacing="1"
+        [formField]="form.frequency"
+      >
+        <button hlmToggleGroupItem value="sunday" aria-label="Sunday">Su</button>
+        <button hlmToggleGroupItem value="monday" aria-label="Monday">Mo</button>
+        <button hlmToggleGroupItem value="tuesday" aria-label="Tuesday">Tu</button>
+        <button hlmToggleGroupItem value="wednesday" aria-label="Wednesday">We</button>
+        <button hlmToggleGroupItem value="thursday" aria-label="Thursday">Th</button>
+        <button hlmToggleGroupItem value="friday" aria-label="Friday">Fr</button>
+        <button hlmToggleGroupItem value="saturday" aria-label="Saturday">Sa</button>
+      </hlm-toggle-group>
+
+      @for (error of form.frequency().errors(); track $index) {
+        <hlm-field-error [validator]="error.kind">
+          {{ error.message }}
+        </hlm-field-error>
+      }
+    </hlm-field>
+    <hlm-field>
+      <button hlmBtn type="submit" form="form-habit-creation">Submit</button>
+    </hlm-field>
+  </hlm-field-group>
+</form>

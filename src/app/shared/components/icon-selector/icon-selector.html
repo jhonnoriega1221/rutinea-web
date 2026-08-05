@@ -1,0 +1,20 @@
+<hlm-popover [state]="state()">
+  <button hlmPopoverTrigger hlmBtn variant="outline" type="button" class="bg-transparent" (click)="state.set('open')">
+    <ng-icon [name]="iconSelected() || 'lucideLeaf'"></ng-icon>
+  </button>
+  <hlm-popover-content *hlmPopoverPortal class="min-w-[276px]">
+    <div>
+      @for (icon of icons; track icon.key) {
+        <button
+          type="button"
+          hlmBtn
+          [variant]="value() === icon.key ? 'default' : 'ghost'"
+          size="icon"
+          (click)="select(icon)"
+        >
+          <ng-icon [name]="icon.icon" size="18" />
+        </button>
+      }
+    </div>
+  </hlm-popover-content>
+</hlm-popover>
