@@ -19,7 +19,14 @@
       "@spartan-ng/helm/toggle-group": ["./libs/ui/toggle-group/src/index.ts"],
       "@spartan-ng/helm/toggle": ["./libs/ui/toggle/src/index.ts"],
       "@spartan-ng/helm/dialog": ["./libs/ui/dialog/src/index.ts"],
-      "@spartan-ng/helm/drawer": ["./libs/ui/drawer/src/index.ts"]
+      "@spartan-ng/helm/drawer": ["./libs/ui/drawer/src/index.ts"],
+      "@spartan-ng/helm/input-group": ["./libs/ui/input-group/src/index.ts"],
+      "@spartan-ng/helm/input": ["./libs/ui/input/src/index.ts"],
+      "@spartan-ng/helm/textarea": ["./libs/ui/textarea/src/index.ts"],
+      "@spartan-ng/helm/field": ["./libs/ui/field/src/index.ts"],
+      "@spartan-ng/helm/label": ["./libs/ui/label/src/index.ts"],
+      "@spartan-ng/helm/separator": ["./libs/ui/separator/src/index.ts"],
+      "@spartan-ng/helm/select": ["./libs/ui/select/src/index.ts"]
     }
   },
   "angularCompilerOptions": {
