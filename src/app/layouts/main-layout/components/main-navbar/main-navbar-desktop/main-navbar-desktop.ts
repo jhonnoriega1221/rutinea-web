@@ -10,7 +10,7 @@ import { getMainNavigationItems } from "../../../../../core/navigation/domain/ma
   selector: "app-main-navbar-desktop",
   imports: [HlmButtonImports, HlmTooltipImports, NgIcon, RouterLink, RouterLinkActive],
   templateUrl: "./main-navbar-desktop.html",
-  styleUrl: "./main-navbar-desktop.css",
+  styleUrl: "./main-navbar-desktop.css"
 })
 export class MainNavbarDesktop {
   readonly items = getMainNavigationItems();

@@ -33,13 +33,13 @@
     <hlm-field>
       <label hlmFieldLabel for="category">Category</label>
 
-      <hlm-select id="category" [formField]="form.category">
-        <hlm-select-trigger buttonId="category" class="w-full">
+      <hlm-select id="category" [formField]="form.categoryId" [itemToString]="itemToString">
+        <hlm-select-trigger buttonId="category" class="w-full" 1>
           <hlm-select-value />
         </hlm-select-trigger>
         <hlm-select-content *hlmSelectPortal>
           <hlm-select-group>
-            <hlm-select-item value="no_category">No category</hlm-select-item>
+            <hlm-select-item value="none">No category</hlm-select-item>
           </hlm-select-group>
         </hlm-select-content>
       </hlm-select>

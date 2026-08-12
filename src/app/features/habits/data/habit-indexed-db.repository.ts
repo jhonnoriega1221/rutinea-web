@@ -1,12 +1,21 @@
-import { IndexedDbRepository } from "../../../core/indexed-db/indexed-db.repository";
-import { Habit } from "../domain/habit";
+import { Habit } from "../domain/models/habit.model";
+import { IndexedDbService } from "../../../core/indexed-db/indexed-db.service";
+import { HabitRepository } from "./habit.repository";
+import { inject, Injectable } from "@angular/core";
 
-export class HabitIndexedDbRepository extends IndexedDbRepository<Habit> {
-  constructor() {
-    super({
-      dbName: "habit-db",
-      version: 1,
-      storeName: "habits"
-    });
+@Injectable({
+  providedIn: "root"
+})
+export class IndexedDbHabitRepository implements HabitRepository {
+  private readonly STORE_NAME = "habits";
+
+  private _idbService = inject(IndexedDbService);
+
+  createHabit(habitData: Habit): Promise<Habit> {
+    return this._idbService.add(this.STORE_NAME, habitData);
+  }
+
+  getHabits(): Promise<Habit[]> {
+    return this._idbService.getAll<Habit>(this.STORE_NAME);
   }
 }

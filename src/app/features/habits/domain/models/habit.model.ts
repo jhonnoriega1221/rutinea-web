@@ -1,5 +1,3 @@
-import { StoreRecord } from "../../../core/indexed-db/indexed-db.repository";
-
 export const WEEKDAYS = [
   "Monday",
   "Tuesday",
@@ -12,12 +10,16 @@ export const WEEKDAYS = [
 
 export type Weekday = (typeof WEEKDAYS)[number];
 
-export interface Habit extends StoreRecord {
+export interface Habit {
+  id: string;
   name: string;
   description: string;
   categoryId: string;
   icon: string;
   status: "active" | "paused" | "archived";
   frequency: Weekday[];
-  createdAt: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
+
+export type CreateHabitFormModel = Omit<Habit, "id" | "createdAt" | "updatedAt" | "status">;

@@ -1,9 +1,9 @@
-import { Habit } from "../domain/habit";
+import { Habit } from "../domain/models/habit.model";
 
-export interface HabitRepository {
-  getAll(): Promise<Habit[]>;
-  getById(id: string): Promise<Habit | null>;
-  create(habit: Habit): Promise<Habit>;
-  update(id: string, changes: Partial<Habit>): Promise<Habit>;
-  delete(id: string): Promise<void>;
+export abstract class HabitRepository {
+  abstract createHabit(habit: Habit): Promise<Habit>;
+  abstract getHabits(): Promise<Habit[]>;
+  // abstract getHabitById(id: string): Observable<Habit | undefined>;
+  // abstract updateHabit(id: string, habit: Partial<Habit>): Observable<Habit>;
+  // abstract deleteHabit(id: string): Observable<void>;
 }

@@ -17,12 +17,12 @@ import { AppInfoService } from "../../../../../core/app-info/app-info.service";
 })
 export class SettingsPage {
   private readonly themeService = inject(ThemeService);
-  private readonly appInfo = inject(AppInfoService)
+  private readonly appInfo = inject(AppInfoService);
 
   readonly actualTheme = this.themeService.getPreferredTheme();
   readonly version = this.appInfo.version;
 
-  selectTheme(value:ThemeMode) {
-    this.themeService.setTheme(value)
+  selectTheme(value: ThemeMode) {
+    this.themeService.setTheme(value);
   }
 }

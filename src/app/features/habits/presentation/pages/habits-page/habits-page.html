@@ -1,13 +1,13 @@
 <main class="mx-auto max-w-250">
   <div class="flex items-center justify-between mb-4">
     <p class="text-2xl font-bold mb-4">Habits</p>
-    <button hlmBtn (click)="dialogTest.open()">
+    <button hlmBtn (click)="createDialog.open()">
       <ng-icon name="lucidePlus" class="w-5! h-5!" />
       New habit
     </button>
   </div>
 </main>
 
-<app-responsive-dialog-sheet #dialogTest> 
-    <app-habits-create-form />
+<app-responsive-dialog-sheet #createDialog>
+  <app-habits-create-form (submitted)="onHabitSubmitted($event)" />
 </app-responsive-dialog-sheet>
