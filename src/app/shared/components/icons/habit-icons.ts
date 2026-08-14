@@ -8,7 +8,7 @@ export const HABIT_ICON_OPTIONS: IconOption[] = [
   { key: "leaf", label: "Leaf", icon: "lucideLeaf" },
   { key: "excercise", label: "Excercise", icon: "lucideDumbbell" },
   { key: "glass", label: "Glass", icon: "lucideGlassWater" },
-  { key: "food", label: "Comida", icon: "lucideApple" }
+  { key: "food", label: "Food", icon: "lucideApple" }
 ];
 
 export function getIconByKey(iconKey: string) {

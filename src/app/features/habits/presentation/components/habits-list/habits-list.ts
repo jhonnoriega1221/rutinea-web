@@ -1,5 +1,6 @@
-import { Component } from "@angular/core";
+import { Component, input } from "@angular/core";
 import { HabitsListItem } from "../habits-list-item/habits-list-item";
+import { Habit } from "../../../domain/models/habit.model";
 
 @Component({
   selector: "app-habits-list",
@@ -7,4 +8,6 @@ import { HabitsListItem } from "../habits-list-item/habits-list-item";
   templateUrl: "./habits-list.html",
   styleUrl: "./habits-list.css"
 })
-export class HabitsList {}
+export class HabitsList {
+  habits = input<Habit[]>([]);
+}

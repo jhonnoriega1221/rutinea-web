@@ -1,7 +1,9 @@
-import { Component } from "@angular/core";
+import { Component, computed, input, OnInit } from "@angular/core";
 import { HlmCardImports } from "@spartan-ng/helm/card";
 import { NgIcon } from "@ng-icons/core";
 import { HabitWeekTracker } from "../habit-week-tracker/habit-week-tracker";
+import { Habit } from "../../../domain/models/habit.model";
+import { getIconByKey } from "../../../../../shared/components/icons/habit-icons";
 
 @Component({
   selector: "app-habits-list-item",
@@ -9,4 +11,7 @@ import { HabitWeekTracker } from "../habit-week-tracker/habit-week-tracker";
   templateUrl: "./habits-list-item.html",
   styleUrl: "./habits-list-item.css"
 })
-export class HabitsListItem {}
+export class HabitsListItem {
+  habit = input<Habit>();
+  habitIcon = computed<string>(() => getIconByKey(this.habit()?.icon!)?.icon!);
+}
