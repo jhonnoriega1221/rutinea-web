@@ -11,6 +11,7 @@ import { WEEK_DAYS, Weekday, WEEKDAYS } from "../../../domain/models/habit.model
 export class HabitWeekTracker {
   frequency = input.required<Weekday[]>();
   completedDays = input<Weekday[]>([]);
+  enableColors = input<boolean>(true);
 
   protected readonly days = computed<DayCell[]>(() => {
     const scheduled = new Set(this.frequency());

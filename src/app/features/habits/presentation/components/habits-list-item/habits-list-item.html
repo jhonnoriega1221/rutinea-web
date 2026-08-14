@@ -1,8 +1,8 @@
-<hlm-card class="card-shadow py-2">
+<a [routerLink]="habit()?.id" class="block bg-card rounded-lg card-shadow py-2">
   <div hlmCardContent class="flex items-center justify-between gap-4 px-2">
-    <div class="flex gap-2">
+    <div class="flex gap-2 items-center">
       <div
-        class="bg-primary/40 text-primary w-[48px] h-[48px] rounded-lg flex items-center justify-center"
+        class="bg-primary/40 text-primary w-[48px] h-[48px] aspect-square rounded-lg flex items-center justify-center"
       >
         <ng-icon [name]="habitIcon()" size="24px" />
       </div>
@@ -22,4 +22,4 @@
       <span class="font-bold">999</span>
     </div>
   </div>
-</hlm-card>
+</a>

@@ -1,21 +1,37 @@
 <div class="flex gap-1">
   @for (day of days(); track day.key) {
-    <span
-      class="flex text-xs aspect-square w-full items-center justify-center rounded-full"
-      [class.text-white]="
-        day.state === 'completed' || day.state === 'pending' || day.state === 'missed'
-      "
-      [class.text-md]="day.isToday"
-      [class.font-bold]="day.isToday"
-      [class.ring-2]="day.isToday"
-      [class.ring-foreground/80]="day.isToday"
-      [class.bg-foreground/10]="day.state === 'not-scheduled'"
-      [class.text-foreground/20]="day.state === 'not-scheduled'"
-      [class.bg-foreground/40]="day.state === 'pending'"
-      [class.bg-green-400]="day.state === 'completed'"
-      [class.bg-red-400]="day.state === 'missed'"
-    >
-      {{ day.label }}
-    </span>
+    @if (enableColors()) {
+      <span
+        class="flex text-xs aspect-square w-full items-center justify-center rounded-full"
+        [class.text-white]="
+          day.state === 'completed' || day.state === 'pending' || day.state === 'missed'
+        "
+        [class.text-md]="day.isToday"
+        [class.font-bold]="day.isToday"
+        [class.ring-2]="day.isToday"
+        [class.ring-foreground/80]="day.isToday"
+        [class.bg-foreground/10]="day.state === 'not-scheduled'"
+        [class.text-foreground/20]="day.state === 'not-scheduled'"
+        [class.bg-foreground/40]="day.state === 'pending'"
+        [class.bg-green-400]="day.state === 'completed'"
+        [class.bg-red-400]="day.state === 'missed'"
+      >
+        {{ day.label }}
+      </span>
+    } @else {
+      <span
+        class="flex text-xs aspect-square w-full items-center justify-center rounded-full"
+        [class.text-white]="
+          day.state === 'completed' || day.state === 'pending' || day.state === 'missed'
+        "
+        [class.bg-foreground/40]="
+          day.state === 'completed' || day.state === 'pending' || day.state === 'missed'
+        "
+        [class.bg-foreground/10]="day.state === 'not-scheduled'"
+        [class.text-foreground/20]="day.state === 'not-scheduled'"
+      >
+        {{ day.label }}
+      </span>
+    }
   }
 </div>

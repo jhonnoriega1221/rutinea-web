@@ -27,6 +27,14 @@ export const routes: Routes = [
           import("./features/habits/presentation/pages/habits-page/habits-page").then(
             (m) => m.HabitsPage
           )
+      },
+      {
+        path: "habits/:id",
+        pathMatch: "full",
+        loadComponent: () =>
+          import("./features/habits/presentation/pages/habits-details-page/habits-details-page").then(
+            (m) => m.HabitsDetailsPage
+          )
       }
     ]
   }
