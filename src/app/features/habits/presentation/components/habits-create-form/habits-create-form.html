@@ -77,13 +77,11 @@
         spacing="1"
         [formField]="form.frequency"
       >
-        <button hlmToggleGroupItem value="sunday" aria-label="Sunday">Su</button>
-        <button hlmToggleGroupItem value="monday" aria-label="Monday">Mo</button>
-        <button hlmToggleGroupItem value="tuesday" aria-label="Tuesday">Tu</button>
-        <button hlmToggleGroupItem value="wednesday" aria-label="Wednesday">We</button>
-        <button hlmToggleGroupItem value="thursday" aria-label="Thursday">Th</button>
-        <button hlmToggleGroupItem value="friday" aria-label="Friday">Fr</button>
-        <button hlmToggleGroupItem value="saturday" aria-label="Saturday">Sa</button>
+        @for (weekDay of weekdayOptions; track weekDay.key) {
+          <button hlmToggleGroupItem [value]="weekDay.key" aria-label="Sunday">
+            {{ weekDay.label }}
+          </button>
+        }
       </hlm-toggle-group>
 
       @for (error of form.frequency().errors(); track $index) {

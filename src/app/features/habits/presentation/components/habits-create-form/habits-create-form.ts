@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, output, signal } from "@angular/core";
+import { ChangeDetectionStrategy, Component, computed, output, signal } from "@angular/core";
 import { HlmFieldImports } from "@spartan-ng/helm/field";
 import { HlmInputImports } from "@spartan-ng/helm/input";
 import { HlmTextareaImports } from "@spartan-ng/helm/textarea";
@@ -7,7 +7,14 @@ import { HlmSelectImports } from "@spartan-ng/helm/select";
 import { form, FormRoot, maxLength, minLength, required, FormField } from "@angular/forms/signals";
 import { HlmButtonImports } from "@spartan-ng/helm/button";
 import { IconSelector } from "../../../../../shared/components/icon-selector/icon-selector";
-import { CreateHabitFormModel, Habit } from "../../../domain/models/habit.model";
+import {
+  CreateHabitFormModel,
+  DAY_LABELS,
+  Habit,
+  WEEK_DAYS,
+  WEEKDAYS
+} from "../../../domain/models/habit.model";
+import { DayCell } from "../../../../record/domain/models/record.model";
 
 @Component({
   selector: "app-habits-create-form",
@@ -28,6 +35,8 @@ import { CreateHabitFormModel, Habit } from "../../../domain/models/habit.model"
 })
 export class HabitsCreateForm {
   submitted = output<CreateHabitFormModel>();
+
+  readonly weekdayOptions = WEEK_DAYS;
 
   itemToString = (value: string): string => {
     if (value === "none") {

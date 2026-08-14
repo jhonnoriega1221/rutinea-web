@@ -1,15 +1,6 @@
 import { Component, computed, input, signal } from "@angular/core";
 import { DayCell, DayState } from "../../../../record/domain/models/record.model";
-
-const WEEK_DAYS: { key: string; label: string }[] = [
-  { key: "monday", label: "M" },
-  { key: "tuesday", label: "T" },
-  { key: "wednesday", label: "W" },
-  { key: "thursday", label: "Th" },
-  { key: "friday", label: "F" },
-  { key: "saturday", label: "S" },
-  { key: "sunday", label: "Su" }
-];
+import { WEEK_DAYS, Weekday, WEEKDAYS } from "../../../domain/models/habit.model";
 
 @Component({
   selector: "app-habit-week-tracker",
@@ -18,10 +9,8 @@ const WEEK_DAYS: { key: string; label: string }[] = [
   styleUrl: "./habit-week-tracker.css"
 })
 export class HabitWeekTracker {
-  frequency = input.required<string[]>();
-  completedDays = input<string[]>([]);
-
-  private readonly _todayKey = WEEK_DAYS[this._todayIndex()].key;
+  frequency = input.required<Weekday[]>();
+  completedDays = input<Weekday[]>([]);
 
   protected readonly days = computed<DayCell[]>(() => {
     const scheduled = new Set(this.frequency());
@@ -45,7 +34,7 @@ export class HabitWeekTracker {
   ): DayState {
     if (!scheduled.has(dayKey)) return "not-scheduled";
     if (completed.has(dayKey)) return "completed";
-    if (dayIndex > todayIndex) return "pending";
+    if (dayIndex >= todayIndex) return "pending";
     return "missed";
   }
 

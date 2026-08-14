@@ -10,13 +10,7 @@ import { HabitsList } from "../../components/habits-list/habits-list";
 
 @Component({
   selector: "app-habits-page",
-  imports: [
-    HlmButtonImports,
-    NgIcon,
-    ResponsiveDialogSheet,
-    HabitsCreateForm,
-    HabitsList
-  ],
+  imports: [HlmButtonImports, NgIcon, ResponsiveDialogSheet, HabitsCreateForm, HabitsList],
   templateUrl: "./habits-page.html",
   styleUrl: "./habits-page.css",
   viewProviders: [provideIcons({ lucidePlus })]
