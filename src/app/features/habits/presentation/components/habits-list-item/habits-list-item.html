@@ -1,0 +1,28 @@
+<hlm-card class="card-shadow mb-6 py-2">
+  <div hlmCardContent class="flex items-center justify-between gap-4 px-2">
+    <div class="flex gap-2">
+      <div
+        class="bg-primary/40 text-primary w-[48px] h-[48px] rounded-lg flex items-center justify-center"
+      >
+        <ng-icon name="lucideGlassWater" size="24px" />
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <p class="text-card-foreground font-medium">Beber 50.000 litros de aguaa</p>
+        <div class="h-[24px] w-[160px]">
+          <app-habit-week-tracker
+            [frequency]="['tuesday', 'wednesday', 'friday', 'saturday']"
+            [completedDays]="['tuesday']"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="flex flex-col items-center w-[42px] text-orange-400 mr-1 border-l-2 pl-2 border-foreground/30"
+    >
+      <ng-icon name="lucideFlame" />
+      <span class="font-bold">999</span>
+    </div>
+  </div>
+</hlm-card>

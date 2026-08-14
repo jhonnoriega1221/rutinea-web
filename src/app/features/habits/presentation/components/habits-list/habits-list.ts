@@ -1,0 +1,10 @@
+import { Component } from "@angular/core";
+import { HabitsListItem } from "../habits-list-item/habits-list-item";
+
+@Component({
+  selector: "app-habits-list",
+  imports: [HabitsListItem],
+  templateUrl: "./habits-list.html",
+  styleUrl: "./habits-list.css"
+})
+export class HabitsList {}

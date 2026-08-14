@@ -14,7 +14,8 @@ import {
   lucideGlassWater,
   lucideLeaf,
   lucideSettings,
-  lucideListChecks
+  lucideListChecks,
+  lucideFlame
 } from "@ng-icons/lucide";
 
 export const APP_ICONS = {
@@ -33,5 +34,6 @@ export const APP_ICONS = {
   lucideGlassWater,
   lucideLeaf,
   lucideSettings,
-  lucideListChecks
+  lucideListChecks,
+  lucideFlame
 } as const;
