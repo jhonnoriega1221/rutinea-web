@@ -1,39 +1,39 @@
 <main class="mx-auto max-w-250">
-  <div>
-    <p class="text-2xl font-bold mb-4">Habit Details</p>
-  </div>
-  <hlm-card class="card-shadow mb-3">
-    <hlm-card-header>
-      <p hlmCardTitle>Details</p>
-    </hlm-card-header>
-    <div hlmCardContent class="flex flex-col gap-2">
-      <div class="flex gap-2">
-        <div class="mt-0.5">
-          <ng-icon name="lucideLeaf" size="20px" />
+  @if (habit()) {
+    <div>
+      <p class="text-2xl font-bold mb-4">Habit Details</p>
+    </div>
+    <hlm-card class="card-shadow mb-3">
+      <hlm-card-header>
+        <p hlmCardTitle>Details</p>
+      </hlm-card-header>
+      <div hlmCardContent class="flex flex-col gap-2">
+        <div class="flex gap-2">
+          <div class="mt-0.5">
+            <ng-icon name="lucideLeaf" size="20px" />
+          </div>
+          <div>
+            <p class="font-bold">{{ habit()!.name }}</p>
+            <p>{{ habit()!.description }}</p>
+          </div>
         </div>
-        <div>
-          <p class="font-bold">Tomar agua</p>
-          <p>Este es un habito en el que se va a realizar al toma del agua frecuente</p>
-        </div>
+        <p><span class="font-bold">Categoria:</span> ninguno</p>
+        <p class="font-bold">Frecuencia semanal:</p>
+        <app-habit-week-tracker [enableColors]="false" [frequency]="habit()!.frequency" />
       </div>
-      <p><span class="font-bold">Categoria:</span> ninguno</p>
-      <p class="font-bold">Frecuencia semanal:</p>
-      <app-habit-week-tracker
-        [enableColors]="false"
-        [frequency]="['monday', 'wednesday', 'friday']"
-      />
-    </div>
-  </hlm-card>
+    </hlm-card>
 
-  <hlm-card class="card-shadow">
-    <hlm-card-header>
-      <p hlmCardTitle>Calendar</p>
-    </hlm-card-header>
-    <div hlmCardContent>
-      <app-habit-calendar-tracker
-        [frequency]="['monday', 'wednesday', 'friday']"
-        [completedDates]="[]"
-      />
-    </div>
-  </hlm-card>
+    <hlm-card class="card-shadow">
+      <hlm-card-header>
+        <p hlmCardTitle>Calendar</p>
+      </hlm-card-header>
+      <div hlmCardContent>
+        <app-habit-calendar-tracker
+          [frequency]="habit()!.frequency"
+          [completedDates]="[]"
+          [trackStart]="habit()!.createdAt"
+        />
+      </div>
+    </hlm-card>
+  }
 </main>

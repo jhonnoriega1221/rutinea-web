@@ -18,4 +18,8 @@ export class IndexedDbHabitRepository implements HabitRepository {
   getHabits(): Promise<Habit[]> {
     return this._idbService.getAll<Habit>(this.STORE_NAME);
   }
+
+  getHabitById(habitId: string): Promise<Habit> {
+    return this._idbService.getById<Habit>(this.STORE_NAME, habitId);
+  }
 }

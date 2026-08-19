@@ -57,7 +57,7 @@ export class IndexedDbService {
     return this._requestToPromise(store.getAll());
   }
 
-  async getById<T>(storeName: StoreName, id: IDBValidKey): Promise<T | undefined> {
+  async getById<T>(storeName: StoreName, id: IDBValidKey): Promise<T> {
     const db = await this.connect();
     const transaction = db.transaction(storeName, "readonly");
     const store = transaction.objectStore(storeName);
