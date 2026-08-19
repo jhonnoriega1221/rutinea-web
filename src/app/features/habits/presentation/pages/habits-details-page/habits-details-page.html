@@ -30,7 +30,10 @@
       <p hlmCardTitle>Calendar</p>
     </hlm-card-header>
     <div hlmCardContent>
-      <p>Here goes the calendar</p>
+      <app-habit-calendar-tracker
+        [frequency]="['monday', 'wednesday', 'friday']"
+        [completedDates]="[]"
+      />
     </div>
   </hlm-card>
 </main>

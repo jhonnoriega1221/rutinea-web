@@ -1,0 +1,86 @@
+<div class="flex flex-col gap-4">
+  <div class="flex w-full items-center justify-between gap-1.5">
+    <button #prevBtn brnCalendarPreviousButton hlmBtn variant="ghost" size="icon" type="button">
+      <ng-icon name="lucideChevronLeft" />
+    </button>
+
+    <div class="flex gap-1">
+      <hlm-select brnCalendarMonthSelect>
+        <hlm-select-trigger>
+          <hlm-select-value />
+        </hlm-select-trigger>
+        <hlm-select-content *hlmSelectPortal>
+          <hlm-select-group>
+            @for (month of _i18n.config().months(); track month) {
+              <hlm-select-item [value]="month"> {{ month }}</hlm-select-item>
+            }
+          </hlm-select-group>
+        </hlm-select-content>
+      </hlm-select>
+
+      <hlm-select brnCalendarYearSelect>
+        <hlm-select-trigger>
+          <hlm-select-value />
+        </hlm-select-trigger>
+        <hlm-select-content *hlmSelectPortal class="max-h-80">
+          <hlm-select-group>
+            @for (year of _i18n.config().years(); track year) {
+              <hlm-select-item [value]="year"> {{ year }}</hlm-select-item>
+            }
+          </hlm-select-group>
+        </hlm-select-content>
+      </hlm-select>
+      <button hlmBtn variant="outline" type="button" (click)="goToToday()">Today</button>
+    </div>
+
+    <button #nextBtn brnCalendarNextButton hlmBtn variant="ghost" size="icon" type="button">
+      <ng-icon name="lucideChevronRight" />
+    </button>
+  </div>
+
+  <table class="w-full border-collapse select-none" brnCalendarGrid>
+    <thead aria-hidden="true">
+      <tr class="flex">
+        <th
+          *brnCalendarWeekday="let weekday"
+          scope="col"
+          class="text-muted-foreground flex-1 text-center text-[0.8rem] font-normal"
+        >
+          {{ _i18n.config().formatWeekdayName(weekday) }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *brnCalendarWeek="let week"
+        class="mt-2 flex w-full rounded-full"
+        [class.bg-primary/10]="isCurrentWeek(week)"
+      >
+        @for (date of week; track _dateAdapter.getTime(date)) {
+          @let state = resolveState(date);
+
+          <td class="aspect-square w-full p-0.5 text-center">
+            <button
+              type="button"
+              brnCalendarCellButton
+              [date]="date"
+              class="flex aspect-square w-full items-center justify-center rounded-full text-xs data-[outside=true]:hidden"
+              [class.text-sm]="isToday(date)"
+              [class.font-bold]="isToday(date)"
+              [class.ring-2]="isToday(date)"
+              [class.ring-foreground/80]="isToday(date)"
+              [class.text-white]="state !== 'not-scheduled'"
+              [class.bg-foreground/10]="state === 'not-scheduled'"
+              [class.text-foreground/20]="state === 'not-scheduled'"
+              [class.bg-foreground/40]="state === 'pending'"
+              [class.bg-green-400]="state === 'completed'"
+              [class.bg-red-400]="state === 'missed'"
+            >
+              {{ _dateAdapter.getDate(date) }}
+            </button>
+          </td>
+        }
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,21 +1,21 @@
 export const WEEKDAYS = [
+  "sunday",
   "monday",
   "tuesday",
   "wednesday",
   "thursday",
   "friday",
-  "saturday",
-  "sunday"
+  "saturday"
 ] as const;
 
 export const DAY_LABELS: Record<Weekday, string> = {
-  monday: "M",
-  tuesday: "T",
-  wednesday: "W",
+  sunday: "Su",
+  monday: "Mo",
+  tuesday: "Tu",
+  wednesday: "We",
   thursday: "Th",
-  friday: "F",
-  saturday: "S",
-  sunday: "Su"
+  friday: "Fr",
+  saturday: "Sa"
 };
 
 export const WEEK_DAYS = WEEKDAYS.map((day) => ({

@@ -1,6 +1,13 @@
 import { Component, computed, input, signal } from "@angular/core";
 import { DayCell, DayState } from "../../../../record/domain/models/record.model";
-import { WEEK_DAYS, Weekday, WEEKDAYS } from "../../../domain/models/habit.model";
+import { DAY_LABELS, WEEK_DAYS, Weekday } from "../../../domain/models/habit.model";
+import {
+  getTodayIndex,
+  getWeekDates,
+  getWeekdayKey,
+  resolveDayState,
+  toDateKey
+} from "../../../domain/utils/day-state.util";
 
 @Component({
   selector: "app-habit-week-tracker",
@@ -10,37 +17,22 @@ import { WEEK_DAYS, Weekday, WEEKDAYS } from "../../../domain/models/habit.model
 })
 export class HabitWeekTracker {
   frequency = input.required<Weekday[]>();
-  completedDays = input<Weekday[]>([]);
+  completedDays = input<string[]>([]); // yyyy-mm-dd
+  createdAt = input<Date>();
+  weekStartsOn = input<0 | 1>(0);
   enableColors = input<boolean>(true);
 
   protected readonly days = computed<DayCell[]>(() => {
     const scheduled = new Set(this.frequency());
     const completed = new Set(this.completedDays());
-    const todayIndex = this._todayIndex();
+    const createdAt = this.createdAt();
+    const todayKey = toDateKey(new Date());
 
-    return WEEK_DAYS.map((day, index) => ({
-      key: day.key,
-      label: day.label,
-      isToday: index === todayIndex,
-      state: this._resolveState(day.key, index, todayIndex, scheduled, completed)
+    return getWeekDates(new Date(), this.weekStartsOn()).map((date) => ({
+      key: getWeekDates(date),
+      label: DAY_LABELS[getWeekdayKey(date)],
+      isToday: toDateKey(date) === todayKey,
+      state: resolveDayState(date, scheduled, completed, createdAt)
     }));
   });
-
-  private _resolveState(
-    dayKey: string,
-    dayIndex: number,
-    todayIndex: number,
-    scheduled: Set<string>,
-    completed: Set<string>
-  ): DayState {
-    if (!scheduled.has(dayKey)) return "not-scheduled";
-    if (completed.has(dayKey)) return "completed";
-    if (dayIndex >= todayIndex) return "pending";
-    return "missed";
-  }
-
-  private _todayIndex(): number {
-    const jsDay = new Date().getDay();
-    return jsDay === 0 ? 6 : jsDay - 1;
-  }
 }
