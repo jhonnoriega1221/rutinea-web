@@ -3,6 +3,12 @@
     <div>
       <p class="text-2xl font-bold mb-4">Habit Details</p>
     </div>
+
+    <app-habit-today-status-card
+      [status]="todayStatus()"
+      (markCompleted)="onMarkCompleted(habit()!.id)"
+    />
+
     <hlm-card class="card-shadow mb-3">
       <hlm-card-header>
         <p hlmCardTitle>Details</p>
@@ -10,22 +16,22 @@
       <div hlmCardContent class="flex flex-col gap-2">
         <div class="flex gap-2">
           <div class="mt-0.5">
-            <ng-icon name="lucideLeaf" size="20px" />
+            <ng-icon [name]="habitIcon()" size="20px" />
           </div>
           <div>
             <p class="font-bold">{{ habit()!.name }}</p>
             <p>{{ habit()!.description }}</p>
           </div>
         </div>
-        <p><span class="font-bold">Categoria:</span> ninguno</p>
-        <p class="font-bold">Frecuencia semanal:</p>
+        <p><span class="font-bold">Category:</span> No category</p>
+        <p class="font-bold">Week frequency:</p>
         <app-habit-week-tracker [enableColors]="false" [frequency]="habit()!.frequency" />
       </div>
     </hlm-card>
 
     <hlm-card class="card-shadow">
       <hlm-card-header>
-        <p hlmCardTitle>Calendar</p>
+        <p hlmCardTitle>History</p>
       </hlm-card-header>
       <div hlmCardContent>
         <app-habit-calendar-tracker

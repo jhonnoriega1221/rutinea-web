@@ -1,6 +1,15 @@
 import { DayState } from "../../../record/domain/models/record.model";
 import { Weekday, WEEKDAYS } from "../models/habit.model";
 
+interface ResolveDayStateOptions {
+  date: Date;
+  scheduled: Set<Weekday>;
+  completed: Set<string>;
+  createdAt?: Date;
+  today?: Date;
+  urgentThresholdHours?: number;
+}
+
 export function getWeekdayKey(date: Date): Weekday {
   return WEEKDAYS[date.getDay()];
 }
@@ -13,18 +22,32 @@ export function toDateKey(date: Date): string {
   return date.toISOString().slice(0, 10);
 }
 
-export function resolveDayState(
-  date: Date,
-  scheduled: Set<Weekday>,
-  completed: Set<string>,
-  createdAt?: Date,
-  today: Date = new Date()
-): DayState {
+export function resolveDayState(options: ResolveDayStateOptions): DayState {
+  const {
+    date,
+    scheduled,
+    completed,
+    createdAt,
+    today = new Date(),
+    urgentThresholdHours
+  } = options;
+
   if (createdAt && toDateKey(createdAt) > toDateKey(date)) return "not-scheduled";
   if (!scheduled.has(getWeekdayKey(date))) return "not-scheduled";
 
   const dateKey = toDateKey(date);
   if (completed.has(dateKey)) return "completed";
+
+  if (urgentThresholdHours) {
+    const isToday = dateKey === toDateKey(today);
+    if (isToday) {
+      const hoursLeft = 24 - today.getHours() - today.getMinutes() / 60;
+      if (hoursLeft <= urgentThresholdHours) {
+        return "urgent";
+      }
+      return "pending";
+    }
+  }
 
   return dateKey >= toDateKey(today) ? "pending" : "missed";
 }

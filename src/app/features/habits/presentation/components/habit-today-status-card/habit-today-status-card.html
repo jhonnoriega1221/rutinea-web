@@ -1,0 +1,34 @@
+@if (status() === "pending" || status() === "urgent") {
+  <hlm-card
+    class="card-shadow mb-3 gap-1 overflow-hidden relative text-white"
+    [class.bg-success]="status() === 'pending'"
+    [class.bg-destructive]="status() === 'urgent'"
+  >
+    <hlm-card-header class="flex justify-between items-center">
+      <p hlmCardTitle class="text-lg">
+        {{
+          status() === "pending"
+            ? "Your habit is waiting for you"
+            : "Hurry up! Don't miss today's habit!"
+        }}
+      </p>
+      <img
+        src="/assets/svg/clock_calendar.svg"
+        alt="Logo"
+        class="w-38 h-38 object-contain opacity-20 absolute invert right-1 top-3"
+      />
+    </hlm-card-header>
+    <div hlmCardContent class="flex flex-col gap-2">
+      <p class="text-sm mb-2">
+        {{
+          status() === "pending"
+            ? "It's scheduled for today, don't forget to register"
+            : "If you completed this habit, please log it before midnight!"
+        }}
+      </p>
+      <button hlmBtn size="lg" class="bg-white text-black" (click)="markCompleted">
+        <ng-icon name="lucideCheck"></ng-icon> Mark as completed
+      </button>
+    </div>
+  </hlm-card>
+}

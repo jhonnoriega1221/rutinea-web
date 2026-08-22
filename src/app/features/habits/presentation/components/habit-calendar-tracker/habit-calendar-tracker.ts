@@ -36,7 +36,12 @@ export class HabitCalendarTracker {
   protected readonly _todayKey = toDateKey(new Date());
 
   protected resolveState(date: Date) {
-    return resolveDayState(date, this._scheduled(), this._completed(), this.trackStart());
+    return resolveDayState({
+      date,
+      scheduled: this._scheduled(),
+      completed: this._completed(),
+      createdAt: this.trackStart()
+    });
   }
 
   protected isToday(date: Date): boolean {

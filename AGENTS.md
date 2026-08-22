@@ -1,0 +1,14 @@
+- Sigue la arquitectura basada en features con las capas (domain, presentation, data)
+- Las funciones de bajo nivel abstraelas en la carpeta @src/app/core
+- Las funciones compartidas entre toda o varias partes de la app guardalas en la carpeta @src/app/shared
+- No uses `any` en typescript, bajo ninguna circunstancia
+- Los componentes se manejarán como dumb components
+- Las pages serán los componentes inteligentes, pero trata de que su .ts no sea muy extenso que no sea un componente dios
+- la librería de componentes que estoy usando es spartan ng https://spartan.ng/ sus componentes se almacenan en /libs/ui
+- Sigue las buenas practicas de clean code y los principios SOLID
+- Implementa las funciones de angular 22, signals, DI con inject en vez de inyectar en el constructor,
+- Iconos: @ng-icons/lucide provistos de forma centralizada a través de @src/app/shared/components/icons/app-icons.ts
+- Inyección de Dependencias: Usar la función inject(...) en lugar de inyección por constructor.
+- Reactividad: Usar Angular Signals (signal, computed, effect, input, output) preferentemente sobre RxJS para el manejo de estado de UI.
+- Componentes: Todos los componentes deben ser standalone: true.
+- Control Flow Syntax: Usar la nueva sintaxis de control de flujo de Angular (@if, @for, @switch).

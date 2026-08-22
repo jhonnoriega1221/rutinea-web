@@ -1,6 +1,6 @@
 import { Component, computed, input, signal } from "@angular/core";
-import { DayCell, DayState } from "../../../../record/domain/models/record.model";
-import { DAY_LABELS, WEEK_DAYS, Weekday } from "../../../domain/models/habit.model";
+import { DayCell } from "../../../../record/domain/models/record.model";
+import { DAY_LABELS, Weekday } from "../../../domain/models/habit.model";
 import {
   getTodayIndex,
   getWeekDates,
@@ -32,7 +32,7 @@ export class HabitWeekTracker {
       key: getWeekDates(date),
       label: DAY_LABELS[getWeekdayKey(date)],
       isToday: toDateKey(date) === todayKey,
-      state: resolveDayState(date, scheduled, completed, createdAt)
+      state: resolveDayState({ date, scheduled, completed, createdAt })
     }));
   });
 }
