@@ -12,3 +12,4 @@
 - Reactividad: Usar Angular Signals (signal, computed, effect, input, output) preferentemente sobre RxJS para el manejo de estado de UI.
 - Componentes: Todos los componentes deben ser standalone: true.
 - Control Flow Syntax: Usar la nueva sintaxis de control de flujo de Angular (@if, @for, @switch).
+- El idioma principal de la aplicación es en Inglés.
