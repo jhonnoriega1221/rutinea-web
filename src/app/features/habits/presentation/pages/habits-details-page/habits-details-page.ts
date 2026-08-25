@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, OnInit, resource, signal } from "@angular/core";
+import { Component, computed, inject, input, OnInit, signal } from "@angular/core";
 import { HlmCardImports } from "@spartan-ng/helm/card";
 import { NgIcon } from "@ng-icons/core";
 import { HabitWeekTracker } from "../../components/habit-week-tracker/habit-week-tracker";
@@ -11,7 +11,8 @@ import { HabitTodayStatusCard } from "../../components/habit-today-status-card/h
 import { resolveDayState, toDateKey } from "../../../domain/utils/day-state.util";
 import { DayState } from "../../../../record/domain/models/record.model";
 import { URGENT_DATE_THRESHOLD } from "../../../domain/constants/habit-constants";
-
+import { ResponsiveDialogSheet } from "../../../../../shared/components/responsive-dialog-sheet/responsive-dialog-sheet";
+import { HabitDateInfo } from "../../components/habit-date-info/habit-date-info";
 @Component({
   selector: "app-habits-details-page",
   imports: [
@@ -20,7 +21,9 @@ import { URGENT_DATE_THRESHOLD } from "../../../domain/constants/habit-constants
     HabitWeekTracker,
     HabitCalendarTracker,
     HlmButtonImports,
-    HabitTodayStatusCard
+    HabitTodayStatusCard,
+    ResponsiveDialogSheet,
+    HabitDateInfo
   ],
   templateUrl: "./habits-details-page.html",
   styleUrl: "./habits-details-page.css"
@@ -32,6 +35,8 @@ export class HabitsDetailsPage implements OnInit {
 
   protected readonly habit = signal<Habit | undefined>(undefined);
   protected readonly habitIcon = computed<string>(() => getIconByKey(this.habit()?.icon!)?.icon!);
+
+  protected readonly dateSelected = signal<Date | undefined>(undefined);
 
   protected readonly todayStatus = computed<DayState>(() => {
     const currentHabit = this.habit();

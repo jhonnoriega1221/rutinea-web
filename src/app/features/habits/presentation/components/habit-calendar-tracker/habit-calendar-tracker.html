@@ -61,6 +61,7 @@
 
           <td class="aspect-square w-full p-0.5 text-center">
             <button
+              (click)="onDayClick(date)"
               type="button"
               brnCalendarCellButton
               [date]="date"
@@ -73,8 +74,8 @@
               [class.bg-foreground/10]="state === 'not-scheduled'"
               [class.text-foreground/20]="state === 'not-scheduled'"
               [class.bg-foreground/40]="state === 'pending'"
-              [class.bg-green-400]="state === 'completed'"
-              [class.bg-red-400]="state === 'missed'"
+              [class.bg-success]="state === 'completed'"
+              [class.bg-destructive]="state === 'missed'"
             >
               {{ _dateAdapter.getDate(date) }}
             </button>

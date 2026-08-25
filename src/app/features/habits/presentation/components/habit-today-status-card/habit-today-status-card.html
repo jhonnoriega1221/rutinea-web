@@ -26,7 +26,7 @@
             : "If you completed this habit, please log it before midnight!"
         }}
       </p>
-      <button hlmBtn size="lg" class="bg-white text-black" (click)="markCompleted">
+      <button hlmBtn size="lg" class="bg-white text-black" (click)="markCompleted.emit()">
         <ng-icon name="lucideCheck"></ng-icon> Mark as completed
       </button>
     </div>

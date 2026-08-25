@@ -8,6 +8,7 @@ interface ResolveDayStateOptions {
   createdAt?: Date;
   today?: Date;
   urgentThresholdHours?: number;
+  hideFuture?: boolean;
 }
 
 export function getWeekdayKey(date: Date): Weekday {
@@ -29,9 +30,10 @@ export function resolveDayState(options: ResolveDayStateOptions): DayState {
     completed,
     createdAt,
     today = new Date(),
-    urgentThresholdHours
+    urgentThresholdHours,
+    hideFuture = false
   } = options;
-
+  if (hideFuture && toDateKey(date) > toDateKey(today)) return "future-date";
   if (createdAt && toDateKey(createdAt) > toDateKey(date)) return "not-scheduled";
   if (!scheduled.has(getWeekdayKey(date))) return "not-scheduled";
 

@@ -13,8 +13,8 @@
         [class.bg-foreground/10]="day.state === 'not-scheduled'"
         [class.text-foreground/20]="day.state === 'not-scheduled'"
         [class.bg-foreground/40]="day.state === 'pending'"
-        [class.bg-green-400]="day.state === 'completed'"
-        [class.bg-red-400]="day.state === 'missed'"
+        [class.bg-success]="day.state === 'completed'"
+        [class.bg-destructive]="day.state === 'missed'"
       >
         {{ day.label }}
       </span>

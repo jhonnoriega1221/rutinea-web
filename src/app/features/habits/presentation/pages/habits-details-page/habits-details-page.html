@@ -38,8 +38,23 @@
           [frequency]="habit()!.frequency"
           [completedDates]="[]"
           [trackStart]="habit()!.createdAt"
+          (dayClicked)="dateSelected.set($event)"
         />
       </div>
     </hlm-card>
   }
 </main>
+
+@if (dateSelected() && habit()) {
+  <app-responsive-dialog-sheet
+    state="open"
+    (closedEvent)="dateSelected.set(undefined)"
+    #dateInfoDialog
+  >
+    <app-habit-date-info
+      [dateSelected]="dateSelected()!"
+      [habit]="habit()!"
+      [completedDates]="[]"
+    />
+  </app-responsive-dialog-sheet>
+}

@@ -1,4 +1,5 @@
-export type DayState = "not-scheduled" | "pending" | "missed" | "completed" | "urgent";
+export type DayState =
+  "not-scheduled" | "pending" | "missed" | "completed" | "urgent" | "future-date";
 
 export interface DayCell {
   key: Date[];
