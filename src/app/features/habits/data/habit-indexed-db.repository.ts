@@ -26,4 +26,8 @@ export class IndexedDbHabitRepository implements HabitRepository {
   updateHabit(habit: Habit): Promise<Habit> {
     return this._idbService.update<Habit>(this.STORE_NAME, habit);
   }
+
+  deleteHabit(habitId: string): Promise<void> {
+    return this._idbService.delete(this.STORE_NAME, habitId);
+  }
 }

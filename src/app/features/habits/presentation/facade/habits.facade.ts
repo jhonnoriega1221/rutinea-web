@@ -4,6 +4,7 @@ import { GetHabitsUseCase } from "../../domain/usecases/get-habits.use-case";
 import { CreateHabitUseCase } from "../../domain/usecases/create-habit.use-case";
 import { GetHabitByIdUseCase } from "../../domain/usecases/get-habit-by-id.use-case";
 import { UpdateHabitUseCase } from "../../domain/usecases/update-habit.use-case";
+import { DeleteHabitUseCase } from "../../domain/usecases/delete-habit.use-case";
 
 @Injectable({
   providedIn: "root"
@@ -13,6 +14,7 @@ export class HabitsFacade {
   private _createHabit = inject(CreateHabitUseCase);
   private _getHabitById = inject(GetHabitByIdUseCase);
   private _updateHabit = inject(UpdateHabitUseCase);
+  private _deleteHabit = inject(DeleteHabitUseCase);
 
   private readonly _habits = signal<Habit[]>([]);
   private readonly _isLoading = signal(false);
@@ -37,7 +39,7 @@ export class HabitsFacade {
     }
   }
 
-  async create(data: CreateHabitFormModel): Promise<Habit> {
+  async create(data: CreateHabitFormModel) {
     const habit = await this._createHabit.execute(data);
     this._habits.update((current) => [...current, habit]);
     return habit;
@@ -58,12 +60,18 @@ export class HabitsFacade {
     return habit;
   }
 
-  async update(habit: Habit): Promise<Habit> {
+  async update(habit: Habit) {
     const updatedHabit = await this._updateHabit.execute(habit);
 
     this._habits.update((current) =>
       current.map((h) => (h.id === updatedHabit.id ? updatedHabit : h))
     );
     return updatedHabit;
+  }
+
+  async delete(id: string) {
+    await this._deleteHabit.execute(id);
+
+    this._habits.update((current) => current.filter((h) => h.id !== id));
   }
 }

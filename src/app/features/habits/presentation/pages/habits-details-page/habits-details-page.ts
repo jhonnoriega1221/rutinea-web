@@ -1,10 +1,10 @@
 import { Component, computed, inject, input, OnInit, signal, viewChild } from "@angular/core";
+import { Location } from "@angular/common";
 import { HlmCardImports } from "@spartan-ng/helm/card";
 import { NgIcon } from "@ng-icons/core";
 import { HabitWeekTracker } from "../../components/habit-week-tracker/habit-week-tracker";
 import { HabitCalendarTracker } from "../../components/habit-calendar-tracker/habit-calendar-tracker";
 import { HabitsFacade } from "../../facade/habits.facade";
-import { Habit } from "../../../domain/models/habit.model";
 import { getIconByKey } from "../../../../../shared/components/icons/habit-icons";
 import { HlmButtonImports } from "@spartan-ng/helm/button";
 import { HabitTodayStatusCard } from "../../components/habit-today-status-card/habit-today-status-card";
@@ -34,6 +34,7 @@ import { CreateHabitFormModel } from "../../../domain/models/habit.model";
 })
 export class HabitsDetailsPage implements OnInit {
   id = input.required<string>();
+  location = inject(Location);
 
   private readonly _habitsFacade = inject(HabitsFacade);
 
@@ -68,12 +69,17 @@ export class HabitsDetailsPage implements OnInit {
     console.log("mark event ", habitId, " as completed");
   }
 
-  protected async onHabitSubmitted(model: CreateHabitFormModel): Promise<void> {
+  protected async onHabitSubmitted(model: CreateHabitFormModel) {
     const updateHabit = {
       ...this.habit()!,
       ...model
     };
     await this._habitsFacade.update(updateHabit);
     this.createDialog().close();
+  }
+
+  protected async deleteHabit() {
+    await this._habitsFacade.delete(this.id());
+    this.location.back();
   }
 }

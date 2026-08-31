@@ -5,5 +5,5 @@ export abstract class HabitRepository {
   abstract getHabits(): Promise<Habit[]>;
   abstract getHabitById(id: string): Promise<Habit>;
   abstract updateHabit(habit: Habit): Promise<Habit>;
-  // abstract deleteHabit(id: string): Observable<void>;
+  abstract deleteHabit(id: string): Promise<void>;
 }
