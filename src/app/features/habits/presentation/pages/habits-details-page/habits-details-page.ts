@@ -11,7 +11,7 @@ import { HabitTodayStatusCard } from "../../components/habit-today-status-card/h
 import { resolveDayState, toDateKey } from "../../../domain/utils/day-state.util";
 import { DayState } from "../../../../record/domain/models/record.model";
 import { URGENT_DATE_THRESHOLD } from "../../../domain/constants/habit-constants";
-import { ResponsiveDialogSheet } from "../../../../../shared/components/responsive-dialog-sheet/responsive-dialog-sheet";
+import { ResponsivePopup } from "../../../../../shared/components/responsive-popup/responsive-popup";
 import { HabitDateInfo } from "../../components/habit-date-info/habit-date-info";
 import { HabitsCreateForm } from "../../components/habits-create-form/habits-create-form";
 import { CreateHabitFormModel } from "../../../domain/models/habit.model";
@@ -25,7 +25,7 @@ import { CreateHabitFormModel } from "../../../domain/models/habit.model";
     HabitCalendarTracker,
     HlmButtonImports,
     HabitTodayStatusCard,
-    ResponsiveDialogSheet,
+    ResponsivePopup,
     HabitDateInfo,
     HabitsCreateForm
   ],
@@ -43,7 +43,7 @@ export class HabitsDetailsPage implements OnInit {
 
   protected readonly dateSelected = signal<Date | undefined>(undefined);
 
-  protected readonly createDialog = viewChild.required<ResponsiveDialogSheet>("createDialog");
+  protected readonly createDialog = viewChild.required<ResponsivePopup>("createDialog");
 
   ngOnInit(): void {
     this._habitsFacade.getById(this.id());

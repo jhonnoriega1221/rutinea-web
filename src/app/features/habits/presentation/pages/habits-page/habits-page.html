@@ -9,8 +9,8 @@
   <app-habits-list [habits]="habits()" />
 </main>
 
-<app-responsive-dialog-sheet #createDialog>
+<app-responsive-popup #createDialog>
   @if (createDialog.state() === "open") {
     <app-habits-create-form (submitted)="onHabitSubmitted($event)" />
   }
-</app-responsive-dialog-sheet>
+</app-responsive-popup>

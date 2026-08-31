@@ -5,16 +5,16 @@ import { BreakpointObserver } from "@angular/cdk/layout";
 import { HlmDialogImports } from "@spartan-ng/helm/dialog";
 import { HlmDrawerImports } from "@spartan-ng/helm/drawer";
 
-type ResponsiveDialogState = "open" | "closed";
+type ResponsivePopupState = "open" | "closed";
 
 @Component({
-  selector: "app-responsive-dialog-sheet",
+  selector: "app-responsive-popup",
   imports: [NgTemplateOutlet, HlmDrawerImports, HlmDialogImports],
-  templateUrl: "./responsive-dialog-sheet.html",
-  styleUrl: "./responsive-dialog-sheet.css"
+  templateUrl: "./responsive-popup.html",
+  styleUrl: "./responsive-popup.css"
 })
-export class ResponsiveDialogSheet {
-  state = model<ResponsiveDialogState>("closed");
+export class ResponsivePopup {
+  state = model<ResponsivePopupState>("closed");
 
   opened = output<void>();
   closedEvent = output<void>();

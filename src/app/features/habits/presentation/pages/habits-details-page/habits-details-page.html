@@ -56,21 +56,17 @@
 </main>
 
 @if (dateSelected() && habit()) {
-  <app-responsive-dialog-sheet
-    state="open"
-    (closedEvent)="dateSelected.set(undefined)"
-    #dateInfoDialog
-  >
+  <app-responsive-popup state="open" (closedEvent)="dateSelected.set(undefined)" #dateInfoDialog>
     <app-habit-date-info
       [dateSelected]="dateSelected()!"
       [habit]="habit()!"
       [completedDates]="[]"
     />
-  </app-responsive-dialog-sheet>
+  </app-responsive-popup>
 }
 
-<app-responsive-dialog-sheet open #createDialog>
+<app-responsive-popup open #createDialog>
   @if (createDialog.state() === "open") {
     <app-habits-create-form (submitted)="onHabitSubmitted($event)" [habitToEdit]="habit()" />
   }
-</app-responsive-dialog-sheet>
+</app-responsive-popup>

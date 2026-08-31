@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { ResponsiveDialogSheet } from "./responsive-dialog-sheet";
+import { ResponsivePopup } from "./responsive-popup";
 
-describe("ResponsiveDialogSheet", () => {
-  let component: ResponsiveDialogSheet;
-  let fixture: ComponentFixture<ResponsiveDialogSheet>;
+describe("ResponsivePopup", () => {
+  let component: ResponsivePopup;
+  let fixture: ComponentFixture<ResponsivePopup>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ResponsiveDialogSheet]
+      imports: [ResponsivePopup]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ResponsiveDialogSheet);
+    fixture = TestBed.createComponent(ResponsivePopup);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

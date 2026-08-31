@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal, viewChild } from "@angular/core";
 import { HlmButtonImports } from "@spartan-ng/helm/button";
-import { ResponsiveDialogSheet } from "../../../../../shared/components/responsive-dialog-sheet/responsive-dialog-sheet";
+import { ResponsivePopup } from "../../../../../shared/components/responsive-popup/responsive-popup";
 import { lucidePlus } from "@ng-icons/lucide";
 import { NgIcon, provideIcons } from "@ng-icons/core";
 import { HabitsCreateForm } from "../../components/habits-create-form/habits-create-form";
@@ -9,7 +9,14 @@ import { HabitsList } from "../../components/habits-list/habits-list";
 import { HabitsFacade } from "../../facade/habits.facade";
 @Component({
   selector: "app-habits-page",
-  imports: [HlmButtonImports, NgIcon, ResponsiveDialogSheet, HabitsCreateForm, HabitsList],
+  imports: [
+    HlmButtonImports,
+    NgIcon,
+    ResponsivePopup,
+    HabitsCreateForm,
+    HabitsList,
+    ResponsivePopup
+  ],
   templateUrl: "./habits-page.html",
   styleUrl: "./habits-page.css",
   viewProviders: [provideIcons({ lucidePlus })]
@@ -18,7 +25,7 @@ export class HabitsPage implements OnInit {
   private readonly _habitsFacade = inject(HabitsFacade);
 
   protected readonly habits = this._habitsFacade.habits;
-  protected readonly createDialog = viewChild.required<ResponsiveDialogSheet>("createDialog");
+  protected readonly createDialog = viewChild.required<ResponsivePopup>("createDialog");
 
   async ngOnInit() {
     await this._habitsFacade.loadAll();
