@@ -1,8 +1,9 @@
-import { inject, Injectable, signal } from "@angular/core";
+import { computed, inject, Injectable, signal } from "@angular/core";
 import { CreateHabitFormModel, Habit } from "../../domain/models/habit.model";
 import { GetHabitsUseCase } from "../../domain/usecases/get-habits.use-case";
 import { CreateHabitUseCase } from "../../domain/usecases/create-habit.use-case";
 import { GetHabitByIdUseCase } from "../../domain/usecases/get-habit-by-id.use-case";
+import { UpdateHabitUseCase } from "../../domain/usecases/update-habit.use-case";
 
 @Injectable({
   providedIn: "root"
@@ -11,12 +12,20 @@ export class HabitsFacade {
   private _getHabits = inject(GetHabitsUseCase);
   private _createHabit = inject(CreateHabitUseCase);
   private _getHabitById = inject(GetHabitByIdUseCase);
+  private _updateHabit = inject(UpdateHabitUseCase);
 
   private readonly _habits = signal<Habit[]>([]);
   private readonly _isLoading = signal(false);
+  private readonly _selectedHabitId = signal<string | undefined>(undefined);
 
   readonly habits = this._habits.asReadonly();
   readonly isLoading = this._isLoading.asReadonly();
+
+  readonly selectedHabit = computed(() => {
+    const habitId = this._selectedHabitId();
+    if (!habitId) return undefined;
+    return this._habits().find((h) => h.id === habitId);
+  });
 
   async loadAll() {
     this._isLoading.set(true);
@@ -36,10 +45,25 @@ export class HabitsFacade {
 
   async getById(id: string): Promise<Habit | undefined> {
     const cached = this._habits().find((h) => h.id === id);
-    if (cached) return cached;
+    if (cached) {
+      this._selectedHabitId.set(cached.id);
+      return cached;
+    }
 
     const habit = await this._getHabitById.execute(id);
-    if (habit) this._habits.update((current) => [...current, habit]);
+    if (habit) {
+      this._habits.update((current) => [...current, habit]);
+      this._selectedHabitId.set(id);
+    }
     return habit;
+  }
+
+  async update(habit: Habit): Promise<Habit> {
+    const updatedHabit = await this._updateHabit.execute(habit);
+
+    this._habits.update((current) =>
+      current.map((h) => (h.id === updatedHabit.id ? updatedHabit : h))
+    );
+    return updatedHabit;
   }
 }

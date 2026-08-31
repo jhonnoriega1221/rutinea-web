@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, output, signal } from "@angular/core";
+import { ChangeDetectionStrategy, Component, effect, input, output, signal } from "@angular/core";
 import { HlmFieldImports } from "@spartan-ng/helm/field";
 import { HlmInputImports } from "@spartan-ng/helm/input";
 import { HlmTextareaImports } from "@spartan-ng/helm/textarea";
@@ -7,14 +7,7 @@ import { HlmSelectImports } from "@spartan-ng/helm/select";
 import { form, FormRoot, maxLength, minLength, required, FormField } from "@angular/forms/signals";
 import { HlmButtonImports } from "@spartan-ng/helm/button";
 import { IconSelector } from "../../../../../shared/components/icon-selector/icon-selector";
-import {
-  CreateHabitFormModel,
-  DAY_LABELS,
-  Habit,
-  WEEK_DAYS,
-  WEEKDAYS
-} from "../../../domain/models/habit.model";
-import { DayCell } from "../../../../record/domain/models/record.model";
+import { CreateHabitFormModel, Habit, WEEK_DAYS } from "../../../domain/models/habit.model";
 
 @Component({
   selector: "app-habits-create-form",
@@ -34,6 +27,8 @@ import { DayCell } from "../../../../record/domain/models/record.model";
   styleUrl: "./habits-create-form.css"
 })
 export class HabitsCreateForm {
+  habitToEdit = input<Habit | undefined>(undefined);
+
   submitted = output<CreateHabitFormModel>();
 
   readonly weekdayOptions = WEEK_DAYS;
@@ -53,6 +48,21 @@ export class HabitsCreateForm {
     frequency: [],
     icon: "leaf"
   });
+
+  constructor() {
+    effect(() => {
+      const habit = this.habitToEdit();
+      if (habit) {
+        this._createHabitFormModel.set({
+          name: habit.name,
+          description: habit.description,
+          categoryId: habit.categoryId,
+          frequency: habit.frequency,
+          icon: habit.icon
+        });
+      }
+    });
+  }
 
   public readonly form = form(
     this._createHabitFormModel,

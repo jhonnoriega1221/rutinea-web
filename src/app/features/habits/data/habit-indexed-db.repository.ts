@@ -22,4 +22,8 @@ export class IndexedDbHabitRepository implements HabitRepository {
   getHabitById(habitId: string): Promise<Habit> {
     return this._idbService.getById<Habit>(this.STORE_NAME, habitId);
   }
+
+  updateHabit(habit: Habit): Promise<Habit> {
+    return this._idbService.update<Habit>(this.STORE_NAME, habit);
+  }
 }
