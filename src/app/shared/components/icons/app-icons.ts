@@ -19,7 +19,11 @@ import {
   lucideChevronLeft,
   lucideChevronRight,
   lucideEdit2,
-  lucideTrash2
+  lucideTrash2,
+  lucideAlertTriangle,
+  lucideCircleQuestionMark,
+  lucideXCircle,
+  lucideCheckCircle2
 } from "@ng-icons/lucide";
 
 export const APP_ICONS = {
@@ -43,5 +47,9 @@ export const APP_ICONS = {
   lucideChevronLeft,
   lucideChevronRight,
   lucideEdit2,
-  lucideTrash2
+  lucideTrash2,
+  lucideAlertTriangle,
+  lucideCircleQuestionMark,
+  lucideXCircle,
+  lucideCheckCircle2
 } as const;

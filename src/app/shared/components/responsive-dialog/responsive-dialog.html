@@ -1,0 +1,49 @@
+<app-responsive-popup #responsivePopup (closedEvent)="onPopupClosed()">
+  <div class="w-full sm:max-w-[380px]">
+    <div class="flex flex-col items-center gap-6 px-6 mb-2">
+      <div
+        class="flex items-center justify-center bg-destructive/40 min-w-12 min-h-12 rounded-full mt-4"
+        [class]="iconThemeClasses()"
+      >
+        <ng-icon size="28" [name]="icon()" />
+      </div>
+      @if (title()) {
+        <h2 class="font-medium text-xl text-center">{{ title() }}</h2>
+      }
+    </div>
+
+    @if (message()) {
+      <p class="text-center px-3 text-card-foreground/60">{{ message() }}</p>
+    }
+
+    <div
+      class="grid grid-cols-1 gap-2 sm:bg-foreground/10 p-3 mt-3"
+      [class.grid-cols-2]="cancelButtonLabel()"
+    >
+      @if (cancelButtonLabel()) {
+        <button
+          hlmBtn
+          variant="secondary"
+          [disabled]="isLoading()"
+          [class.opacity-50]="isLoading()"
+          (click)="onCancel()"
+          size="lg"
+          type="button"
+        >
+          {{ cancelButtonLabel() }}
+        </button>
+      }
+      <button
+        hlmBtn
+        [variant]="type() === 'warning' || type() === 'error' ? 'destructive' : 'default'"
+        [disabled]="isLoading()"
+        [class.opacity-50]="isLoading()"
+        (click)="onConfirm()"
+        size="lg"
+        type="button"
+      >
+        {{ confirmButtonLabel() }}
+      </button>
+    </div>
+  </div>
+</app-responsive-popup>
