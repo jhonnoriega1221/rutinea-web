@@ -1,15 +1,12 @@
 import { Injectable } from "@angular/core";
+import { DB_CONFIG } from "./indexed-db.config";
 
-export type StoreName = "habits" | "records" | "categories";
+export type StoreName = "habits" | "habitLogs" | "categories";
 
 @Injectable({
   providedIn: "root"
 })
 export class IndexedDbService {
-  private readonly _dbName = "HabitsAppDB";
-  private readonly _dbVersion = 1;
-  private readonly _stores: StoreName[] = ["habits", "records"];
-
   private _dbInstance: IDBDatabase | null = null;
   private _connection: Promise<IDBDatabase> | null = null;
 
@@ -18,13 +15,29 @@ export class IndexedDbService {
     if (this._connection) return this._connection;
 
     this._connection = new Promise((resolve, reject) => {
-      const request = indexedDB.open(this._dbName, this._dbVersion);
+      const request = indexedDB.open(DB_CONFIG.name, DB_CONFIG.version);
 
       request.onupgradeneeded = (event) => {
         const db = (event.target as IDBOpenDBRequest).result;
-        this._stores.forEach((storeName) => {
-          if (!db.objectStoreNames.contains(storeName)) {
-            db.createObjectStore(storeName, { keyPath: "id" });
+        const transaction = (event.target as IDBOpenDBRequest).transaction!;
+
+        DB_CONFIG.stores.forEach((storeConfig) => {
+          let store: IDBObjectStore;
+
+          // Crea los stores en la base de datos si no existen
+          if (!db.objectStoreNames.contains(storeConfig.name)) {
+            store = db.createObjectStore(storeConfig.name, storeConfig.options);
+          } else {
+            store = transaction.objectStore(storeConfig.name);
+          }
+
+          // Crea los indices si no existen
+          if (storeConfig.indexes) {
+            storeConfig.indexes.forEach((indexConfig) => {
+              if (!store.indexNames.contains(indexConfig.name)) {
+                store.createIndex(indexConfig.name, indexConfig.keyPath, indexConfig.options);
+              }
+            });
           }
         });
       };
