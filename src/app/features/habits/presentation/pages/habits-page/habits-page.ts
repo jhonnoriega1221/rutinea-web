@@ -7,6 +7,7 @@ import { HabitsCreateForm } from "../../components/habits-create-form/habits-cre
 import { CreateHabitFormModel } from "../../../domain/models/habit.model";
 import { HabitsList } from "../../components/habits-list/habits-list";
 import { HabitsFacade } from "../../facade/habits.facade";
+import { toast } from "@spartan-ng/brain/sonner";
 @Component({
   selector: "app-habits-page",
   imports: [
@@ -33,6 +34,7 @@ export class HabitsPage implements OnInit {
 
   protected async onHabitSubmitted(model: CreateHabitFormModel): Promise<void> {
     await this._habitsFacade.create(model);
+    toast.success("Habit has been created");
     this.createDialog().close();
   }
 }

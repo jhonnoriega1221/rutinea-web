@@ -8,7 +8,7 @@ import { HabitsFacade } from "../../facade/habits.facade";
 import { getIconByKey } from "../../../../../shared/components/icons/habit-icons";
 import { HlmButtonImports } from "@spartan-ng/helm/button";
 import { HabitTodayStatusCard } from "../../components/habit-today-status-card/habit-today-status-card";
-import { resolveDayState, toDateKey } from "../../../domain/utils/day-state.util";
+import { resolveDayState } from "../../../domain/utils/day-state.util";
 import { DayState } from "../../../../record/domain/models/record.model";
 import { URGENT_DATE_THRESHOLD } from "../../../domain/constants/habit-constants";
 import { ResponsivePopup } from "../../../../../shared/components/responsive-popup/responsive-popup";
@@ -16,6 +16,7 @@ import { HabitDateInfo } from "../../components/habit-date-info/habit-date-info"
 import { HabitsCreateForm } from "../../components/habits-create-form/habits-create-form";
 import { CreateHabitFormModel } from "../../../domain/models/habit.model";
 import { ResponsiveDialogService } from "../../../../../shared/services/responsive-dialog.service";
+import { toast } from "@spartan-ng/brain/sonner";
 
 @Component({
   selector: "app-habits-details-page",
@@ -77,6 +78,7 @@ export class HabitsDetailsPage implements OnInit {
       ...model
     };
     await this._habitsFacade.update(updateHabit);
+    toast.success("Habit has been updated");
     this.createDialog().close();
   }
 
@@ -96,6 +98,7 @@ export class HabitsDetailsPage implements OnInit {
 
   protected async deleteHabit() {
     await this._habitsFacade.delete(this.id());
+    toast.success("Habit has been deleted succefully");
     this.location.back();
   }
 }
