@@ -15,6 +15,7 @@ import { ResponsivePopup } from "../../../../../shared/components/responsive-pop
 import { HabitDateInfo } from "../../components/habit-date-info/habit-date-info";
 import { HabitsCreateForm } from "../../components/habits-create-form/habits-create-form";
 import { CreateHabitFormModel } from "../../../domain/models/habit.model";
+import { ResponsiveDialogService } from "../../../../../shared/services/responsive-dialog.service";
 
 @Component({
   selector: "app-habits-details-page",
@@ -37,6 +38,7 @@ export class HabitsDetailsPage implements OnInit {
   location = inject(Location);
 
   private readonly _habitsFacade = inject(HabitsFacade);
+  private readonly _dialog = inject(ResponsiveDialogService);
 
   protected readonly habit = this._habitsFacade.selectedHabit;
   protected readonly habitIcon = computed<string>(() => getIconByKey(this.habit()?.icon!)?.icon!);
@@ -76,6 +78,20 @@ export class HabitsDetailsPage implements OnInit {
     };
     await this._habitsFacade.update(updateHabit);
     this.createDialog().close();
+  }
+
+  protected async onDelete() {
+    const confirmDelete = await this._dialog.open({
+      type: "error",
+      title: "Do you want to delete this habit?",
+      message: "This action cannot be undone.",
+      confirmButtonLabel: "Delete habit",
+      cancelButtonLabel: "Cancel"
+    });
+
+    if (confirmDelete) {
+      this.deleteHabit();
+    }
   }
 
   protected async deleteHabit() {

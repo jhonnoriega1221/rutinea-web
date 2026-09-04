@@ -67,10 +67,4 @@ export class ResponsiveDialog {
     if (this.isLoading()) return;
     this._dialogService.cancel();
   }
-
-  protected onPopupClosed() {
-    if (!this.isLoading()) {
-      this._dialogService.cancel();
-    }
-  }
 }
