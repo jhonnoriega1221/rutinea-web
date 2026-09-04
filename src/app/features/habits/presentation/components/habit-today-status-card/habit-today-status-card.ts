@@ -1,10 +1,8 @@
 import { Component, inject, input, output, signal, DestroyRef, computed } from "@angular/core";
-import { DayState } from "../../../../record/domain/models/record.model";
-import { getWeekdayKey, toDateKey } from "../../../domain/utils/day-state.util";
+import { DayState } from "../../../domain/models/habit-log.model";
 import { HlmCardImports } from "@spartan-ng/helm/card";
 import { HlmButtonImports } from "@spartan-ng/helm/button";
 import { NgIcon } from "@ng-icons/core";
-import { Weekday } from "../../../domain/models/habit.model";
 
 @Component({
   selector: "app-habit-today-status-card",

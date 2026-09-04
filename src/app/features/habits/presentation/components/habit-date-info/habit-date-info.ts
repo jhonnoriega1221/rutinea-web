@@ -3,7 +3,7 @@ import { HlmBadgeImports } from "@spartan-ng/helm/badge";
 import { HlmButtonImports } from "@spartan-ng/helm/button";
 import { NgIcon } from "@ng-icons/core";
 import { Habit } from "../../../domain/models/habit.model";
-import { DayState } from "../../../../record/domain/models/record.model";
+import { DayState } from "../../../domain/models/habit-log.model";
 import { resolveDayState } from "../../../domain/utils/day-state.util";
 
 interface DayConfig {

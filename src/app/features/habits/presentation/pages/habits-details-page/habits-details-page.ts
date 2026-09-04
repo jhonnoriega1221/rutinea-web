@@ -9,7 +9,7 @@ import { getIconByKey } from "../../../../../shared/components/icons/habit-icons
 import { HlmButtonImports } from "@spartan-ng/helm/button";
 import { HabitTodayStatusCard } from "../../components/habit-today-status-card/habit-today-status-card";
 import { resolveDayState } from "../../../domain/utils/day-state.util";
-import { DayState } from "../../../../record/domain/models/record.model";
+import { DayState } from "../../../domain/models/habit-log.model";
 import { URGENT_DATE_THRESHOLD } from "../../../domain/constants/habit-constants";
 import { ResponsivePopup } from "../../../../../shared/components/responsive-popup/responsive-popup";
 import { HabitDateInfo } from "../../components/habit-date-info/habit-date-info";

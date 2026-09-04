@@ -7,3 +7,12 @@ export interface DayCell {
   isToday: boolean;
   state: DayState;
 }
+
+export interface HabitLog {
+  id: string;
+  habitId: string;
+  date: Date;
+  note?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}

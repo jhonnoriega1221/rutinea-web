@@ -1,12 +1,12 @@
 import { inject, Injectable } from "@angular/core";
 import { CreateHabitFormModel, Habit } from "../models/habit.model";
-import { IndexedDbHabitRepository } from "../../data/habit-indexed-db.repository";
+import { HabitRepository } from "../repositories/habit.repository";
 
 @Injectable({
   providedIn: "root"
 })
 export class CreateHabitUseCase {
-  private readonly _repository = inject(IndexedDbHabitRepository);
+  private readonly _repository = inject(HabitRepository);
 
   execute(data: CreateHabitFormModel) {
     const habit: Habit = {

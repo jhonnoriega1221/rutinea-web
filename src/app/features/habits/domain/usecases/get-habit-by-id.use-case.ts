@@ -1,11 +1,11 @@
 import { inject, Injectable } from "@angular/core";
-import { IndexedDbHabitRepository } from "../../data/habit-indexed-db.repository";
+import { HabitRepository } from "../repositories/habit.repository";
 
 @Injectable({
   providedIn: "root"
 })
 export class GetHabitByIdUseCase {
-  private readonly _repository = inject(IndexedDbHabitRepository);
+  private readonly _repository = inject(HabitRepository);
 
   execute(id: string) {
     return this._repository.getHabitById(id);

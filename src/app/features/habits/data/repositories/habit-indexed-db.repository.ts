@@ -1,6 +1,6 @@
-import { Habit } from "../domain/models/habit.model";
-import { IndexedDbService } from "../../../core/indexed-db/indexed-db.service";
-import { HabitRepository } from "./habit.repository";
+import { Habit } from "../../domain/models/habit.model";
+import { IndexedDbService } from "../../../../core/indexed-db/indexed-db.service";
+import { HabitRepository } from "../../domain/repositories/habit.repository";
 import { inject, Injectable } from "@angular/core";
 
 @Injectable({

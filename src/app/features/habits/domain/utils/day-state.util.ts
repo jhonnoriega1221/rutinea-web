@@ -1,4 +1,4 @@
-import { DayState } from "../../../record/domain/models/record.model";
+import { DayState } from "../models/habit-log.model";
 import { Weekday, WEEKDAYS } from "../models/habit.model";
 
 interface ResolveDayStateOptions {

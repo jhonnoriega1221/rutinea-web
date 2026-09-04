@@ -1,4 +1,4 @@
-import { Habit } from "../domain/models/habit.model";
+import { Habit } from "../models/habit.model";
 
 export abstract class HabitRepository {
   abstract createHabit(habit: Habit): Promise<Habit>;

@@ -1,5 +1,5 @@
 import { Component, computed, input } from "@angular/core";
-import { DayCell } from "../../../../record/domain/models/record.model";
+import { DayCell } from "../../../domain/models/habit-log.model";
 import { DAY_LABELS, Weekday } from "../../../domain/models/habit.model";
 import {
   getWeekDates,
