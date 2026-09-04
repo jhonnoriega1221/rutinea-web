@@ -1,8 +1,7 @@
-import { Component, computed, input, signal } from "@angular/core";
+import { Component, computed, input } from "@angular/core";
 import { DayCell } from "../../../../record/domain/models/record.model";
 import { DAY_LABELS, Weekday } from "../../../domain/models/habit.model";
 import {
-  getTodayIndex,
   getWeekDates,
   getWeekdayKey,
   resolveDayState,

@@ -20,7 +20,8 @@ export function getTodayIndex(): number {
 }
 
 export function toDateKey(date: Date): string {
-  return date.toISOString().slice(0, 10);
+  const tzOffset = date.getTimezoneOffset() * 60000;
+  return new Date(date.getTime() - tzOffset).toISOString().split("T")[0];
 }
 
 export function resolveDayState(options: ResolveDayStateOptions): DayState {
