@@ -12,7 +12,8 @@ export interface HabitLog {
   id: string;
   habitId: string;
   date: Date;
-  note?: string;
   createdAt: Date;
   updatedAt: Date;
 }
+
+export type CreateHabitLogFormModel = Omit<HabitLog, "id" | "createdAt" | "updatedAt">;

@@ -5,9 +5,9 @@ import { HabitRepository } from "../repositories/habit.repository";
   providedIn: "root"
 })
 export class DeleteHabitUseCase {
-  private readonly _habitRepository = inject(HabitRepository);
+  private readonly _repository = inject(HabitRepository);
 
   execute(id: string) {
-    return this._habitRepository.deleteHabit(id);
+    return this._repository.deleteHabit(id);
   }
 }

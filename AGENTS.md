@@ -8,8 +8,7 @@
 - Sigue las buenas practicas de clean code y los principios SOLID
 - Implementa las funciones de angular 22, signals, DI con inject en vez de inyectar en el constructor,
 - Iconos: @ng-icons/lucide provistos de forma centralizada a través de @src/app/shared/components/icons/app-icons.ts
-- Inyección de Dependencias: Usar la función inject(...) en lugar de inyección por constructor.
 - Reactividad: Usar Angular Signals (signal, computed, effect, input, output) preferentemente sobre RxJS para el manejo de estado de UI.
-- Componentes: Todos los componentes deben ser standalone: true.
+- Componentes: Todos los componentes deben ser standalone: true (ya lo son por defecto).
 - Control Flow Syntax: Usar la nueva sintaxis de control de flujo de Angular (@if, @for, @switch).
 - El idioma principal de la aplicación es en Inglés.

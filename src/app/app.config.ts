@@ -11,6 +11,8 @@ import { routes } from "./app.routes";
 import { provideIcons } from "@ng-icons/core";
 import { HabitRepository } from "./features/habits/domain/repositories/habit.repository";
 import { IndexedDbHabitRepository } from "./features/habits/data/repositories/habit-indexed-db.repository";
+import { HabitLogRepository } from "./features/habits/domain/repositories/habit-log.repository";
+import { IndexedDbHabitLogRepository } from "./features/habits/data/repositories/habit-log-indexed-db.repository";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,6 +26,10 @@ export const appConfig: ApplicationConfig = {
     {
       provide: HabitRepository,
       useClass: IndexedDbHabitRepository
+    },
+    {
+      provide: HabitLogRepository,
+      useClass: IndexedDbHabitLogRepository
     }
   ]
 };

@@ -14,7 +14,7 @@ interface DayConfig {
   footerHint?: string;
   buttonLabel?: string;
   buttonVariant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
-  action?: "missed" | "completed";
+  action?: () => Date;
 }
 
 @Component({
@@ -27,8 +27,9 @@ export class HabitDateInfo {
   habit = input.required<Habit>();
   dateSelected = input.required<Date>();
   completedDates = input<string[]>();
+
   markCompleted = output<Date>();
-  markMissed = output<Date>();
+  removeCompleted = output<Date>();
 
   protected readonly dayNumber = computed(() => this.dateSelected().getDate());
 
@@ -62,7 +63,7 @@ export class HabitDateInfo {
         footerHint: "Made a mistake? You can remove this completion record.",
         buttonLabel: "Mark as missed",
         buttonVariant: "destructive",
-        action: "missed"
+        action: this.removeCompleted.emit(this.dateSelected())!
       },
       missed: {
         badgeLabel: "Missed",
@@ -72,7 +73,7 @@ export class HabitDateInfo {
         footerHint: "Did you actually complete it? You can log it retroactively.",
         buttonLabel: "Mark as completed",
         buttonVariant: "default",
-        action: "completed"
+        action: this.markCompleted.emit(this.dateSelected())!
       },
       pending: {
         badgeLabel: "Pending",
@@ -81,7 +82,7 @@ export class HabitDateInfo {
         footerHint: "Log your progress once you finish your habit.",
         buttonLabel: "Mark as completed",
         buttonVariant: "default",
-        action: "completed"
+        action: this.markCompleted.emit(this.dateSelected())!
       },
       "future-date": {
         badgeLabel: "Future",
@@ -100,10 +101,18 @@ export class HabitDateInfo {
         footerHint: "Complete it before midnight!",
         buttonLabel: "Mark as completed",
         buttonVariant: "default",
-        action: "completed"
+        action: this.markCompleted.emit(this.dateSelected())!
       }
     };
 
     return configs[currentStatus] ?? configs["not-scheduled"];
   });
+
+  protected onRemoveCompleted() {
+    console.log("Eliminar log");
+  }
+
+  protected onMarkCompleted() {
+    console.log("Registrar log");
+  }
 }

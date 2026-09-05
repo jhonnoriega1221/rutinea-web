@@ -17,6 +17,7 @@ import { HabitsCreateForm } from "../../components/habits-create-form/habits-cre
 import { CreateHabitFormModel } from "../../../domain/models/habit.model";
 import { ResponsiveDialogService } from "../../../../../shared/services/responsive-dialog.service";
 import { toast } from "@spartan-ng/brain/sonner";
+import { HabitLogsFacade } from "../../facade/habit-logs.facade";
 
 @Component({
   selector: "app-habits-details-page",
@@ -39,6 +40,7 @@ export class HabitsDetailsPage implements OnInit {
   location = inject(Location);
 
   private readonly _habitsFacade = inject(HabitsFacade);
+  private readonly _habitLogsFacade = inject(HabitLogsFacade);
   private readonly _dialog = inject(ResponsiveDialogService);
 
   protected readonly habit = this._habitsFacade.selectedHabit;
@@ -68,8 +70,9 @@ export class HabitsDetailsPage implements OnInit {
     });
   });
 
-  onMarkCompleted(habitId: string) {
-    console.log("mark event ", habitId, " as completed");
+  protected async onMarkCompleted(habitId: string) {
+    await this._habitLogsFacade.create({ habitId, date: new Date() });
+    toast.success("Habit has been completed for today");
   }
 
   protected async onHabitSubmitted(model: CreateHabitFormModel) {

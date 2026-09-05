@@ -14,7 +14,7 @@ export interface StoreConfig {
 
 export const DB_CONFIG = {
   name: "HabitsAppDB",
-  version: 2,
+  version: 1,
   stores: [
     {
       name: "habits",

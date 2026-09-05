@@ -39,6 +39,8 @@ export class IndexedDbService {
               }
             });
           }
+
+          //TODO: Mecanismo automatizado para eliminar stores antiguos sin utilizar
         });
       };
 
@@ -75,6 +77,30 @@ export class IndexedDbService {
     const transaction = db.transaction(storeName, "readonly");
     const store = transaction.objectStore(storeName);
     return this._requestToPromise(store.get(id));
+  }
+
+  async getByIndex<T>(
+    storeName: StoreName,
+    indexName: string,
+    key: IDBValidKey | IDBKeyRange
+  ): Promise<T[]> {
+    const db = await this.connect();
+    const transaction = db.transaction(storeName, "readonly");
+    const store = transaction.objectStore(storeName);
+    const index = store.index(indexName);
+    return this._requestToPromise(index.getAll(key));
+  }
+
+  async getOneByIndex<T>(
+    storeName: StoreName,
+    indexName: string,
+    key: IDBValidKey | IDBKeyRange
+  ): Promise<T | undefined> {
+    const db = await this.connect();
+    const transaction = db.transaction(storeName, "readonly");
+    const store = transaction.objectStore(storeName);
+    const index = store.index(indexName);
+    return this._requestToPromise(index.get(key));
   }
 
   async update<T>(storeName: StoreName, item: T): Promise<T> {

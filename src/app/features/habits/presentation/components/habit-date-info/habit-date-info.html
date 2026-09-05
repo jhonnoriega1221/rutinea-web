@@ -29,7 +29,12 @@
         {{ config().footerHint }}
       </small>
 
-      <button hlmBtn class="w-full" [variant]="config().buttonVariant ?? 'default'">
+      <button
+        hlmBtn
+        class="w-full"
+        (click)="config().action"
+        [variant]="config().buttonVariant ?? 'default'"
+      >
         Mark as completed
       </button>
     </footer>

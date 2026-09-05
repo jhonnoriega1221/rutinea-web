@@ -2,12 +2,13 @@ import { Habit } from "../../domain/models/habit.model";
 import { IndexedDbService } from "../../../../core/indexed-db/indexed-db.service";
 import { HabitRepository } from "../../domain/repositories/habit.repository";
 import { inject, Injectable } from "@angular/core";
+import { StoreName } from "../../../../core/indexed-db/indexed-db.config";
 
 @Injectable({
   providedIn: "root"
 })
 export class IndexedDbHabitRepository implements HabitRepository {
-  private readonly STORE_NAME = "habits";
+  private readonly STORE_NAME: StoreName = "habits"; // TODO: obtener el nombre del store desde indexedDB.config.ts
 
   private _idbService = inject(IndexedDbService);
 
