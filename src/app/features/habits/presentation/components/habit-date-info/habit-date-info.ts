@@ -4,7 +4,7 @@ import { HlmButtonImports } from "@spartan-ng/helm/button";
 import { NgIcon } from "@ng-icons/core";
 import { Habit } from "../../../domain/models/habit.model";
 import { DayState } from "../../../domain/models/habit-log.model";
-import { resolveDayState } from "../../../domain/utils/day-state.util";
+import { resolveDayState, toDateKey } from "../../../domain/utils/day-state.util";
 
 interface DayConfig {
   badgeLabel: string;
@@ -26,7 +26,7 @@ interface DayConfig {
 export class HabitDateInfo {
   habit = input.required<Habit>();
   dateSelected = input.required<Date>();
-  completedDates = input<string[]>();
+  completedDates = input<Set<string>>();
 
   markCompleted = output<Date>();
   removeCompleted = output<Date>();
@@ -44,7 +44,7 @@ export class HabitDateInfo {
     return resolveDayState({
       date,
       scheduled: new Set(habit.frequency),
-      completed: new Set(this.completedDates()),
+      completed: this.completedDates()?.has(toDateKey(date)) ?? false,
       createdAt: habit.createdAt,
       hideFuture: true
     });

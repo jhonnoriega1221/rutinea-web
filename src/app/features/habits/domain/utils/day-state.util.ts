@@ -4,9 +4,8 @@ import { Weekday, WEEKDAYS } from "../models/habit.model";
 interface ResolveDayStateOptions {
   date: Date;
   scheduled: Set<Weekday>;
-  completed: Set<string>;
+  completed: boolean;
   createdAt?: Date;
-  today?: Date;
   urgentThresholdHours?: number;
   hideFuture?: boolean;
 }
@@ -30,16 +29,18 @@ export function resolveDayState(options: ResolveDayStateOptions): DayState {
     scheduled,
     completed,
     createdAt,
-    today = new Date(),
     urgentThresholdHours,
     hideFuture = false
   } = options;
+
+  const today = new Date();
+
   if (hideFuture && toDateKey(date) > toDateKey(today)) return "future-date";
   if (createdAt && toDateKey(createdAt) > toDateKey(date)) return "not-scheduled";
   if (!scheduled.has(getWeekdayKey(date))) return "not-scheduled";
 
   const dateKey = toDateKey(date);
-  if (completed.has(dateKey)) return "completed";
+  if (completed) return "completed";
 
   if (urgentThresholdHours) {
     const isToday = dateKey === toDateKey(today);

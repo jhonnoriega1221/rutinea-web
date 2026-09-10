@@ -35,7 +35,7 @@
         </div>
         <p><span class="font-bold">Category:</span> No category</p>
         <p class="font-bold">Week frequency:</p>
-        <app-habit-week-tracker [enableColors]="false" [frequency]="habit()!.frequency" />
+        <app-habit-week-tracker [enableColors]="false" [frequency]="habitFrequency()" />
       </div>
     </hlm-card>
 
@@ -45,10 +45,11 @@
       </hlm-card-header>
       <div hlmCardContent>
         <app-habit-calendar-tracker
-          [frequency]="habit()!.frequency"
-          [completedDates]="[]"
+          [frequency]="habitFrequency()"
+          [completedDates]="completedDates()"
           [trackStart]="habit()!.createdAt"
           (dayClicked)="dateSelected.set($event)"
+          (focusedDateChange)="onChangeCalendarFocusDate($event)"
         />
       </div>
     </hlm-card>
@@ -60,12 +61,12 @@
     <app-habit-date-info
       [dateSelected]="dateSelected()!"
       [habit]="habit()!"
-      [completedDates]="[]"
+      [completedDates]="completedDates()"
     />
   </app-responsive-popup>
 }
 
-<app-responsive-popup open #createDialog>
+<app-responsive-popup #createDialog>
   @if (createDialog.state() === "open") {
     <app-habits-create-form (submitted)="onHabitSubmitted($event)" [habitToEdit]="habit()" />
   }

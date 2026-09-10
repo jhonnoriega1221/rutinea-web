@@ -11,7 +11,7 @@ export interface DayCell {
 export interface HabitLog {
   id: string;
   habitId: string;
-  date: Date;
+  date: string;
   createdAt: Date;
   updatedAt: Date;
 }

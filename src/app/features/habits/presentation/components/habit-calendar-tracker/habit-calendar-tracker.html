@@ -1,6 +1,14 @@
 <div class="flex flex-col gap-4">
   <div class="flex w-full items-center justify-between gap-1.5">
-    <button #prevBtn brnCalendarPreviousButton hlmBtn variant="ghost" size="icon" type="button">
+    <button
+      #prevBtn
+      brnCalendarPreviousButton
+      (click)="onFocusedDateChange()"
+      hlmBtn
+      variant="ghost"
+      size="icon"
+      type="button"
+    >
       <ng-icon name="lucideChevronLeft" />
     </button>
 
@@ -12,7 +20,9 @@
         <hlm-select-content *hlmSelectPortal>
           <hlm-select-group>
             @for (month of _i18n.config().months(); track month) {
-              <hlm-select-item [value]="month"> {{ month }}</hlm-select-item>
+              <hlm-select-item (click)="onFocusedDateChange()" [value]="month">
+                {{ month }}</hlm-select-item
+              >
             }
           </hlm-select-group>
         </hlm-select-content>
@@ -25,7 +35,9 @@
         <hlm-select-content *hlmSelectPortal class="max-h-80">
           <hlm-select-group>
             @for (year of _i18n.config().years(); track year) {
-              <hlm-select-item [value]="year"> {{ year }}</hlm-select-item>
+              <hlm-select-item (click)="onFocusedDateChange()" [value]="year">
+                {{ year }}</hlm-select-item
+              >
             }
           </hlm-select-group>
         </hlm-select-content>
@@ -33,7 +45,15 @@
       <button hlmBtn variant="outline" type="button" (click)="goToToday()">Today</button>
     </div>
 
-    <button #nextBtn brnCalendarNextButton hlmBtn variant="ghost" size="icon" type="button">
+    <button
+      #nextBtn
+      brnCalendarNextButton
+      (click)="onFocusedDateChange()"
+      hlmBtn
+      variant="ghost"
+      size="icon"
+      type="button"
+    >
       <ng-icon name="lucideChevronRight" />
     </button>
   </div>

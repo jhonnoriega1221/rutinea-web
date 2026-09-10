@@ -8,13 +8,13 @@ import { HabitsFacade } from "../../facade/habits.facade";
 import { getIconByKey } from "../../../../../shared/components/icons/habit-icons";
 import { HlmButtonImports } from "@spartan-ng/helm/button";
 import { HabitTodayStatusCard } from "../../components/habit-today-status-card/habit-today-status-card";
-import { resolveDayState } from "../../../domain/utils/day-state.util";
+import { resolveDayState, toDateKey } from "../../../domain/utils/day-state.util";
 import { DayState } from "../../../domain/models/habit-log.model";
 import { URGENT_DATE_THRESHOLD } from "../../../domain/constants/habit-constants";
 import { ResponsivePopup } from "../../../../../shared/components/responsive-popup/responsive-popup";
 import { HabitDateInfo } from "../../components/habit-date-info/habit-date-info";
 import { HabitsCreateForm } from "../../components/habits-create-form/habits-create-form";
-import { CreateHabitFormModel } from "../../../domain/models/habit.model";
+import { CreateHabitFormModel, Weekday } from "../../../domain/models/habit.model";
 import { ResponsiveDialogService } from "../../../../../shared/services/responsive-dialog.service";
 import { toast } from "@spartan-ng/brain/sonner";
 import { HabitLogsFacade } from "../../facade/habit-logs.facade";
@@ -37,13 +37,23 @@ import { HabitLogsFacade } from "../../facade/habit-logs.facade";
 })
 export class HabitsDetailsPage implements OnInit {
   id = input.required<string>();
-  location = inject(Location);
+
+  private readonly _dialog = inject(ResponsiveDialogService);
+  private readonly location = inject(Location);
 
   private readonly _habitsFacade = inject(HabitsFacade);
   private readonly _habitLogsFacade = inject(HabitLogsFacade);
-  private readonly _dialog = inject(ResponsiveDialogService);
 
   protected readonly habit = this._habitsFacade.selectedHabit;
+  protected readonly logs = this._habitLogsFacade.logs;
+  protected readonly habitFrequency = computed(() => {
+    return new Set<Weekday>(this.habit()?.frequency);
+  });
+
+  readonly completedDates = computed(() => {
+    return new Set<string>(this.logs().map((log) => log.date));
+  });
+
   protected readonly habitIcon = computed<string>(() => getIconByKey(this.habit()?.icon!)?.icon!);
 
   protected readonly dateSelected = signal<Date | undefined>(undefined);
@@ -51,27 +61,34 @@ export class HabitsDetailsPage implements OnInit {
   protected readonly createDialog = viewChild.required<ResponsivePopup>("createDialog");
 
   ngOnInit(): void {
+    const now = new Date();
     this._habitsFacade.getById(this.id());
+    this._habitLogsFacade.checkTodayCompletion(this.id(), toDateKey(now));
+    this._habitLogsFacade.loadLogsForMonth(this.id(), now.getFullYear(), now.getMonth() + 1);
   }
 
   protected readonly todayStatus = computed<DayState>(() => {
     const currentHabit = this.habit();
-    if (!currentHabit) return "not-scheduled";
 
-    const scheduled = new Set(currentHabit.frequency);
-    const completedDates = new Set<string>();
+    const todayLog = this._habitLogsFacade.todayLog();
+    const scheduled = new Set(currentHabit!.frequency);
 
     return resolveDayState({
       date: new Date(),
       scheduled,
-      completed: completedDates,
-      createdAt: currentHabit.createdAt,
+      completed: !!todayLog,
+      createdAt: currentHabit!.createdAt,
       urgentThresholdHours: URGENT_DATE_THRESHOLD
     });
   });
 
   protected async onMarkCompleted(habitId: string) {
-    await this._habitLogsFacade.create({ habitId, date: new Date() });
+    await this._habitLogsFacade.create({ habitId, date: toDateKey(new Date()) });
+    toast.success("Habit has been completed for today");
+  }
+
+  protected async onRemoveCompleted(habitId: string) {
+    await this._habitLogsFacade.delete(habitId);
     toast.success("Habit has been completed for today");
   }
 
@@ -103,5 +120,9 @@ export class HabitsDetailsPage implements OnInit {
     await this._habitsFacade.delete(this.id());
     toast.success("Habit has been deleted succefully");
     this.location.back();
+  }
+
+  onChangeCalendarFocusDate(event: { month: number; year: number }) {
+    this._habitLogsFacade.loadLogsForMonth(this.id(), event.year, event.month + 1);
   }
 }

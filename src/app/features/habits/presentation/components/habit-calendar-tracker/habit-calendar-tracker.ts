@@ -1,9 +1,9 @@
-import { Component, computed, inject, input, output } from "@angular/core";
+import { Component, computed, inject, input, output, viewChild } from "@angular/core";
 import { NgIcon } from "@ng-icons/core";
 import { BrnCalendar, BrnCalendarImports, injectBrnCalendarI18n } from "@spartan-ng/brain/calendar";
 import { injectDateAdapter } from "@spartan-ng/brain/date-time";
-import { HlmButtonImports } from "@spartan-ng/helm/button";
-import { HlmSelectImports } from "@spartan-ng/helm/select";
+import { HlmButton, HlmButtonImports } from "@spartan-ng/helm/button";
+import { HlmSelect, HlmSelectImports } from "@spartan-ng/helm/select";
 import { Weekday } from "../../../domain/models/habit.model";
 import { resolveDayState, toDateKey } from "../../../domain/utils/day-state.util";
 
@@ -22,24 +22,27 @@ import { resolveDayState, toDateKey } from "../../../domain/utils/day-state.util
 })
 export class HabitCalendarTracker {
   trackStart = input<Date>();
-  frequency = input.required<Weekday[]>();
-  completedDates = input<string[]>([]);
+  frequency = input.required<Set<Weekday>>();
+  completedDates = input<Set<string>>();
 
   dayClicked = output<Date>();
+  focusedDateChange = output<{ month: number; year: number }>();
+
+  prevBtn = viewChild.required<HlmButton>("prevBtn");
 
   protected readonly _i18n = injectBrnCalendarI18n();
   protected readonly _dateAdapter = injectDateAdapter<Date>();
   private readonly _calendar = inject(BrnCalendar);
 
-  private readonly _scheduled = computed(() => new Set(this.frequency()));
-  private readonly _completed = computed(() => new Set(this.completedDates()));
+  private readonly _yearSelect = viewChild.required<HlmSelect>("");
+
   protected readonly _todayKey = toDateKey(new Date());
 
   protected resolveState(date: Date) {
     return resolveDayState({
       date,
-      scheduled: this._scheduled(),
-      completed: this._completed(),
+      scheduled: this.frequency(),
+      completed: this.completedDates()?.has(toDateKey(date)) ?? false,
       createdAt: this.trackStart()
     });
   }
@@ -56,8 +59,14 @@ export class HabitCalendarTracker {
     this.dayClicked.emit(date);
   }
 
+  protected onFocusedDateChange(): void {
+    const actualDate = this._calendar.focusedDate() as Date;
+    this.focusedDateChange.emit({ month: actualDate.getMonth(), year: actualDate.getFullYear() });
+  }
+
   protected goToToday(): void {
     const today = new Date();
     this._calendar.date.set(today);
+    this.onFocusedDateChange();
   }
 }

@@ -15,15 +15,13 @@ import {
   styleUrl: "./habit-week-tracker.css"
 })
 export class HabitWeekTracker {
-  frequency = input.required<Weekday[]>();
-  completedDays = input<string[]>([]); // yyyy-mm-dd
+  frequency = input.required<Set<Weekday>>();
+  completedDates = input<Set<string>>(); // yyyy-mm-dd
   createdAt = input<Date>();
   weekStartsOn = input<0 | 1>(0);
   enableColors = input<boolean>(true);
 
   protected readonly days = computed<DayCell[]>(() => {
-    const scheduled = new Set(this.frequency());
-    const completed = new Set(this.completedDays());
     const createdAt = this.createdAt();
     const todayKey = toDateKey(new Date());
 
@@ -31,7 +29,12 @@ export class HabitWeekTracker {
       key: getWeekDates(date),
       label: DAY_LABELS[getWeekdayKey(date)],
       isToday: toDateKey(date) === todayKey,
-      state: resolveDayState({ date, scheduled, completed, createdAt })
+      state: resolveDayState({
+        date,
+        scheduled: this.frequency(),
+        completed: this.completedDates()?.has(toDateKey(date)) ?? false,
+        createdAt
+      })
     }));
   });
 }
