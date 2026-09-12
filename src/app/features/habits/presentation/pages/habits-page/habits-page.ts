@@ -8,6 +8,8 @@ import { CreateHabitFormModel } from "../../../domain/models/habit.model";
 import { HabitsList } from "../../components/habits-list/habits-list";
 import { HabitsFacade } from "../../facade/habits.facade";
 import { toast } from "@spartan-ng/brain/sonner";
+import { HabitLogsFacade } from "../../facade/habit-logs.facade";
+import { getWeekDates, toDateKey } from "../../../domain/utils/day-state.util";
 @Component({
   selector: "app-habits-page",
   imports: [
@@ -24,12 +26,20 @@ import { toast } from "@spartan-ng/brain/sonner";
 })
 export class HabitsPage implements OnInit {
   private readonly _habitsFacade = inject(HabitsFacade);
+  private readonly _habitlogsFacade = inject(HabitLogsFacade);
 
   protected readonly habits = this._habitsFacade.habits;
+  protected readonly logsMap = this._habitlogsFacade.listLogsMap;
+
   protected readonly createDialog = viewChild.required<ResponsivePopup>("createDialog");
 
   async ngOnInit() {
     await this._habitsFacade.loadAll();
+
+    const currentHabitsIds = this.habits().map((h) => h.id);
+
+    const weekDays = getWeekDates(new Date());
+    await this._habitlogsFacade.loadLogsForHabitsList(currentHabitsIds, weekDays[0], weekDays[6]);
   }
 
   protected async onHabitSubmitted(model: CreateHabitFormModel): Promise<void> {

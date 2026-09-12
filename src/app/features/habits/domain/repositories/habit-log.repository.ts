@@ -9,5 +9,10 @@ export abstract class HabitLogRepository {
     startDateKey: string,
     endDateKey: string
   ): Promise<HabitLog[]>;
-  /*abstract getLogsByDateRange(startDate: Date, endDate: string): Promise<HabitLog[]>; */
+  abstract getLogsByHabitsAndDateRange(
+    habitIds: string[],
+    startDate: string,
+    endDate: string
+  ): Promise<HabitLog[]>;
+  //abstract getLogsByDateRange(startDate: string, endDate: string): Promise<HabitLog[]>;
 }

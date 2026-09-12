@@ -10,4 +10,5 @@ import { Habit } from "../../../domain/models/habit.model";
 })
 export class HabitsList {
   habits = input<Habit[]>([]);
+  logsMap = input.required<Map<string, Set<string>>>();
 }

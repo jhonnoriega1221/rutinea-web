@@ -11,9 +11,9 @@
         <p class="text-card-foreground font-medium">{{ habit()?.name }}</p>
         <div class="h-[24px] w-[160px]">
           <app-habit-week-tracker
-            [frequency]="habit()?.frequency!"
-            [completedDays]="['']"
+            [frequency]="habitFrequency()"
             [createdAt]="habit()?.createdAt"
+            [completedDates]="completedDates()"
           />
         </div>
       </div>

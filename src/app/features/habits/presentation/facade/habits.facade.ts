@@ -16,12 +16,10 @@ export class HabitsFacade {
   private _updateHabit = inject(UpdateHabitUseCase);
   private _deleteHabit = inject(DeleteHabitUseCase);
 
-  private readonly _habits = signal<Habit[]>([]);
-  private readonly _isLoading = signal(false);
   private readonly _selectedHabitId = signal<string | undefined>(undefined);
 
+  private readonly _habits = signal<Habit[]>([]);
   readonly habits = this._habits.asReadonly();
-  readonly isLoading = this._isLoading.asReadonly();
 
   readonly selectedHabit = computed(() => {
     const habitId = this._selectedHabitId();
@@ -30,13 +28,8 @@ export class HabitsFacade {
   });
 
   async loadAll() {
-    this._isLoading.set(true);
-    try {
-      const habitsList = await this._getHabits.execute();
-      this._habits.set(habitsList);
-    } finally {
-      this._isLoading.set(false);
-    }
+    const habitsList = await this._getHabits.execute();
+    this._habits.set(habitsList);
   }
 
   async create(data: CreateHabitFormModel) {

@@ -40,4 +40,17 @@ export class IndexedDbHabitLogRepository implements HabitLogRepository {
     //TODO: crear diccionario de indexes
     return this._idbService.getByIndex<HabitLog>(this.STORE_NAME, "habitId_date", range);
   }
+
+  async getLogsByHabitsAndDateRange(
+    habitIds: string[],
+    startDate: string,
+    endDate: string
+  ): Promise<HabitLog[]> {
+    if (habitIds.length === 0) return [];
+
+    const promises = habitIds.map((id) => this.getLogsByHabitAndDateRange(id, startDate, endDate));
+
+    const results = await Promise.all(promises);
+    return results.flat();
+  }
 }
