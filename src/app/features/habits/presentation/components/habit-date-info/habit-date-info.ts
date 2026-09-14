@@ -51,7 +51,6 @@ export class HabitDateInfo {
   });
 
   protected readonly config = computed<DayConfig>(() => {
-    const name = this.habit().name;
     const currentStatus = this.status();
 
     const configs: Record<DayState, DayConfig> = {
@@ -63,7 +62,7 @@ export class HabitDateInfo {
         footerHint: "Made a mistake? You can remove this completion record.",
         buttonLabel: "Mark as missed",
         buttonVariant: "destructive",
-        action: this.removeCompleted.emit(this.dateSelected())!
+        action: () => this.removeCompleted.emit(this.dateSelected())!
       },
       missed: {
         badgeLabel: "Missed",
@@ -73,7 +72,7 @@ export class HabitDateInfo {
         footerHint: "Did you actually complete it? You can log it retroactively.",
         buttonLabel: "Mark as completed",
         buttonVariant: "default",
-        action: this.markCompleted.emit(this.dateSelected())!
+        action: () => this.markCompleted.emit(this.dateSelected())!
       },
       pending: {
         badgeLabel: "Pending",
@@ -82,7 +81,7 @@ export class HabitDateInfo {
         footerHint: "Log your progress once you finish your habit.",
         buttonLabel: "Mark as completed",
         buttonVariant: "default",
-        action: this.markCompleted.emit(this.dateSelected())!
+        action: () => this.markCompleted.emit(this.dateSelected())!
       },
       "future-date": {
         badgeLabel: "Future",
@@ -92,7 +91,12 @@ export class HabitDateInfo {
       "not-scheduled": {
         badgeLabel: "Not Scheduled",
         badgeClass: "bg-foreground/40 text-white",
-        description: (n) => `${n} is not scheduled on this weekday.`
+        description: (n) => `${n} is not scheduled on this weekday.`,
+        footerHint:
+          "You can log if you did this habit in this day even if it's not scheduled for this day.",
+        buttonLabel: "Mark completed",
+        buttonVariant: "default",
+        action: () => this.markCompleted.emit(this.dateSelected())!
       },
       urgent: {
         badgeLabel: "Urgent",
@@ -101,18 +105,10 @@ export class HabitDateInfo {
         footerHint: "Complete it before midnight!",
         buttonLabel: "Mark as completed",
         buttonVariant: "default",
-        action: this.markCompleted.emit(this.dateSelected())!
+        action: () => this.markCompleted.emit(this.dateSelected())!
       }
     };
 
     return configs[currentStatus] ?? configs["not-scheduled"];
   });
-
-  protected onRemoveCompleted() {
-    console.log("Eliminar log");
-  }
-
-  protected onMarkCompleted() {
-    console.log("Registrar log");
-  }
 }

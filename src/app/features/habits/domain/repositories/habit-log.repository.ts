@@ -14,5 +14,6 @@ export abstract class HabitLogRepository {
     startDate: string,
     endDate: string
   ): Promise<HabitLog[]>;
+  abstract deleteLogByHabitAndDate(habitId: string, dateKey: string): Promise<void>;
   //abstract getLogsByDateRange(startDate: string, endDate: string): Promise<HabitLog[]>;
 }

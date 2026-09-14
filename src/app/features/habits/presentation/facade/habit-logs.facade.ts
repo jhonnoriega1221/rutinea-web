@@ -79,12 +79,14 @@ export class HabitLogsFacade {
     return habitLog;
   }
 
-  async delete(id: string) {
-    await this._deleteHabitLog.execute(id);
-    this._logs.update((current) => current.filter((h) => h.id !== id));
+  async delete(habitId: string, dateKey: string) {
+    await this._deleteHabitLog.execute(habitId, dateKey);
+    this._logs.update((current) =>
+      current.filter((log) => log.habitId !== habitId || log.date !== dateKey)
+    );
 
     // Si el log que se elimina es de hoy, actualiza tambien el log de hoy en su signal
-    if (this._todayLog()?.id === id) {
+    if (this._todayLog()?.habitId === habitId && this._todayLog()?.date === dateKey) {
       this._todayLog.set(null);
     }
   }

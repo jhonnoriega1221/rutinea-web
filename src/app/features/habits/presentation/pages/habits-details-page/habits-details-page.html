@@ -14,10 +14,7 @@
       </div>
     </div>
 
-    <app-habit-today-status-card
-      [status]="todayStatus()"
-      (markCompleted)="onMarkCompleted(habit()!.id)"
-    />
+    <app-habit-today-status-card [status]="todayStatus()" (markCompleted)="onMarkCompleted()" />
 
     <hlm-card class="card-shadow mb-3">
       <hlm-card-header>
@@ -48,7 +45,7 @@
           [frequency]="habitFrequency()"
           [completedDates]="completedDates()"
           [trackStart]="habit()!.createdAt"
-          (dayClicked)="dateSelected.set($event)"
+          (dayClicked)="onSelectDay($event)"
           (focusedDateChange)="onChangeCalendarFocusDate($event)"
         />
       </div>
@@ -56,15 +53,17 @@
   }
 </main>
 
-@if (dateSelected() && habit()) {
-  <app-responsive-popup state="open" (closedEvent)="dateSelected.set(undefined)" #dateInfoDialog>
+<app-responsive-popup #dateInfoPopup>
+  @if (dateInfoPopup.state() === "open") {
     <app-habit-date-info
       [dateSelected]="dateSelected()!"
       [habit]="habit()!"
       [completedDates]="completedDates()"
+      (markCompleted)="onMarkCompleted($event)"
+      (removeCompleted)="onRemoveCompleted($event)"
     />
-  </app-responsive-popup>
-}
+  }
+</app-responsive-popup>
 
 <app-responsive-popup #createDialog>
   @if (createDialog.state() === "open") {

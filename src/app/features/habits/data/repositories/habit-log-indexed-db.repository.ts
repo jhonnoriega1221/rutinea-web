@@ -53,4 +53,8 @@ export class IndexedDbHabitLogRepository implements HabitLogRepository {
     const results = await Promise.all(promises);
     return results.flat();
   }
+
+  deleteLogByHabitAndDate(habitId: string, dateKey: string): Promise<void> {
+    return this._idbService.deleteByIndex(this.STORE_NAME, "habitId_date", [habitId, dateKey]);
+  }
 }

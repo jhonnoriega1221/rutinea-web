@@ -32,10 +32,10 @@
       <button
         hlmBtn
         class="w-full"
-        (click)="config().action"
+        (click)="config().action?.()"
         [variant]="config().buttonVariant ?? 'default'"
       >
-        Mark as completed
+        {{ config().buttonLabel }}
       </button>
     </footer>
   }

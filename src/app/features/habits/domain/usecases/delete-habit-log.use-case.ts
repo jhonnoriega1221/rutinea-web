@@ -7,7 +7,7 @@ import { HabitLogRepository } from "../repositories/habit-log.repository";
 export class DeleteHabitLogUseCase {
   private readonly _repository = inject(HabitLogRepository);
 
-  execute(id: string) {
-    return this._repository.deleteHabitLog(id);
+  execute(habitId: string, dateKey: string) {
+    return this._repository.deleteLogByHabitAndDate(habitId, dateKey);
   }
 }

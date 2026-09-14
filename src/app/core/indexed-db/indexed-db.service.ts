@@ -118,6 +118,23 @@ export class IndexedDbService {
     await this._requestToPromise(store.delete(id));
   }
 
+  async deleteByIndex(
+    storeName: StoreName,
+    indexName: string,
+    key: IDBValidKey | IDBKeyRange
+  ): Promise<void> {
+    const db = await this.connect();
+    const transaction = db.transaction(storeName, "readwrite");
+    const store = transaction.objectStore(storeName);
+    const index = store.index(indexName);
+
+    const primaryKey = await this._requestToPromise(index.getKey(key));
+
+    if (primaryKey !== undefined) {
+      await this._requestToPromise(store.delete(primaryKey));
+    }
+  }
+
   async count(storeName: StoreName): Promise<number> {
     const db = await this.connect();
     const transaction = db.transaction(storeName);

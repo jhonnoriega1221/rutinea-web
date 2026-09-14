@@ -56,9 +56,10 @@ export class HabitsDetailsPage implements OnInit {
 
   protected readonly habitIcon = computed<string>(() => getIconByKey(this.habit()?.icon!)?.icon!);
 
-  protected readonly dateSelected = signal<Date | undefined>(undefined);
+  protected readonly dateSelected = signal<Date>(new Date());
 
   protected readonly createDialog = viewChild.required<ResponsivePopup>("createDialog");
+  protected readonly dateInfoPopup = viewChild.required<ResponsivePopup>("dateInfoPopup");
 
   ngOnInit(): void {
     const now = new Date();
@@ -82,14 +83,19 @@ export class HabitsDetailsPage implements OnInit {
     });
   });
 
-  protected async onMarkCompleted(habitId: string) {
-    await this._habitLogsFacade.create({ habitId, date: toDateKey(new Date()) });
+  protected async onMarkCompleted(date?: Date) {
+    await this._habitLogsFacade.create({
+      habitId: this.habit()!.id,
+      date: toDateKey(date ?? new Date())
+    });
+    this.dateInfoPopup().close();
     toast.success("Habit has been completed for today");
   }
 
-  protected async onRemoveCompleted(habitId: string) {
-    await this._habitLogsFacade.delete(habitId);
-    toast.success("Habit has been completed for today");
+  protected async onRemoveCompleted(date?: Date) {
+    await this._habitLogsFacade.delete(this.habit()!.id, toDateKey(date ?? new Date()));
+    this.dateInfoPopup().close();
+    toast.success("Completed removed succefully");
   }
 
   protected async onHabitSubmitted(model: CreateHabitFormModel) {
@@ -124,5 +130,10 @@ export class HabitsDetailsPage implements OnInit {
 
   onChangeCalendarFocusDate(event: { month: number; year: number }) {
     this._habitLogsFacade.loadLogsForMonth(this.id(), event.year, event.month + 1);
+  }
+
+  onSelectDay(date: Date) {
+    this.dateSelected.set(date);
+    this.dateInfoPopup().open();
   }
 }
