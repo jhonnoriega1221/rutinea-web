@@ -13,6 +13,8 @@ import { HabitRepository } from "./features/habits/domain/repositories/habit.rep
 import { IndexedDbHabitRepository } from "./features/habits/data/repositories/habit-indexed-db.repository";
 import { HabitLogRepository } from "./features/habits/domain/repositories/habit-log.repository";
 import { IndexedDbHabitLogRepository } from "./features/habits/data/repositories/habit-log-indexed-db.repository";
+import { CategoryRepository } from "./features/categories/domain/repositories/category.repository";
+import { IndexedDbCategoryRepository } from "./features/categories/data/repositories/category-indexed-db.repository";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,6 +32,10 @@ export const appConfig: ApplicationConfig = {
     {
       provide: HabitLogRepository,
       useClass: IndexedDbHabitLogRepository
+    },
+    {
+      provide: CategoryRepository,
+      useClass: IndexedDbCategoryRepository
     }
   ]
 };

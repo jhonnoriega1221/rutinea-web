@@ -10,6 +10,7 @@ import { HabitsFacade } from "../../facade/habits.facade";
 import { toast } from "@spartan-ng/brain/sonner";
 import { HabitLogsFacade } from "../../facade/habit-logs.facade";
 import { getWeekDates, toDateKey } from "../../../domain/utils/day-state.util";
+import { CategoriesList } from "../../../../categories/presentation/components/categories-list/categories-list";
 @Component({
   selector: "app-habits-page",
   imports: [
@@ -18,8 +19,9 @@ import { getWeekDates, toDateKey } from "../../../domain/utils/day-state.util";
     ResponsivePopup,
     HabitsCreateForm,
     HabitsList,
-    ResponsivePopup
-  ],
+    ResponsivePopup,
+    CategoriesList
+],
   templateUrl: "./habits-page.html",
   styleUrl: "./habits-page.css",
   viewProviders: [provideIcons({ lucidePlus })]
