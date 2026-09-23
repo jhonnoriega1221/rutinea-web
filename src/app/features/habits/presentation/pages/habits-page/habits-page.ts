@@ -11,6 +11,9 @@ import { toast } from "@spartan-ng/brain/sonner";
 import { HabitLogsFacade } from "../../facade/habit-logs.facade";
 import { getWeekDates, toDateKey } from "../../../domain/utils/day-state.util";
 import { CategoriesList } from "../../../../categories/presentation/components/categories-list/categories-list";
+import { CategoryUpsertForm } from "../../../../categories/presentation/components/category-upsert-form/category-upsert-form";
+import { CategoriesFacade } from "../../../../categories/presentation/facade/categories.facade";
+import { UpsertCategoryFormModel } from "../../../../categories/domain/models/category.model";
 @Component({
   selector: "app-habits-page",
   imports: [
@@ -20,8 +23,9 @@ import { CategoriesList } from "../../../../categories/presentation/components/c
     HabitsCreateForm,
     HabitsList,
     ResponsivePopup,
-    CategoriesList
-],
+    CategoriesList,
+    CategoryUpsertForm
+  ],
   templateUrl: "./habits-page.html",
   styleUrl: "./habits-page.css",
   viewProviders: [provideIcons({ lucidePlus })]
@@ -30,10 +34,14 @@ export class HabitsPage implements OnInit {
   private readonly _habitsFacade = inject(HabitsFacade);
   private readonly _habitlogsFacade = inject(HabitLogsFacade);
 
+  private readonly _categoriesFacade = inject(CategoriesFacade);
+
   protected readonly habits = this._habitsFacade.habits;
   protected readonly logsMap = this._habitlogsFacade.listLogsMap;
 
-  protected readonly createDialog = viewChild.required<ResponsivePopup>("createDialog");
+  protected readonly createHabitDialog = viewChild.required<ResponsivePopup>("createHabitDialog");
+  protected readonly createCategoryDialog =
+    viewChild.required<ResponsivePopup>("createCategoryDialog");
 
   async ngOnInit() {
     await this._habitsFacade.loadAll();
@@ -47,6 +55,12 @@ export class HabitsPage implements OnInit {
   protected async onHabitSubmitted(model: CreateHabitFormModel): Promise<void> {
     await this._habitsFacade.create(model);
     toast.success("Habit has been created");
-    this.createDialog().close();
+    this.createHabitDialog().close();
+  }
+
+  protected async onCategorySubmitted(model: UpsertCategoryFormModel): Promise<void> {
+    await this._categoriesFacade.create(model);
+    toast.success("Category has been created");
+    this.createCategoryDialog().close();
   }
 }

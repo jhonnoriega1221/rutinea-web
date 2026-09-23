@@ -1,1 +1,35 @@
-<p>category-upsert-form works!</p>
+<form
+  [formRoot]="form"
+  id="form-category-upsert"
+  class="w-full sm:w-100 max-w-full min-w-20 box-border p-6"
+>
+  <hlm-field-group>
+    <hlm-field>
+      <label hlmFieldLabel for="name">Category name</label>
+      <input
+        id="name"
+        hlmInput
+        placeholder="e.g: Priority"
+        autocomplete="off"
+        [formField]="form.name"
+      />
+      @for (error of form.name().errors(); track $index) {
+        <hlm-field-error [validator]="error.kind">
+          {{ error.message }}
+        </hlm-field-error>
+      }
+    </hlm-field>
+    <hlm-field>
+      <label hlmFieldLabel for="name">Category color</label>
+      <p>Custom component</p>
+      @for (error of form.color().errors(); track $index) {
+        <hlm-field-error [validator]="error.kind">
+          {{ error.message }}
+        </hlm-field-error>
+      }
+    </hlm-field>
+    <hlm-field>
+      <button hlmBtn type="submit" form="form-category-upsert">Submit</button>
+    </hlm-field>
+  </hlm-field-group>
+</form>

@@ -1,17 +1,27 @@
 <main class="mx-auto max-w-250">
-  <div class="flex items-center justify-between mb-4">
+  <div class="flex items-center justify-between mb-4 px-2">
     <p class="text-2xl font-bold mb-4">Habits</p>
-    <button hlmBtn (click)="createDialog.open()">
+    <button hlmBtn (click)="createHabitDialog.open()">
       <ng-icon name="lucidePlus" class="w-5! h-5!" />
       New habit
     </button>
   </div>
-  <app-categories-list />
-  <app-habits-list [habits]="habits()" [logsMap]="logsMap()" />
+  <div class="overflow-x-auto px-3 mb-3">
+    <app-categories-list (clickedCreateCategory)="createCategoryDialog.open()" />
+  </div>
+  <div class="px-2">
+    <app-habits-list [habits]="habits()" [logsMap]="logsMap()" />
+  </div>
 </main>
 
-<app-responsive-popup #createDialog>
-  @if (createDialog.state() === "open") {
+<app-responsive-popup #createHabitDialog>
+  @if (createHabitDialog.state() === "open") {
     <app-habits-create-form (submitted)="onHabitSubmitted($event)" />
+  }
+</app-responsive-popup>
+
+<app-responsive-popup #createCategoryDialog>
+  @if (createCategoryDialog.state() === "open") {
+    <app-category-upsert-form (submitted)="onCategorySubmitted($event)" />
   }
 </app-responsive-popup>
