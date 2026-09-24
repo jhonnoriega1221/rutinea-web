@@ -21,7 +21,9 @@
     </hlm-field>
     <hlm-field>
       <label hlmFieldLabel for="name" class="mb-2">Category color</label>
-      <app-color-picker id="color" [formField]="form.color" />
+      <div class="max-w-80 mx-auto">
+        <app-color-picker id="color" [formField]="form.color" />
+      </div>
       @for (error of form.name().errors(); track $index) {
         <hlm-field-error [validator]="error.kind">
           {{ error.message }}
