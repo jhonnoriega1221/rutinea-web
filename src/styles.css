@@ -11,6 +11,23 @@
   --color-destructive: var(--destructive);
   --color-warning: var(--warning);
   --color-info: var(--info);
+
+  --color-cat-red: var(--cat-red);
+  --color-cat-orange: var(--cat-orange);
+  --color-cat-amber: var(--cat-amber);
+  --color-cat-yellow: var(--cat-yellow);
+  --color-cat-lime: var(--cat-lime);
+  --color-cat-green: var(--cat-green);
+  --color-cat-emerald: var(--cat-emerald);
+  --color-cat-teal: var(--cat-teal);
+  --color-cat-cyan: var(--cat-cyan);
+  --color-cat-blue: var(--cat-blue);
+  --color-cat-indigo: var(--cat-indigo);
+  --color-cat-violet: var(--cat-violet);
+  --color-cat-purple: var(--cat-purple);
+  --color-cat-fuchsia: var(--cat-fuchsia);
+  --color-cat-pink: var(--cat-pink);
+  --color-cat-slate: var(--cat-slate);
 }
 
 :root {
@@ -59,6 +76,23 @@
   --sidebar-border: oklch(93.911% 0.00355 248.548);
   --sidebar-ring: oklch(0.708 0 0);
   --sidebar-shadow: 0 12px 20px oklch(60.298% 0.08758 169.032 / 0.25);
+
+  --cat-red: oklch(0.65 0.25 25);
+  --cat-orange: oklch(0.7 0.18 50);
+  --cat-amber: oklch(0.75 0.16 75);
+  --cat-yellow: oklch(0.85 0.15 100);
+  --cat-lime: oklch(0.75 0.16 130);
+  --cat-green: oklch(0.65 0.16 150);
+  --cat-emerald: oklch(0.6 0.15 170);
+  --cat-teal: oklch(0.65 0.12 190);
+  --cat-cyan: oklch(0.7 0.12 210);
+  --cat-blue: oklch(0.65 0.16 250);
+  --cat-indigo: oklch(0.6 0.18 280);
+  --cat-violet: oklch(0.6 0.2 300);
+  --cat-purple: oklch(0.65 0.2 320);
+  --cat-fuchsia: oklch(0.65 0.22 340);
+  --cat-pink: oklch(0.7 0.2 350);
+  --cat-slate: oklch(0.7 0.05 250);
 }
 
 :root.dark {
@@ -98,6 +132,23 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
   --sidebar-shadow: 0 18px 20px oklch(12.222% 0.01861 177.798 / 0.5);
+
+  --cat-red: oklch(0.55 0.22 25);
+  --cat-orange: oklch(0.6 0.16 50);
+  --cat-amber: oklch(0.65 0.14 75);
+  --cat-yellow: oklch(0.75 0.13 100);
+  --cat-lime: oklch(0.65 0.14 130);
+  --cat-green: oklch(0.55 0.14 150);
+  --cat-emerald: oklch(0.5 0.13 170);
+  --cat-teal: oklch(0.55 0.1 190);
+  --cat-cyan: oklch(0.6 0.1 210);
+  --cat-blue: oklch(0.55 0.14 250);
+  --cat-indigo: oklch(0.5 0.16 280);
+  --cat-violet: oklch(0.5 0.18 300);
+  --cat-purple: oklch(0.55 0.18 320);
+  --cat-fuchsia: oklch(0.55 0.2 340);
+  --cat-pink: oklch(0.6 0.18 350);
+  --cat-slate: oklch(0.4 0.04 250);
 }
 
 @layer utilities {

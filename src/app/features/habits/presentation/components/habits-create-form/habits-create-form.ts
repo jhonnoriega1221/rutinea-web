@@ -46,7 +46,7 @@ export class HabitsCreateForm {
     description: "",
     categoryId: "none",
     frequency: [],
-    icon: "leaf"
+    icon: "leaf" //TODO: Traer este valor de una constante
   });
 
   constructor() {

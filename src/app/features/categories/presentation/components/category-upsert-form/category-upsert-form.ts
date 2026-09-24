@@ -4,10 +4,12 @@ import { form, FormField, FormRoot, maxLength, minLength, required } from "@angu
 import { HlmButtonImports } from "@spartan-ng/helm/button";
 import { HlmFieldImports } from "@spartan-ng/helm/field";
 import { HlmInputImports } from "@spartan-ng/helm/input";
+import { ColorPicker } from "../../../../../shared/components/color-picker/color-picker";
+import { CATEGORY_COLORS } from "../../../../../shared/components/color-picker/app-colors";
 
 @Component({
   selector: "app-category-upsert-form",
-  imports: [HlmButtonImports, HlmFieldImports, HlmInputImports, FormRoot, FormField],
+  imports: [HlmButtonImports, HlmFieldImports, HlmInputImports, FormRoot, FormField, ColorPicker],
   templateUrl: "./category-upsert-form.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: "./category-upsert-form.css"
@@ -19,7 +21,7 @@ export class CategoryUpsertForm {
 
   protected readonly _upsertCategoryFormModel = signal<UpsertCategoryFormModel>({
     name: "",
-    color: "#ffffff" //TODO: CREAR DICCIONARIO DE COLORES
+    color: "red" //TODO: CREAR DICCIONARIO DE COLORES
   });
 
   constructor() {
@@ -47,6 +49,7 @@ export class CategoryUpsertForm {
       submission: {
         action: async () => {
           const model = this._upsertCategoryFormModel();
+          console.log(model);
           this.submitted.emit(model);
         }
       }

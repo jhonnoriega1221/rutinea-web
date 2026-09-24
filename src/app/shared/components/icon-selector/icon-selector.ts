@@ -8,8 +8,7 @@ import { NgIcon } from "@ng-icons/core";
 @Component({
   selector: "app-icon-selector",
   imports: [HlmPopoverImports, HlmButtonImports, NgIcon],
-  templateUrl: "./icon-selector.html",
-  styleUrl: "./icon-selector.css"
+  templateUrl: "./icon-selector.html"
 })
 export class IconSelector implements FormValueControl<string> {
   readonly value = model(HABIT_ICON_OPTIONS[0].key);

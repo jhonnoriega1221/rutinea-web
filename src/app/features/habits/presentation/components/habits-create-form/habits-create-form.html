@@ -91,7 +91,9 @@
       }
     </hlm-field>
     <hlm-field>
-      <button hlmBtn type="submit" form="form-habit-creation">Submit</button>
+      <button hlmBtn type="submit" form="form-habit-creation">
+        {{ habitToEdit() ? "Edit Habit" : "Create Habit" }}
+      </button>
     </hlm-field>
   </hlm-field-group>
 </form>

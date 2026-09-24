@@ -20,16 +20,18 @@
       }
     </hlm-field>
     <hlm-field>
-      <label hlmFieldLabel for="name">Category color</label>
-      <p>Custom component</p>
-      @for (error of form.color().errors(); track $index) {
+      <label hlmFieldLabel for="name" class="mb-2">Category color</label>
+      <app-color-picker id="color" [formField]="form.color" />
+      @for (error of form.name().errors(); track $index) {
         <hlm-field-error [validator]="error.kind">
           {{ error.message }}
         </hlm-field-error>
       }
     </hlm-field>
     <hlm-field>
-      <button hlmBtn type="submit" form="form-category-upsert">Submit</button>
+      <button hlmBtn type="submit" form="form-category-upsert">
+        {{ categoryToEdit() ? "Edit Category" : "Create Category" }}
+      </button>
     </hlm-field>
   </hlm-field-group>
 </form>

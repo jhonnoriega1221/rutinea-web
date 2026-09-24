@@ -1,0 +1,14 @@
+<div class="grid grid-cols-8 gap-3">
+  @for (color of colors; track color.key) {
+    <button
+      type="button"
+      (click)="select(color)"
+      [title]="color.label"
+      type="button"
+      class="w-8 h-8 rounded-full flex items-center justify-center border-2 outline-none transition-transform hover:scale-110 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+      [class.border-foreground]="value() === color.key"
+      [class.border-transparent]="value() !== color.key"
+      [style.backgroundCOlor]="'var(' + color.cssVar + ')'"
+    ></button>
+  }
+</div>
