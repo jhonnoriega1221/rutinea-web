@@ -18,6 +18,9 @@ import { CreateHabitFormModel, Weekday } from "../../../domain/models/habit.mode
 import { ResponsiveDialogService } from "../../../../../shared/services/responsive-dialog.service";
 import { toast } from "@spartan-ng/brain/sonner";
 import { HabitLogsFacade } from "../../facade/habit-logs.facade";
+import { CategoriesFacade } from "../../../../categories/presentation/facade/categories.facade";
+import { CategoryUpsertForm } from "../../../../categories/presentation/components/category-upsert-form/category-upsert-form";
+import { UpsertCategoryFormModel } from "../../../../categories/domain/models/category.model";
 
 @Component({
   selector: "app-habits-details-page",
@@ -30,7 +33,8 @@ import { HabitLogsFacade } from "../../facade/habit-logs.facade";
     HabitTodayStatusCard,
     ResponsivePopup,
     HabitDateInfo,
-    HabitsCreateForm
+    HabitsCreateForm,
+    CategoryUpsertForm
   ],
   templateUrl: "./habits-details-page.html",
   styleUrl: "./habits-details-page.css"
@@ -44,8 +48,12 @@ export class HabitsDetailsPage implements OnInit {
   private readonly _habitsFacade = inject(HabitsFacade);
   private readonly _habitLogsFacade = inject(HabitLogsFacade);
 
+  private readonly _categoriesFacade = inject(CategoriesFacade);
+
   protected readonly habit = this._habitsFacade.selectedHabit;
   protected readonly logs = this._habitLogsFacade.logs;
+  protected readonly categories = this._categoriesFacade.categories;
+
   protected readonly habitFrequency = computed(() => {
     return new Set<Weekday>(this.habit()?.frequency);
   });
@@ -60,12 +68,16 @@ export class HabitsDetailsPage implements OnInit {
 
   protected readonly createDialog = viewChild.required<ResponsivePopup>("createDialog");
   protected readonly dateInfoPopup = viewChild.required<ResponsivePopup>("dateInfoPopup");
+  protected readonly createCategoryDialog =
+    viewChild.required<ResponsivePopup>("createCategoryDialog");
+  protected readonly createHabitForm = viewChild<HabitsCreateForm>("createHabitForm");
 
-  ngOnInit(): void {
+  async ngOnInit() {
     const now = new Date();
     this._habitsFacade.getById(this.id());
     this._habitLogsFacade.checkTodayCompletion(this.id(), toDateKey(now));
     this._habitLogsFacade.loadLogsForMonth(this.id(), now.getFullYear(), now.getMonth() + 1);
+    await this._categoriesFacade.loadAll();
   }
 
   protected readonly todayStatus = computed<DayState>(() => {
@@ -135,5 +147,19 @@ export class HabitsDetailsPage implements OnInit {
   onSelectDay(date: Date) {
     this.dateSelected.set(date);
     this.dateInfoPopup().open();
+  }
+
+  protected async onCategorySubmitted(model: UpsertCategoryFormModel): Promise<void> {
+    const newCategory = await this._categoriesFacade.create(model);
+    toast.success("Category has been created");
+
+    this.createCategoryDialog().close();
+
+    if (newCategory && newCategory.id) {
+      const formRef = this.createHabitForm();
+      if (formRef) {
+        formRef.patchCategory(newCategory.id);
+      }
+    }
   }
 }
