@@ -22,7 +22,7 @@ export class ResponsivePopup {
   protected readonly isOpen = computed(() => this.state() === "open");
 
   private readonly _breakpointObserver = inject(BreakpointObserver);
-  readonly isMobile = signal(false);
+  protected readonly isMobile = signal(false);
 
   constructor() {
     this._breakpointObserver

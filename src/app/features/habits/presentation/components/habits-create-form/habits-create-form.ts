@@ -8,6 +8,8 @@ import { form, FormRoot, maxLength, minLength, required, FormField } from "@angu
 import { HlmButtonImports } from "@spartan-ng/helm/button";
 import { IconSelector } from "../../../../../shared/components/icon-selector/icon-selector";
 import { CreateHabitFormModel, Habit, WEEK_DAYS } from "../../../domain/models/habit.model";
+import { Category } from "../../../../categories/domain/models/category.model";
+import { NgIcon } from "@ng-icons/core";
 
 @Component({
   selector: "app-habits-create-form",
@@ -20,7 +22,8 @@ import { CreateHabitFormModel, Habit, WEEK_DAYS } from "../../../domain/models/h
     HlmSelectImports,
     FormRoot,
     FormField,
-    IconSelector
+    IconSelector,
+    NgIcon
   ],
   templateUrl: "./habits-create-form.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,17 +31,21 @@ import { CreateHabitFormModel, Habit, WEEK_DAYS } from "../../../domain/models/h
 })
 export class HabitsCreateForm {
   habitToEdit = input<Habit | undefined>(undefined);
+  categories = input.required<Category[]>();
 
   submitted = output<CreateHabitFormModel>();
+  clickNewCategory = output<void>();
 
   readonly weekdayOptions = WEEK_DAYS;
 
   itemToString = (value: string): string => {
-    if (value === "none") {
+    if (value === "none" || !value) {
       return "No category";
     }
 
-    return value;
+    const category = this.categories().find((c) => c.id === value);
+
+    return category ? category.name : value;
   };
 
   protected readonly _createHabitFormModel = signal<CreateHabitFormModel>({
@@ -85,4 +92,8 @@ export class HabitsCreateForm {
       }
     }
   );
+
+  public patchCategory(categoryId: string) {
+    this.form.categoryId().controlValue.set(categoryId);
+  }
 }

@@ -37,14 +37,18 @@ export class HabitsPage implements OnInit {
   private readonly _categoriesFacade = inject(CategoriesFacade);
 
   protected readonly habits = this._habitsFacade.habits;
+  protected readonly categories = this._categoriesFacade.categories;
   protected readonly logsMap = this._habitlogsFacade.listLogsMap;
 
   protected readonly createHabitDialog = viewChild.required<ResponsivePopup>("createHabitDialog");
+  protected readonly createHabitForm = viewChild<HabitsCreateForm>("createHabitForm");
+
   protected readonly createCategoryDialog =
     viewChild.required<ResponsivePopup>("createCategoryDialog");
 
   async ngOnInit() {
     await this._habitsFacade.loadAll();
+    await this._categoriesFacade.loadAll();
 
     const currentHabitsIds = this.habits().map((h) => h.id);
 
@@ -59,8 +63,16 @@ export class HabitsPage implements OnInit {
   }
 
   protected async onCategorySubmitted(model: UpsertCategoryFormModel): Promise<void> {
-    await this._categoriesFacade.create(model);
+    const newCategory = await this._categoriesFacade.create(model);
     toast.success("Category has been created");
+
     this.createCategoryDialog().close();
+
+    if (newCategory && newCategory.id) {
+      const formRef = this.createHabitForm();
+      if (formRef) {
+        formRef.patchCategory(newCategory.id);
+      }
+    }
   }
 }

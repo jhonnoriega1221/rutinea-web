@@ -5,7 +5,6 @@ import { HlmButtonImports } from "@spartan-ng/helm/button";
 import { HlmFieldImports } from "@spartan-ng/helm/field";
 import { HlmInputImports } from "@spartan-ng/helm/input";
 import { ColorPicker } from "../../../../../shared/components/color-picker/color-picker";
-import { CATEGORY_COLORS } from "../../../../../shared/components/color-picker/app-colors";
 
 @Component({
   selector: "app-category-upsert-form",
@@ -49,7 +48,6 @@ export class CategoryUpsertForm {
       submission: {
         action: async () => {
           const model = this._upsertCategoryFormModel();
-          console.log(model);
           this.submitted.emit(model);
         }
       }

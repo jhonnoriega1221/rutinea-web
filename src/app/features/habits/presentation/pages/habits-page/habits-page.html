@@ -16,7 +16,12 @@
 
 <app-responsive-popup #createHabitDialog>
   @if (createHabitDialog.state() === "open") {
-    <app-habits-create-form (submitted)="onHabitSubmitted($event)" />
+    <app-habits-create-form
+      #createHabitForm
+      [categories]="categories()"
+      (clickNewCategory)="createCategoryDialog.open()"
+      (submitted)="onHabitSubmitted($event)"
+    />
   }
 </app-responsive-popup>
 

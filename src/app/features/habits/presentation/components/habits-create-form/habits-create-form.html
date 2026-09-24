@@ -32,17 +32,35 @@
     </div>
     <hlm-field>
       <label hlmFieldLabel for="category">Category</label>
-
-      <hlm-select id="category" [formField]="form.categoryId" [itemToString]="itemToString">
-        <hlm-select-trigger buttonId="category" class="w-full" 1>
-          <hlm-select-value />
-        </hlm-select-trigger>
-        <hlm-select-content *hlmSelectPortal>
-          <hlm-select-group>
-            <hlm-select-item value="none">No category</hlm-select-item>
-          </hlm-select-group>
-        </hlm-select-content>
-      </hlm-select>
+      <div class="flex gap-2">
+        <hlm-select
+          id="category"
+          [formField]="form.categoryId"
+          [itemToString]="itemToString"
+          class="w-full"
+        >
+          <hlm-select-trigger buttonId="category" class="w-full" 1>
+            <hlm-select-value />
+          </hlm-select-trigger>
+          <hlm-select-content *hlmSelectPortal>
+            <hlm-select-group>
+              <hlm-select-item value="none">No category</hlm-select-item>
+              @for (category of categories(); track category.id) {
+                <hlm-select-item [value]="category.id">{{ category.name }}</hlm-select-item>
+              }
+            </hlm-select-group>
+          </hlm-select-content>
+        </hlm-select>
+        <button
+          hlmBtn
+          type="button"
+          size="icon"
+          variant="outline"
+          (click)="clickNewCategory.emit()"
+        >
+          <ng-icon name="lucidePlus" />
+        </button>
+      </div>
 
       @for (error of form.name().errors(); track $index) {
         <hlm-field-error [validator]="error.kind">
