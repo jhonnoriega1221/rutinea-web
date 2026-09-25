@@ -51,7 +51,7 @@ export class HabitsDetailsPage implements OnInit {
   private readonly _categoriesFacade = inject(CategoriesFacade);
 
   protected readonly habit = this._habitsFacade.selectedHabit;
-  protected readonly logs = this._habitLogsFacade.logs;
+  protected readonly logs = this._habitLogsFacade.monthlyLogs;
   protected readonly categories = this._categoriesFacade.categories;
 
   protected readonly habitFrequency = computed(() => {
