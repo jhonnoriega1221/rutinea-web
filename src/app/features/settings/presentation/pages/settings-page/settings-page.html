@@ -4,8 +4,8 @@
   <p class="font-semibold mb-2">Appearance</p>
   <hlm-card class="card-shadow mb-6">
     <div hlmCardContent class="flex flex-col sm:flex-row gap-3 justify-between">
-      <div class="flex gap-4">
-        <ng-icon name="lucideContrast" class="my-auto w-5! h-5!" />
+      <div class="flex gap-4 items-center">
+        <ng-icon name="lucideContrast" size="20" class="min-w-5" />
         <div>
           <label>Theme</label>
           <p class="text-card-foreground/40 text-sm">Set your theme preference</p>
@@ -30,6 +30,26 @@
         </button>
       </hlm-toggle-group>
     </div>
+  </hlm-card>
+
+  <p class="font-semibold mb-2">Categories</p>
+  <hlm-card class="card-shadow mb-6">
+    <a
+      routerLink="/settings/categories"
+      hlmCardContent
+      class="flex flex-row gap-3 justify-between items-center hover:bg-card-foreground/10"
+    >
+      <div class="flex gap-4 items-center">
+        <ng-icon name="lucideFolderBookmark" size="20" class="min-w-5" />
+        <div>
+          <p>Manage Categories</p>
+          <p class="text-card-foreground/40 text-sm">
+            View, add, and edit categories for your habits.
+          </p>
+        </div>
+      </div>
+      <ng-icon size="22" name="lucideChevronRight" class="min-w-5" />
+    </a>
   </hlm-card>
 
   <p class="font-semibold mb-2">About</p>

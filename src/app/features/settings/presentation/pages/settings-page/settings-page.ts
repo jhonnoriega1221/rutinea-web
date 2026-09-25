@@ -6,10 +6,11 @@ import { HlmToggleGroupImports } from "@spartan-ng/helm/toggle-group";
 import { ThemeService } from "../../../../../core/theme/theme.service";
 import { ThemeMode } from "../../../../../core/theme/theme.types";
 import { AppInfoService } from "../../../../../core/app-info/app-info.service";
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: "app-settings-page",
-  imports: [HlmCardImports, HlmToggleGroupImports, NgIcon],
+  imports: [HlmCardImports, HlmToggleGroupImports, NgIcon, RouterLink],
   templateUrl: "./settings-page.html",
   styleUrl: "./settings-page.css"
 })
