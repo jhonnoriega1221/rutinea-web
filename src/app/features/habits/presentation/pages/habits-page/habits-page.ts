@@ -14,17 +14,22 @@ import { CategoriesList } from "../../../../categories/presentation/components/c
 import { CategoryUpsertForm } from "../../../../categories/presentation/components/category-upsert-form/category-upsert-form";
 import { CategoriesFacade } from "../../../../categories/presentation/facade/categories.facade";
 import { UpsertCategoryFormModel } from "../../../../categories/domain/models/category.model";
+import { HlmDropdownMenuImports } from "@spartan-ng/helm/dropdown-menu";
+import { RouterLink } from "@angular/router";
+import { CategoryFilterPicker } from "../../../../categories/presentation/components/category-filter-picker/category-filter-picker";
 @Component({
   selector: "app-habits-page",
   imports: [
     HlmButtonImports,
+    HlmDropdownMenuImports,
     NgIcon,
     ResponsivePopup,
     HabitsCreateForm,
     HabitsList,
     ResponsivePopup,
-    CategoriesList,
-    CategoryUpsertForm
+    CategoryUpsertForm,
+    RouterLink,
+    CategoryFilterPicker
   ],
   templateUrl: "./habits-page.html",
   styleUrl: "./habits-page.css",

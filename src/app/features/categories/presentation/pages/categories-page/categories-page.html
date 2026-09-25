@@ -1,0 +1,27 @@
+<main class="mx-auto max-w-250">
+  <div class="flex items-center justify-between mb-4 px-2">
+    <p class="text-2xl font-bold mb-4">Categories</p>
+    <div class="flex gap-2">
+      <button hlmBtn (click)="createCategoryDialog.open()">
+        <ng-icon name="lucidePlus" class="w-5! h-5!" />
+        New category
+      </button>
+    </div>
+  </div>
+  <div class="px-2">
+    <app-categories-list
+      (clickDelete)="onDeleteCategory($event)"
+      (clickEdit)="onEditCategory($event)"
+      [categories]="categories()"
+    />
+  </div>
+</main>
+
+<app-responsive-popup #createCategoryDialog (closedEvent)="onCloseCategoryForm()">
+  @if (createCategoryDialog.state() === "open") {
+    <app-category-upsert-form
+      (submitted)="onCategorySubmitted($event)"
+      [categoryToEdit]="categoryToEdit()"
+    />
+  }
+</app-responsive-popup>

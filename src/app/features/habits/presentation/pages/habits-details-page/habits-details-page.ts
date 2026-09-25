@@ -130,11 +130,11 @@ export class HabitsDetailsPage implements OnInit {
     });
 
     if (confirmDelete) {
-      this.deleteHabit();
+      this.confirmDelete();
     }
   }
 
-  protected async deleteHabit() {
+  protected async confirmDelete() {
     await this._habitsFacade.delete(this.id());
     toast.success("Habit has been deleted succefully");
     this.location.back();

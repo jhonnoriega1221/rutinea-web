@@ -1,13 +1,23 @@
 <main class="mx-auto max-w-250">
   <div class="flex items-center justify-between mb-4 px-2">
     <p class="text-2xl font-bold mb-4">Habits</p>
-    <button hlmBtn (click)="createHabitDialog.open()">
-      <ng-icon name="lucidePlus" class="w-5! h-5!" />
-      New habit
-    </button>
+    <div class="flex gap-2">
+      <button hlmBtn (click)="createHabitDialog.open()">
+        <ng-icon name="lucidePlus" class="w-5! h-5!" />
+        New habit
+      </button>
+      <button hlmBtn variant="ghost" size="icon" [hlmDropdownMenuTrigger]="menu" align="end">
+        <ng-icon size="20" name="lucideEllipsisVertical" />
+      </button>
+      <ng-template #menu>
+        <hlm-dropdown-menu>
+          <a hlmDropdownMenuItem routerLink="/settings/categories"> Manage Categories </a>
+        </hlm-dropdown-menu>
+      </ng-template>
+    </div>
   </div>
   <div class="overflow-x-auto px-3 mb-3">
-    <app-categories-list
+    <app-category-filter-picker
       [categories]="categories()"
       (clickedCreateCategory)="createCategoryDialog.open()"
     />

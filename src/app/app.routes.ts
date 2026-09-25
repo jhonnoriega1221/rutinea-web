@@ -21,6 +21,14 @@ export const routes: Routes = [
           )
       },
       {
+        path: "settings/categories",
+        pathMatch: "full",
+        loadComponent: () =>
+          import("./features/categories/presentation/pages/categories-page/categories-page").then(
+            (m) => m.CategoriesPage
+          )
+      },
+      {
         path: "habits",
         pathMatch: "full",
         loadComponent: () =>

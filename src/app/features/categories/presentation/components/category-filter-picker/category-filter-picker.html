@@ -1,1 +1,37 @@
-<p>category-filter-picker works!</p>
+<div class="flex gap-2 h-8 overflow-y-clip">
+  <hlm-toggle-group
+    type="single"
+    size="sm"
+    variant="outline"
+    nullable="false"
+    spacing="2"
+    value="all"
+    class="h-full"
+  >
+    <button
+      hlmToggleGroupItem
+      value="all"
+      class="flex flex-col h-full max-w-20 overflow-hidden items-start rounded-full"
+    >
+      <label class="overflow-hidden text-ellipsis w-full text-xs">All</label>
+    </button>
+    @for (category of categories(); track category.id) {
+      <button
+        hlmToggleGroupItem
+        [value]="category.id"
+        class="flex flex-col h-full max-w-25 overflow-hidden items-start rounded-full"
+      >
+        <label class="overflow-hidden text-ellipsis w-full text-xs">{{ category.name }}</label>
+      </button>
+    }
+  </hlm-toggle-group>
+  <button
+    hlmBtn
+    size="icon"
+    class="h-full rounded-full"
+    variant="outline"
+    (click)="clickedCreateCategory.emit()"
+  >
+    <ng-icon size="18" name="lucidePlus" />
+  </button>
+</div>
