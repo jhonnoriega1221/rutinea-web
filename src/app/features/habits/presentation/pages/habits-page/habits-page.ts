@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, viewChild } from "@angular/core";
+import { Component, computed, inject, OnInit, signal, viewChild } from "@angular/core";
 import { HlmButtonImports } from "@spartan-ng/helm/button";
 import { ResponsivePopup } from "../../../../../shared/components/responsive-popup/responsive-popup";
 import { lucidePlus } from "@ng-icons/lucide";
@@ -9,14 +9,14 @@ import { HabitsList } from "../../components/habits-list/habits-list";
 import { HabitsFacade } from "../../facade/habits.facade";
 import { toast } from "@spartan-ng/brain/sonner";
 import { HabitLogsFacade } from "../../facade/habit-logs.facade";
-import { getWeekDates, toDateKey } from "../../../domain/utils/day-state.util";
-import { CategoriesList } from "../../../../categories/presentation/components/categories-list/categories-list";
+import { getWeekDates } from "../../../domain/utils/day-state.util";
 import { CategoryUpsertForm } from "../../../../categories/presentation/components/category-upsert-form/category-upsert-form";
 import { CategoriesFacade } from "../../../../categories/presentation/facade/categories.facade";
 import { UpsertCategoryFormModel } from "../../../../categories/domain/models/category.model";
 import { HlmDropdownMenuImports } from "@spartan-ng/helm/dropdown-menu";
 import { RouterLink } from "@angular/router";
 import { CategoryFilterPicker } from "../../../../categories/presentation/components/category-filter-picker/category-filter-picker";
+import { HabitListViewModel } from "../../models/habit-list.view-model";
 @Component({
   selector: "app-habits-page",
   imports: [
@@ -38,18 +38,39 @@ import { CategoryFilterPicker } from "../../../../categories/presentation/compon
 export class HabitsPage implements OnInit {
   private readonly _habitsFacade = inject(HabitsFacade);
   private readonly _habitlogsFacade = inject(HabitLogsFacade);
-
   private readonly _categoriesFacade = inject(CategoriesFacade);
 
   protected readonly habits = this._habitsFacade.habits;
-  protected readonly categories = this._categoriesFacade.categories;
   protected readonly logsMap = this._habitlogsFacade.listLogsMap;
+  protected readonly categories = this._categoriesFacade.categories;
 
   protected readonly createHabitDialog = viewChild.required<ResponsivePopup>("createHabitDialog");
-  protected readonly createHabitForm = viewChild<HabitsCreateForm>("createHabitForm");
-
   protected readonly createCategoryDialog =
     viewChild.required<ResponsivePopup>("createCategoryDialog");
+  protected readonly createHabitForm = viewChild<HabitsCreateForm>("createHabitForm");
+
+  protected readonly habitsViewModel = computed<HabitListViewModel[]>(() => {
+    const habits = this.habits();
+    const categories = this.categories();
+    const logsMap = this.logsMap();
+
+    return habits.map((habit) => {
+      const category = categories.find((c) => c.id === habit.categoryId);
+
+      const completedDates = logsMap.get(habit.id) ?? new Set<string>();
+
+      return {
+        ...habit,
+        categoryInfo: category
+          ? {
+              name: category.name,
+              color: category.color
+            }
+          : null,
+        completedDates
+      };
+    });
+  });
 
   async ngOnInit() {
     await this._habitsFacade.loadAll();

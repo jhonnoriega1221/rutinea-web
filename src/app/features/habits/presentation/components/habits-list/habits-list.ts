@@ -1,6 +1,6 @@
 import { Component, input } from "@angular/core";
 import { HabitsListItem } from "../habits-list-item/habits-list-item";
-import { Habit } from "../../../domain/models/habit.model";
+import { HabitListViewModel } from "../../models/habit-list.view-model";
 
 @Component({
   selector: "app-habits-list",
@@ -9,6 +9,5 @@ import { Habit } from "../../../domain/models/habit.model";
   styleUrl: "./habits-list.css"
 })
 export class HabitsList {
-  habits = input<Habit[]>([]);
-  logsMap = input.required<Map<string, Set<string>>>();
+  habits = input<HabitListViewModel[]>([]);
 }

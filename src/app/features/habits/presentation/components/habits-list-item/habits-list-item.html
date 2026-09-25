@@ -2,7 +2,8 @@
   <div hlmCardContent class="flex items-center justify-between gap-4 px-2">
     <div class="flex gap-2 items-center">
       <div
-        class="bg-primary/40 text-primary w-[48px] h-[48px] aspect-square rounded-lg flex items-center justify-center"
+        class="bg-primary/40 text-primary w-[48px] h-[48px] aspect-square rounded-lg flex items-center justify-center text-white"
+        [style.backgroundColor]="'var(' + categoryColor() + ')'"
       >
         <ng-icon [name]="habitIcon()" size="24px" />
       </div>
@@ -13,7 +14,7 @@
           <app-habit-week-tracker
             [frequency]="habitFrequency()"
             [createdAt]="habit()?.createdAt"
-            [completedDates]="completedDates()"
+            [completedDates]="habit()?.completedDates"
           />
         </div>
       </div>
