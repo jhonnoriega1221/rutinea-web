@@ -7,3 +7,7 @@ export interface HabitListViewModel extends Habit {
   } | null;
   completedDates: Set<string>;
 }
+
+export interface HabitListFilters {
+  categoryId: string | null;
+}

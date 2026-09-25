@@ -1,11 +1,12 @@
 <div class="flex gap-2 h-8 overflow-y-clip">
   <hlm-toggle-group
+  (valueChange)="onChangeCategory($event)"
     type="single"
     size="sm"
     variant="outline"
     nullable="false"
     spacing="2"
-    value="all"
+    [value]="selectedCategory() ?? 'all'"
     class="h-full"
   >
     <button
@@ -30,7 +31,7 @@
     size="icon"
     class="h-full rounded-full"
     variant="outline"
-    (click)="clickedCreateCategory.emit()"
+    (click)="clickCreateCategory.emit()"
   >
     <ng-icon size="18" name="lucidePlus" />
   </button>

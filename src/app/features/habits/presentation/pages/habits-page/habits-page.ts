@@ -16,7 +16,7 @@ import { UpsertCategoryFormModel } from "../../../../categories/domain/models/ca
 import { HlmDropdownMenuImports } from "@spartan-ng/helm/dropdown-menu";
 import { RouterLink } from "@angular/router";
 import { CategoryFilterPicker } from "../../../../categories/presentation/components/category-filter-picker/category-filter-picker";
-import { HabitListViewModel } from "../../models/habit-list.view-model";
+import { HabitListFilters, HabitListViewModel } from "../../models/habit-list.view-model";
 @Component({
   selector: "app-habits-page",
   imports: [
@@ -49,6 +49,10 @@ export class HabitsPage implements OnInit {
     viewChild.required<ResponsivePopup>("createCategoryDialog");
   protected readonly createHabitForm = viewChild<HabitsCreateForm>("createHabitForm");
 
+  protected readonly filters = signal<HabitListFilters>({
+    categoryId: null
+  });
+
   protected readonly habitsViewModel = computed<HabitListViewModel[]>(() => {
     const habits = this.habits();
     const categories = this.categories();
@@ -71,6 +75,26 @@ export class HabitsPage implements OnInit {
       };
     });
   });
+
+  protected readonly filteredHabits = computed<HabitListViewModel[]>(() => {
+    const allHabits = this.habitsViewModel();
+    const currentFilters = this.filters();
+
+    return allHabits.filter((habit) => {
+      if (currentFilters.categoryId && habit.categoryId !== currentFilters.categoryId) {
+        return false;
+      }
+
+      return true;
+    });
+  });
+
+  onCategoryFilterChange(categoryId: string | null) {
+    this.filters.update((state) => ({
+      ...state,
+      categoryId
+    }));
+  }
 
   async ngOnInit() {
     await this._habitsFacade.loadAll();

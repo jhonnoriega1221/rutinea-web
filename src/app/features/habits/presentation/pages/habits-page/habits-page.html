@@ -19,11 +19,13 @@
   <div class="overflow-x-auto px-3 mb-3">
     <app-category-filter-picker
       [categories]="categories()"
-      (clickedCreateCategory)="createCategoryDialog.open()"
+      [selectedCategory]="filters().categoryId"
+      (changeCategory)="onCategoryFilterChange($event)"
+      (clickCreateCategory)="createCategoryDialog.open()"
     />
   </div>
   <div class="px-2">
-    <app-habits-list [habits]="habitsViewModel()" />
+    <app-habits-list [habits]="filteredHabits()" />
   </div>
 </main>
 
