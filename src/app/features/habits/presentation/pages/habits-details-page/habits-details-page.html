@@ -1,5 +1,5 @@
-<main class="mx-auto max-w-250">
-  @if (habit()) {
+<main class="mx-auto max-w-250 px-2">
+  @if (habitViewModel()) {
     <div class="flex items-center justify-between mb-4">
       <p class="text-2xl font-bold mb-4">Habit Details</p>
       <div class="flex gap-2">
@@ -23,16 +23,27 @@
       <div hlmCardContent class="flex flex-col gap-2">
         <div class="flex gap-2">
           <div class="mt-0.5">
-            <ng-icon [name]="habitIcon()" size="20px" />
+            <ng-icon [name]="habitViewModel()?.icon" size="20px" />
           </div>
           <div>
-            <p class="font-bold">{{ habit()!.name }}</p>
-            <p>{{ habit()!.description }}</p>
+            <p class="font-bold">{{ habitViewModel()!.name }}</p>
+            <p>{{ habitViewModel()!.description }}</p>
           </div>
         </div>
-        <p><span class="font-bold">Category:</span> No category</p>
+        <p class="flex gap-2 items-center">
+          <span class="font-bold">Category:</span>
+          <span
+            class="py-0.5 px-3 rounded-full"
+            [style.backgroundColor]="
+              habitViewModel()?.categoryInfo
+                ? `var(${habitViewModel()?.categoryInfo?.color})`
+                : `transparent`
+            "
+            >{{ habitViewModel()?.categoryInfo?.name ?? "No category" }}</span
+          >
+        </p>
         <p class="font-bold">Week frequency:</p>
-        <app-habit-week-tracker [enableColors]="false" [frequency]="habitFrequency()" />
+        <app-habit-week-tracker [enableColors]="false" [frequency]="habitViewModel()?.frequency!" />
       </div>
     </hlm-card>
 
@@ -42,7 +53,7 @@
       </hlm-card-header>
       <div hlmCardContent>
         <app-habit-calendar-tracker
-          [frequency]="habitFrequency()"
+          [frequency]="habitViewModel()?.frequency!"
           [completedDates]="completedDates()"
           [trackStart]="habit()!.createdAt"
           (dayClicked)="onSelectDay($event)"

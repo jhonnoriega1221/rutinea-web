@@ -21,6 +21,8 @@ import { HabitLogsFacade } from "../../facade/habit-logs.facade";
 import { CategoriesFacade } from "../../../../categories/presentation/facade/categories.facade";
 import { CategoryUpsertForm } from "../../../../categories/presentation/components/category-upsert-form/category-upsert-form";
 import { UpsertCategoryFormModel } from "../../../../categories/domain/models/category.model";
+import { HabitDetailsViewModel } from "../../models/habit-details.view-model";
+import { getColorByKey } from "../../../../../shared/components/color-picker/app-colors";
 
 @Component({
   selector: "app-habits-details-page",
@@ -47,22 +49,11 @@ export class HabitsDetailsPage implements OnInit {
 
   private readonly _habitsFacade = inject(HabitsFacade);
   private readonly _habitLogsFacade = inject(HabitLogsFacade);
-
   private readonly _categoriesFacade = inject(CategoriesFacade);
 
   protected readonly habit = this._habitsFacade.selectedHabit;
   protected readonly logs = this._habitLogsFacade.monthlyLogs;
   protected readonly categories = this._categoriesFacade.categories;
-
-  protected readonly habitFrequency = computed(() => {
-    return new Set<Weekday>(this.habit()?.frequency);
-  });
-
-  readonly completedDates = computed(() => {
-    return new Set<string>(this.logs().map((log) => log.date));
-  });
-
-  protected readonly habitIcon = computed<string>(() => getIconByKey(this.habit()?.icon!)?.icon!);
 
   protected readonly dateSelected = signal<Date>(new Date());
 
@@ -71,6 +62,33 @@ export class HabitsDetailsPage implements OnInit {
   protected readonly createCategoryDialog =
     viewChild.required<ResponsivePopup>("createCategoryDialog");
   protected readonly createHabitForm = viewChild<HabitsCreateForm>("createHabitForm");
+
+  protected readonly habitViewModel = computed<HabitDetailsViewModel | null>(() => {
+    const currentHabit = this.habit();
+    if (!currentHabit) return null;
+
+    const categories = this.categories();
+    const category = categories.find((c) => c.id === currentHabit.categoryId);
+
+    return {
+      id: currentHabit.id,
+      name: currentHabit.name,
+      description: currentHabit.description,
+      createdAt: currentHabit.createdAt,
+      frequency: new Set<Weekday>(currentHabit.frequency),
+      icon: getIconByKey(currentHabit.icon)?.icon ?? "lucideLeaf",
+      categoryInfo: category
+        ? {
+            name: category.name,
+            color: getColorByKey(category?.color!)?.cssVar!
+          }
+        : null
+    };
+  });
+
+  readonly completedDates = computed(() => {
+    return new Set<string>(this.logs().map((log) => log.date));
+  });
 
   async ngOnInit() {
     const now = new Date();
