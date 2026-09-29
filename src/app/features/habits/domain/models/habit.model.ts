@@ -25,6 +25,21 @@ export const WEEK_DAYS = WEEKDAYS.map((day) => ({
 
 export type Weekday = (typeof WEEKDAYS)[number];
 
+export const FREQUENCY_TYPE: Record<Weekday, string> = {
+  sunday: "Su",
+  monday: "Mo",
+  tuesday: "Tu",
+  wednesday: "We",
+  thursday: "Th",
+  friday: "Fr",
+  saturday: "Sa"
+};
+
+export type HabitFrequency =
+  | { type: "everyday" }
+  | { type: "specific_days"; days: Weekday[] }
+  | { type: "days_per_week"; count: number };
+
 export interface Habit {
   id: string;
   name: string;
@@ -32,7 +47,7 @@ export interface Habit {
   categoryId: string;
   icon: string;
   status: "active" | "paused" | "archived";
-  frequency: Weekday[];
+  frequencyData: HabitFrequency;
   createdAt: Date;
   updatedAt: Date;
 }

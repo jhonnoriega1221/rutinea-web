@@ -4,7 +4,7 @@ import { ResponsivePopup } from "../../../../../shared/components/responsive-pop
 import { lucidePlus } from "@ng-icons/lucide";
 import { NgIcon, provideIcons } from "@ng-icons/core";
 import { HabitsCreateForm } from "../../components/habits-create-form/habits-create-form";
-import { CreateHabitFormModel } from "../../../domain/models/habit.model";
+import { CreateHabitFormModel, Weekday } from "../../../domain/models/habit.model";
 import { HabitsList } from "../../components/habits-list/habits-list";
 import { HabitsFacade } from "../../facade/habits.facade";
 import { toast } from "@spartan-ng/brain/sonner";
@@ -53,6 +53,7 @@ export class HabitsPage implements OnInit {
     categoryId: null
   });
 
+  //TODO: Mover esto a un mapper
   protected readonly habitsViewModel = computed<HabitListViewModel[]>(() => {
     const habits = this.habits();
     const categories = this.categories();
@@ -63,15 +64,37 @@ export class HabitsPage implements OnInit {
 
       const completedDates = logsMap.get(habit.id) ?? new Set<string>();
 
+      const frequencyType = habit.frequencyData.type;
+
+      const trackableDays =
+        frequencyType === "specific_days"
+          ? new Set<Weekday>(habit.frequencyData.days)
+          : new Set<Weekday>([
+              "sunday",
+              "monday",
+              "thursday",
+              "wednesday",
+              "tuesday",
+              "friday",
+              "saturday"
+            ]);
+      const weeklyGoal = frequencyType === "days_per_week" ? habit.frequencyData.count : 7;
+
       return {
         ...habit,
         categoryInfo: category
           ? {
+              id: habit.categoryId,
               name: category.name,
               color: category.color
             }
           : null,
-        completedDates
+        completedDates,
+        frequencyData: {
+          type: frequencyType,
+          count: weeklyGoal,
+          days: trackableDays
+        }
       };
     });
   });
@@ -81,7 +104,7 @@ export class HabitsPage implements OnInit {
     const currentFilters = this.filters();
 
     return allHabits.filter((habit) => {
-      if (currentFilters.categoryId && habit.categoryId !== currentFilters.categoryId) {
+      if (currentFilters.categoryId && habit.categoryInfo?.id !== currentFilters.categoryId) {
         return false;
       }
 

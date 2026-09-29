@@ -1,0 +1,11 @@
+<div
+  class="text-sm text-foreground/70"
+  [class.text-success]="completionsThisWeek() >= weeklyGoal()"
+>
+  <span>
+    {{ completionsThisWeek() }}
+  </span>
+  <span class="mr-1">/</span>
+  <span>{{ weeklyGoal() }}</span>
+  <span class="ml-1 font-normal">days</span>
+</div>

@@ -70,3 +70,15 @@ export function getWeekDates(reference: Date = new Date(), weekStartsOn: 0 | 1 =
     return d;
   });
 }
+
+export function completionsThisWeek(completedDates: Set<string>, weekStartsOn: 0 | 1 = 0) {
+  const completed = completedDates;
+  if (!completed || completed.size === 0) return 0;
+
+  const weekDates = getWeekDates(new Date(), weekStartsOn);
+
+  return weekDates.reduce((count, date) => {
+    const key = toDateKey(date);
+    return completed.has(key) ? count + 1 : count;
+  }, 0);
+}

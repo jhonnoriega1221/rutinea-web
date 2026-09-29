@@ -8,7 +8,11 @@ import { HabitsFacade } from "../../facade/habits.facade";
 import { getIconByKey } from "../../../../../shared/components/icons/habit-icons";
 import { HlmButtonImports } from "@spartan-ng/helm/button";
 import { HabitTodayStatusCard } from "../../components/habit-today-status-card/habit-today-status-card";
-import { resolveDayState, toDateKey } from "../../../domain/utils/day-state.util";
+import {
+  completionsThisWeek,
+  resolveDayState,
+  toDateKey
+} from "../../../domain/utils/day-state.util";
 import { DayState } from "../../../domain/models/habit-log.model";
 import { URGENT_DATE_THRESHOLD } from "../../../domain/constants/habit-constants";
 import { ResponsivePopup } from "../../../../../shared/components/responsive-popup/responsive-popup";
@@ -52,7 +56,7 @@ export class HabitsDetailsPage implements OnInit {
   private readonly _categoriesFacade = inject(CategoriesFacade);
 
   protected readonly habit = this._habitsFacade.selectedHabit;
-  protected readonly logs = this._habitLogsFacade.monthlyLogs;
+  protected readonly monthlyLogs = this._habitLogsFacade.monthlyLogs;
   protected readonly categories = this._categoriesFacade.categories;
 
   protected readonly dateSelected = signal<Date>(new Date());
@@ -70,44 +74,70 @@ export class HabitsDetailsPage implements OnInit {
     const categories = this.categories();
     const category = categories.find((c) => c.id === currentHabit.categoryId);
 
+    const frequencyType = currentHabit.frequencyData.type;
+
+    const trackableDays =
+      frequencyType === "specific_days"
+        ? new Set<Weekday>(currentHabit.frequencyData.days)
+        : new Set<Weekday>([
+            "sunday",
+            "monday",
+            "thursday",
+            "wednesday",
+            "tuesday",
+            "friday",
+            "saturday"
+          ]);
+    const weeklyGoal = frequencyType === "days_per_week" ? currentHabit.frequencyData.count : 7;
+
     return {
-      id: currentHabit.id,
-      name: currentHabit.name,
-      description: currentHabit.description,
-      createdAt: currentHabit.createdAt,
-      frequency: new Set<Weekday>(currentHabit.frequency),
+      ...currentHabit,
       icon: getIconByKey(currentHabit.icon)?.icon ?? "lucideLeaf",
       categoryInfo: category
         ? {
             name: category.name,
             color: getColorByKey(category?.color!)?.cssVar!
           }
-        : null
+        : null,
+      frequencyData: {
+        type: frequencyType,
+        count: weeklyGoal,
+        days: trackableDays
+      }
     };
   });
 
-  readonly completedDates = computed(() => {
-    return new Set<string>(this.logs().map((log) => log.date));
+  readonly completedFocusedMonthDates = computed(() => {
+    return new Set<string>(this.monthlyLogs().map((log) => log.date));
   });
 
   async ngOnInit() {
     const now = new Date();
     this._habitsFacade.getById(this.id());
     this._habitLogsFacade.checkTodayCompletion(this.id(), toDateKey(now));
-    this._habitLogsFacade.loadLogsForMonth(this.id(), now.getFullYear(), now.getMonth() + 1);
+    this._habitLogsFacade.loadLogsForHabitMonth(this.id(), now.getFullYear(), now.getMonth() + 1);
+    this._habitLogsFacade.loadLogsForHabitCurrentWeek(this.id());
     await this._categoriesFacade.loadAll();
   }
 
   protected readonly todayStatus = computed<DayState>(() => {
-    const currentHabit = this.habit();
+    const currentHabit = this.habitViewModel();
+    const frequencyType = this.habitViewModel()?.frequencyData.type;
+    const frequencyDays = currentHabit!.frequencyData!.days;
 
-    const todayLog = this._habitLogsFacade.todayLog();
-    const scheduled = new Set(currentHabit!.frequency);
+    let todayLog = !!this._habitLogsFacade.todayLog();
+
+    if (frequencyType === "days_per_week" && !todayLog) {
+      const frequencyCount = this.habitViewModel()?.frequencyData.count!;
+
+      todayLog = completionsThisWeek(this._habitLogsFacade.currentWeeklyLogs()!) >= frequencyCount;
+    }
+    const scheduled = new Set(frequencyDays);
 
     return resolveDayState({
       date: new Date(),
       scheduled,
-      completed: !!todayLog,
+      completed: todayLog,
       createdAt: currentHabit!.createdAt,
       urgentThresholdHours: URGENT_DATE_THRESHOLD
     });
@@ -159,7 +189,7 @@ export class HabitsDetailsPage implements OnInit {
   }
 
   onChangeCalendarFocusDate(event: { month: number; year: number }) {
-    this._habitLogsFacade.loadLogsForMonth(this.id(), event.year, event.month + 1);
+    this._habitLogsFacade.loadLogsForHabitMonth(this.id(), event.year, event.month + 1);
   }
 
   onSelectDay(date: Date) {

@@ -20,7 +20,7 @@ interface MonthlyQuery {
 }
 
 interface WeeklyQuery {
-  habitIds: string[];
+  habitId: string;
   startDateKey: string;
   endDateKey: string;
 }
@@ -43,6 +43,7 @@ export class HabitLogsFacade {
   private readonly _globalLogs = signal<Map<string, HabitLog>>(new Map());
 
   private readonly _activeMonthQuery = signal<MonthlyQuery | null>(null);
+  private readonly _activeWeeklyQuery = signal<WeeklyQuery | null>(null);
   private readonly _activeTodayQuery = signal<TodayQuery | null>(null);
 
   readonly listLogsMap = computed(() => {
@@ -73,6 +74,23 @@ export class HabitLogsFacade {
     return logs;
   });
 
+  readonly currentWeeklyLogs = computed(() => {
+    const query = this._activeWeeklyQuery();
+    if (!query) return null;
+
+    const logsSet = new Set<string>();
+    for (const log of this._globalLogs().values()) {
+      if (
+        log.habitId === query.habitId &&
+        log.date >= query.startDateKey &&
+        log.date <= query.endDateKey
+      ) {
+        logsSet.add(log.date);
+      }
+    }
+    return logsSet;
+  });
+
   readonly todayLog = computed(() => {
     const query = this._activeTodayQuery();
     if (!query) return null;
@@ -89,7 +107,7 @@ export class HabitLogsFacade {
     });
   }
 
-  async loadLogsForMonth(habitId: string, year: number, month: number) {
+  async loadLogsForHabitMonth(habitId: string, year: number, month: number) {
     const startDateKey = toDateKey(new Date(year, month - 1, 1, 0, 0, 0));
     const endDateKey = toDateKey(new Date(year, month, 0, 0, 0, 0));
 
@@ -110,6 +128,24 @@ export class HabitLogsFacade {
     if (log) {
       this._updateGlobalLogs([log]);
     }
+  }
+
+  async loadLogsForHabitCurrentWeek(habitId: string) {
+    const now = new Date();
+    const day = now.getDay();
+    const diff = now.getDate() - day;
+
+    const startOfWeek = new Date(now.setDate(diff));
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(endOfWeek.getDate() + 6);
+
+    const startDateKey = toDateKey(startOfWeek);
+    const endDateKey = toDateKey(endOfWeek);
+
+    this._activeWeeklyQuery.set({ habitId, startDateKey, endDateKey });
+
+    const logs = await this._getWeeklyLogsByHabits.execute([habitId], startDateKey, endDateKey);
+    this._updateGlobalLogs(logs);
   }
 
   async loadLogsForHabitsList(habitIds: string[], startDate: Date, endDate: Date) {

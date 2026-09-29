@@ -43,7 +43,23 @@
           >
         </p>
         <p class="font-bold">Week frequency:</p>
-        <app-habit-week-tracker [enableColors]="false" [frequency]="habitViewModel()?.frequency!" />
+        @if (habitViewModel()?.frequencyData!.type === "specific_days") {
+          <app-habit-week-tracker
+            [enableColors]="false"
+            [frequency]="habitViewModel()?.frequencyData!.days"
+          />
+        }
+
+        @if (habitViewModel()?.frequencyData!.type === "days_per_week") {
+          <p>
+            <span class="mr-1">{{ habitViewModel()?.frequencyData!.count }}</span>
+            <span>{{ habitViewModel()?.frequencyData!.count > 1 ? "days" : "day" }}</span> at week
+          </p>
+        }
+
+        @if (habitViewModel()?.frequencyData!.type === "everyday") {
+          <p>Everyday</p>
+        }
       </div>
     </hlm-card>
 
@@ -53,8 +69,8 @@
       </hlm-card-header>
       <div hlmCardContent>
         <app-habit-calendar-tracker
-          [frequency]="habitViewModel()?.frequency!"
-          [completedDates]="completedDates()"
+          [frequency]="habitViewModel()?.frequencyData!.days"
+          [completedDates]="completedFocusedMonthDates()"
           [trackStart]="habit()!.createdAt"
           (dayClicked)="onSelectDay($event)"
           (focusedDateChange)="onChangeCalendarFocusDate($event)"
@@ -68,8 +84,8 @@
   @if (dateInfoPopup.state() === "open") {
     <app-habit-date-info
       [dateSelected]="dateSelected()!"
-      [habit]="habit()!"
-      [completedDates]="completedDates()"
+      [habit]="habitViewModel()!"
+      [completedDates]="completedFocusedMonthDates()"
       (markCompleted)="onMarkCompleted($event)"
       (removeCompleted)="onRemoveCompleted($event)"
     />

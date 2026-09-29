@@ -2,7 +2,7 @@
   <div hlmCardContent class="flex items-center justify-between gap-4 px-2">
     <div class="flex gap-2 items-center">
       <div
-        class="bg-primary/40 text-primary w-[48px] h-[48px] aspect-square rounded-lg flex items-center justify-center text-white"
+        class="bg-primary/40 text-white w-[48px] h-[48px] aspect-square rounded-lg flex items-center justify-center"
         [style.backgroundColor]="'var(' + categoryColor() + ')'"
       >
         <ng-icon [name]="habitIcon()" size="24px" />
@@ -11,11 +11,23 @@
       <div class="flex flex-col gap-1">
         <p class="text-card-foreground font-medium">{{ habit()?.name }}</p>
         <div class="h-[24px] w-[160px]">
-          <app-habit-week-tracker
-            [frequency]="habitFrequency()"
-            [createdAt]="habit()?.createdAt"
-            [completedDates]="habit()?.completedDates"
-          />
+          @if (
+            habit()!.frequencyData.type === "specific_days" ||
+            habit()!.frequencyData.type === "everyday"
+          ) {
+            <app-habit-week-tracker
+              [frequency]="habit()?.frequencyData!.days"
+              [createdAt]="habit()?.createdAt"
+              [completedDates]="habit()?.completedDates"
+            />
+          }
+
+          @if (habit()!.frequencyData.type === "days_per_week") {
+            <app-habit-numeric-tracker
+              [completedDates]="habit()!.completedDates"
+              [weeklyGoal]="habit()!.frequencyData.count"
+            />
+          }
         </div>
       </div>
     </div>

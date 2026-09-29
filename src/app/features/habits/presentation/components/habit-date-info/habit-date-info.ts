@@ -2,9 +2,9 @@ import { Component, computed, input, output } from "@angular/core";
 import { HlmBadgeImports } from "@spartan-ng/helm/badge";
 import { HlmButtonImports } from "@spartan-ng/helm/button";
 import { NgIcon } from "@ng-icons/core";
-import { Habit } from "../../../domain/models/habit.model";
 import { DayState } from "../../../domain/models/habit-log.model";
 import { resolveDayState, toDateKey } from "../../../domain/utils/day-state.util";
+import { HabitDetailsViewModel } from "../../models/habit-details.view-model";
 
 interface DayConfig {
   badgeLabel: string;
@@ -24,9 +24,9 @@ interface DayConfig {
   styleUrl: "./habit-date-info.css"
 })
 export class HabitDateInfo {
-  habit = input.required<Habit>();
+  habit = input.required<HabitDetailsViewModel>();
   dateSelected = input.required<Date>();
-  completedDates = input<Set<string>>();
+  completedDates = input<Set<string>>(); // TODO: Evaluar si esto es necesario, creo que lo ideal es pasarle el booleano si está o no completado el dia seleciconado
 
   markCompleted = output<Date>();
   removeCompleted = output<Date>();
@@ -43,7 +43,7 @@ export class HabitDateInfo {
 
     return resolveDayState({
       date,
-      scheduled: new Set(habit.frequency),
+      scheduled: new Set(habit.frequencyData.days),
       completed: this.completedDates()?.has(toDateKey(date)) ?? false,
       createdAt: habit.createdAt,
       hideFuture: true
