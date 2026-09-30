@@ -5,4 +5,6 @@ import packageJson from "../../../../package.json";
 export class AppInfoService {
   readonly version = packageJson.version;
   readonly name = packageJson.name;
+
+  hasSeenDashboardGreeting = false;
 }
