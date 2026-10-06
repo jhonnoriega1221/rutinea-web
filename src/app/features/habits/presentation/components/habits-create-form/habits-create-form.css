@@ -1,0 +1,15 @@
+.weekday-toggle button {
+  background: color-mix(in srgb, var(--background) 50%, transparent);
+  color: color-mix(in srgb, var(--foreground) 20%, transparent);
+  border: 1px solid color-mix(in srgb, var(--foreground) 15%, transparent);
+}
+
+.weekday-toggle button[data-state="on"] {
+  background: color-mix(in srgb, var(--primary) 20%, transparent);
+  color: var(--primary);
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
+}
+
+.weekday-toggle button[data-state="off"]:hover {
+  background: color-mix(in srgb, var(--foreground) 10%, transparent);
+}
