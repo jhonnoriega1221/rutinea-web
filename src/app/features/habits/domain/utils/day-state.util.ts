@@ -36,11 +36,11 @@ export function resolveDayState(options: ResolveDayStateOptions): DayState {
   const today = new Date();
 
   if (hideFuture && toDateKey(date) > toDateKey(today)) return "future-date";
+  if (completed) return "completed";
   if (createdAt && toDateKey(createdAt) > toDateKey(date)) return "not-scheduled";
   if (!scheduled.has(getWeekdayKey(date))) return "not-scheduled";
 
   const dateKey = toDateKey(date);
-  if (completed) return "completed";
 
   if (urgentThresholdHours) {
     const isToday = dateKey === toDateKey(today);
