@@ -14,12 +14,14 @@
       </div>
     </div>
 
-    <app-habit-today-status-card [status]="todayStatus()" (markCompleted)="onMarkCompleted()" />
+    <section>
+      <app-habit-today-status-card [status]="todayStatus()" (markCompleted)="onMarkCompleted()" />
+    </section>
 
-    <hlm-card class="card-shadow mb-3">
-      <hlm-card-header>
+    <section class="bg-card card-shadow border rounded-2xl p-4 mb-3">
+      <header>
         <p hlmCardTitle>Details</p>
-      </hlm-card-header>
+      </header>
       <div hlmCardContent class="flex flex-col gap-2">
         <div class="flex gap-2">
           <div class="mt-0.5">
@@ -44,10 +46,12 @@
         </p>
         <p class="font-bold">Week frequency:</p>
         @if (habitViewModel()?.frequencyData!.type === "specific_days") {
-          <app-habit-week-tracker
-            [enableColors]="false"
-            [frequency]="habitViewModel()?.frequencyData!.days"
-          />
+          <div class="w-[190px]">
+            <app-habit-week-tracker
+              [enableColors]="false"
+              [frequency]="habitViewModel()?.frequencyData!.days"
+            />
+          </div>
         }
 
         @if (habitViewModel()?.frequencyData!.type === "days_per_week") {
@@ -61,9 +65,9 @@
           <p>Everyday</p>
         }
       </div>
-    </hlm-card>
+    </section>
 
-    <hlm-card class="card-shadow">
+    <section class="bg-card card-shadow border p-4 rounded-2xl">
       <hlm-card-header>
         <p hlmCardTitle>History</p>
       </hlm-card-header>
@@ -76,7 +80,7 @@
           (focusedDateChange)="onChangeCalendarFocusDate($event)"
         />
       </div>
-    </hlm-card>
+    </section>
   }
 </main>
 

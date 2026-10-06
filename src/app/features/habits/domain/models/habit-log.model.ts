@@ -6,6 +6,7 @@ export interface DayCell {
   label: string;
   isToday: boolean;
   state: DayState;
+  uiClasses?: string;
 }
 
 export interface HabitLog {

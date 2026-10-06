@@ -24,17 +24,41 @@ export class HabitWeekTracker {
   protected readonly days = computed<DayCell[]>(() => {
     const createdAt = this.createdAt();
     const todayKey = toDateKey(new Date());
+    const useColors = this.enableColors(); //TODO: Pensar en otro nombre para esta variable, ya que es para ver el progreso del mes en detalle del habito
 
-    return getWeekDates(new Date(), this.weekStartsOn()).map((date) => ({
-      key: getWeekDates(date),
-      label: DAY_LABELS[getWeekdayKey(date)],
-      isToday: toDateKey(date) === todayKey,
-      state: resolveDayState({
+    return getWeekDates(new Date(), this.weekStartsOn()).map((date) => {
+      const isToday = toDateKey(date) === todayKey;
+      const state = resolveDayState({
         date,
         scheduled: this.frequency(),
         completed: this.completedDates()?.has(toDateKey(date)) ?? false,
         createdAt
-      })
-    }));
+      });
+
+      const textClasses = useColors ? "text-sm" : "text-base";
+      let statusClasses = "";
+
+      if (useColors) {
+        if (state === "completed") {
+          statusClasses = "text-primary";
+        } else if (state === "not-scheduled") {
+          statusClasses = "text-foreground/20";
+        } else {
+          statusClasses = "text-foreground/50";
+        }
+      } else {
+        statusClasses = state === "not-scheduled" ? "text-foreground/20" : "text-foreground";
+      }
+
+      const todayClasses = isToday && useColors ? "ring-2 ring-foreground/15 bg-foreground/10" : "";
+
+      return {
+        key: getWeekDates(date),
+        label: DAY_LABELS[getWeekdayKey(date)],
+        isToday: toDateKey(date) === todayKey,
+        state,
+        uiClasses: `${textClasses} ${statusClasses} ${todayClasses}`.trim()
+      };
+    });
   });
 }
