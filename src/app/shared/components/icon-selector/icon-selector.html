@@ -11,12 +11,12 @@
   </button>
   <hlm-popover-content *hlmPopoverPortal class="min-w-[276px]">
     <div>
-      @for (icon of icons; track icon.key) {
+      @for (icon of uiIcons(); track icon.key) {
         <button
           type="button"
           hlmBtn
-          [variant]="value() === icon.key ? 'default' : 'ghost'"
-          size="icon"
+          class="{{ icon.uiClasses }}"
+          size="icon-lg"
           (click)="select(icon)"
         >
           <ng-icon [name]="icon.icon" size="18" />

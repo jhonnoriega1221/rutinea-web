@@ -4,10 +4,11 @@ import { getIconByKey, HABIT_ICON_OPTIONS, IconOption } from "../icons/habit-ico
 import { HlmPopoverImports } from "@spartan-ng/helm/popover";
 import { HlmButtonImports } from "@spartan-ng/helm/button";
 import { NgIcon } from "@ng-icons/core";
+import { HlmInputGroupButton } from "@spartan-ng/helm/input-group";
 
 @Component({
   selector: "app-icon-selector",
-  imports: [HlmPopoverImports, HlmButtonImports, NgIcon],
+  imports: [HlmPopoverImports, HlmButtonImports, NgIcon, HlmInputGroupButton],
   templateUrl: "./icon-selector.html"
 })
 export class IconSelector implements FormValueControl<string> {
@@ -17,7 +18,22 @@ export class IconSelector implements FormValueControl<string> {
   });
 
   protected readonly state = signal<"open" | "closed">("closed");
-  protected readonly icons = HABIT_ICON_OPTIONS;
+  protected readonly uiIcons = computed(() => {
+    const selectedKey = this.value();
+
+    return HABIT_ICON_OPTIONS.map((icon) => {
+      const isSelected = icon.key === selectedKey;
+
+      const stateClasses = isSelected
+        ? "bg-primary/20 hover:bg-primary/20 text-primary"
+        : "bg-transparent hover:bg-foreground/10 text-foreground";
+
+      return {
+        ...icon,
+        uiClasses: stateClasses
+      };
+    });
+  });
 
   protected select(iconSelected: IconOption) {
     this.value.set(iconSelected.key);
