@@ -2,13 +2,13 @@
   <p class="text-2xl font-bold mb-4">Settings</p>
 
   <p class="font-semibold mb-2">Appearance</p>
-  <div class="shadow border bg-card py-3 px-6 rounded-xl mb-6">
+  <section class="card-shadow border bg-card py-3 px-6 rounded-xl mb-6">
     <div hlmCardContent class="flex flex-col sm:flex-row gap-3 justify-between">
       <div class="flex gap-4 items-center">
         <ng-icon name="lucideContrast" size="20" class="min-w-5" />
         <div>
           <label>Theme</label>
-          <p class="text-foreground/40 text-sm">Set your theme preference</p>
+          <p class="text-foreground/50 text-sm">Set your theme preference</p>
         </div>
       </div>
       <hlm-toggle-group
@@ -30,10 +30,10 @@
         </button>
       </hlm-toggle-group>
     </div>
-  </div>
+  </section>
 
   <p class="font-semibold mb-2">Categories</p>
-  <div class="shadow border bg-card rounded-xl mb-6">
+  <section class="card-shadow border bg-card rounded-xl mb-6">
     <a
       routerLink="/settings/categories"
       hlmCardContent
@@ -43,15 +43,15 @@
         <ng-icon name="lucideFolderBookmark" size="20" class="min-w-5" />
         <div>
           <p>Manage Categories</p>
-          <p class="text-foreground/40 text-sm">View, add, and edit categories for your habits.</p>
+          <p class="text-foreground/50 text-sm">View, add, and edit categories for your habits.</p>
         </div>
       </div>
       <ng-icon size="22" name="lucideChevronRight" class="min-w-5" />
     </a>
-  </div>
+  </section>
 
   <p class="font-semibold mb-2">About</p>
-  <div class="shadow border bg-card py-3 px-6 rounded-xl">
+  <section class="card-shadow border bg-card py-3 px-6 rounded-xl">
     <div hlmCardContent class="flex flex-col justify-center gap-2 py-4">
       <img
         src="/assets/images/habits_logo.svg"
@@ -72,5 +72,5 @@
         >
       </p>
     </div>
-  </div>
+  </section>
 </main>
