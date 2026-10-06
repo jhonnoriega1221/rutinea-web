@@ -7,7 +7,7 @@
     nullable="false"
     spacing="2"
     [value]="selectedCategory() ?? 'all'"
-    class="h-full"
+    class="category-filter-toggle"
   >
     <button
       hlmToggleGroupItem
@@ -29,7 +29,7 @@
   <button
     hlmBtn
     size="icon"
-    class="h-full rounded-full"
+    class="rounded-full bg-background/50! border-foreground/20! hover:bg-foreground/10!"
     variant="outline"
     (click)="clickCreateCategory.emit()"
   >

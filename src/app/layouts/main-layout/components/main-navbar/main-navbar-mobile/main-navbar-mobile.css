@@ -19,6 +19,7 @@
   background: var(--sidebar);
   border-radius: 9999px;
   box-shadow: var(--sidebar-shadow);
+  border: 1px solid var(--sidebar-border);
 }
 
 .navbar-item {

@@ -2,13 +2,13 @@
   <p class="text-2xl font-bold mb-4">Settings</p>
 
   <p class="font-semibold mb-2">Appearance</p>
-  <hlm-card class="card-shadow mb-6">
+  <div class="shadow border bg-card py-3 px-6 rounded-xl mb-6">
     <div hlmCardContent class="flex flex-col sm:flex-row gap-3 justify-between">
       <div class="flex gap-4 items-center">
         <ng-icon name="lucideContrast" size="20" class="min-w-5" />
         <div>
           <label>Theme</label>
-          <p class="text-card-foreground/40 text-sm">Set your theme preference</p>
+          <p class="text-foreground/40 text-sm">Set your theme preference</p>
         </div>
       </div>
       <hlm-toggle-group
@@ -30,30 +30,28 @@
         </button>
       </hlm-toggle-group>
     </div>
-  </hlm-card>
+  </div>
 
   <p class="font-semibold mb-2">Categories</p>
-  <hlm-card class="card-shadow mb-6">
+  <div class="shadow border bg-card rounded-xl mb-6">
     <a
       routerLink="/settings/categories"
       hlmCardContent
-      class="flex flex-row gap-3 justify-between items-center hover:bg-card-foreground/10"
+      class="flex flex-row gap-3 py-3 px-6 rounded-xl justify-between items-center hover:bg-foreground/4"
     >
       <div class="flex gap-4 items-center">
         <ng-icon name="lucideFolderBookmark" size="20" class="min-w-5" />
         <div>
           <p>Manage Categories</p>
-          <p class="text-card-foreground/40 text-sm">
-            View, add, and edit categories for your habits.
-          </p>
+          <p class="text-foreground/40 text-sm">View, add, and edit categories for your habits.</p>
         </div>
       </div>
       <ng-icon size="22" name="lucideChevronRight" class="min-w-5" />
     </a>
-  </hlm-card>
+  </div>
 
   <p class="font-semibold mb-2">About</p>
-  <hlm-card class="card-shadow">
+  <div class="shadow border bg-card py-3 px-6 rounded-xl">
     <div hlmCardContent class="flex flex-col justify-center gap-2 py-4">
       <img
         src="/assets/images/habits_logo.svg"
@@ -61,7 +59,7 @@
         class="w-24 h-24 object-contain mx-auto"
       />
       <p class="text-center font-medium text-lg">Habits App</p>
-      <p class="text-center text-neutral-500 text-sm">v{{ version }}</p>
+      <p class="text-center text-foreground/40 text-sm">v{{ version }}</p>
 
       <p class="text-xs text-center mt-3">2026 Made By Jhon Noriega</p>
       <p class="text-xs text-center">
@@ -74,5 +72,5 @@
         >
       </p>
     </div>
-  </hlm-card>
+  </div>
 </main>

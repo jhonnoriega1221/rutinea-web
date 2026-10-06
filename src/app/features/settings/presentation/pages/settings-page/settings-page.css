@@ -1,7 +1,10 @@
 .settings-theme-toggle button[data-state="on"] {
   background: var(--primary);
   color: var(--primary-foreground);
-  border-color: var(--primary-border);
+}
+
+.settings-theme-toggle button[data-state="off"]:hover {
+  background: color-mix(in srgb, var(--foreground) 5%, transparent);
 }
 
 .settings-theme-toggle button[data-state="on"] ng-icon {

@@ -17,6 +17,7 @@
   background: var(--sidebar);
   width: var(--sidebar-width);
   box-shadow: var(--sidebar-shadow);
+  border: 1px solid var(--sidebar-border);
 }
 
 .sidebar a:hover {
@@ -29,6 +30,7 @@
 
 .sidebar a.is-active {
   color: var(--sidebar-primary-foreground);
+  background-color: var(--sidebar-primary);
 }
 
 .sidebar a.is-active ng-icon {

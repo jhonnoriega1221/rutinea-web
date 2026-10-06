@@ -1,0 +1,14 @@
+.category-filter-toggle button {
+  background: color-mix(in srgb, var(--background) 50%, transparent);
+  border: 1px solid color-mix(in srgb, var(--foreground) 20%, transparent);
+}
+
+.category-filter-toggle button[data-state="on"] {
+  background: color-mix(in srgb, var(--primary) 20%, transparent);
+  color: var(--primary);
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
+}
+
+.category-filter-toggle button[data-state="off"]:hover {
+  background: color-mix(in srgb, var(--foreground) 10%, transparent);
+}
