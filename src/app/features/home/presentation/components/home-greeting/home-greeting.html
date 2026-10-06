@@ -1,0 +1,16 @@
+<header class="relative h-[36px] mb-6 flex items-center">
+  @if (showGreeting()) {
+    <h1 class="absolute inset-0 text-3xl font-bold tracking-tight text-foreground animate-greeting">
+      {{ greeting() }}
+    </h1>
+  } @else {
+    <h1
+      class="absolute inset-0 text-3xl font-bold tracking-tight text-foreground capitalize"
+      [class.animate-in]="animateDate()"
+      [class.fade-in]="animateDate()"
+      [class.duration-500]="animateDate()"
+    >
+      {{ formattedDate() }}
+    </h1>
+  }
+</header>
