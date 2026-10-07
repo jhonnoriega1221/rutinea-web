@@ -1,0 +1,17 @@
+<div class="mx-auto max-w-150 px-12 py-6 text-center">
+  <img class="mx-auto mb-8 w-30 sm:w-36" [src]="image()" />
+
+  <p class="mb-1 text-xl font-bold sm:text-2xl">{{ title() }}</p>
+
+  @if (description() !== undefined || description() === "") {
+    <p class="text-foreground/60 text-sm sm:text-base">{{ description() }}</p>
+  }
+
+  @if (actionBtnText() !== undefined || actionBtnText() === "") {
+    <div class="mt-5">
+      <button class="px-5 py-6 text-lg" size="lg" hlmBtn (click)="this.clickAction.emit()">
+        {{ actionBtnText() }}
+      </button>
+    </div>
+  }
+</div>

@@ -17,6 +17,7 @@ import { HlmDropdownMenuImports } from "@spartan-ng/helm/dropdown-menu";
 import { RouterLink } from "@angular/router";
 import { CategoryFilterPicker } from "../../../../categories/presentation/components/category-filter-picker/category-filter-picker";
 import { HabitListFilters, HabitListViewModel } from "../../models/habit-list.view-model";
+import { DataState } from "../../../../../shared/components/data-state/data-state";
 @Component({
   selector: "app-habits-page",
   imports: [
@@ -29,7 +30,8 @@ import { HabitListFilters, HabitListViewModel } from "../../models/habit-list.vi
     ResponsivePopup,
     CategoryUpsertForm,
     RouterLink,
-    CategoryFilterPicker
+    CategoryFilterPicker,
+    DataState
   ],
   templateUrl: "./habits-page.html",
   styleUrl: "./habits-page.css",

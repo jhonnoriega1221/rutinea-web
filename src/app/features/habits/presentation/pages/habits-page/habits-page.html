@@ -31,7 +31,23 @@
     />
   </div>
   <div class="px-2">
-    <app-habits-list [habits]="filteredHabits()" />
+    @if (habits().length === 0) {
+      <app-data-state
+        [image]="'/assets/svg/empty_habits_state.svg'"
+        title="Your routine starts here"
+        description="Small habits grow into big changes. Create your first one and start building your streak."
+        actionBtnText="Crear hábito"
+        (clickAction)="createHabitDialog.open()"
+      />
+    } @else if (filteredHabits().length === 0) {
+      <app-data-state
+        [image]="'/assets/svg/empty_search_state.svg'"
+        title="No habits found"
+        description="Nothing matches your search or filters. Try a different keyword or category."
+      />
+    } @else {
+      <app-habits-list [habits]="filteredHabits()" />
+    }
   </div>
 </main>
 
