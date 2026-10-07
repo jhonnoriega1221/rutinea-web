@@ -9,11 +9,21 @@
     </div>
   </div>
   <div class="px-2">
-    <app-categories-list
-      (clickDelete)="onDeleteCategory($event)"
-      (clickEdit)="onEditCategory($event)"
-      [categories]="categories()"
-    />
+    @if (categories().length === 0) {
+      <app-data-state
+        [image]="'/assets/svg/empty_state.svg'"
+        title="Organize your habits"
+        description="Categories help you group habits by theme. Create your first one."
+        actionBtnText="Create category"
+        (clickAction)="createCategoryDialog.open()"
+      />
+    } @else {
+      <app-categories-list
+        (clickDelete)="onDeleteCategory($event)"
+        (clickEdit)="onEditCategory($event)"
+        [categories]="categories()"
+      />
+    }
   </div>
 </main>
 

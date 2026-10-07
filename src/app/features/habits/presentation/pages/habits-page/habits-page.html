@@ -22,20 +22,22 @@
       </ng-template>
     </div>
   </div>
-  <div class="mb-3 overflow-x-auto px-3">
-    <app-category-filter-picker
-      [categories]="categories()"
-      [selectedCategory]="filters().categoryId"
-      (changeCategory)="onCategoryFilterChange($event)"
-      (clickCreateCategory)="createCategoryDialog.open()"
-    />
-  </div>
+  @if (habits().length > 0) {
+    <div class="mb-3 overflow-x-auto px-3">
+      <app-category-filter-picker
+        [categories]="categories()"
+        [selectedCategory]="filters().categoryId"
+        (changeCategory)="onCategoryFilterChange($event)"
+        (clickCreateCategory)="createCategoryDialog.open()"
+      />
+    </div>
+  }
   <div class="px-2">
     @if (habits().length === 0) {
       <app-data-state
         [image]="'/assets/svg/empty_habits_state.svg'"
         title="Your routine starts here"
-        description="Small habits grow into big changes. Create your first one and start building your streak."
+        description="Small habits grow into big changes. Create your first one."
         actionBtnText="Crear hábito"
         (clickAction)="createHabitDialog.open()"
       />

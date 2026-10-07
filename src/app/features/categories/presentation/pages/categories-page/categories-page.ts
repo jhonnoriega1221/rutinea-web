@@ -8,10 +8,18 @@ import { CategoryUpsertForm } from "../../components/category-upsert-form/catego
 import { Category, UpsertCategoryFormModel } from "../../../domain/models/category.model";
 import { toast } from "@spartan-ng/brain/sonner";
 import { ResponsiveDialogService } from "../../../../../shared/services/responsive-dialog.service";
+import { DataState } from "../../../../../shared/components/data-state/data-state";
 
 @Component({
   selector: "app-categories-page",
-  imports: [HlmButtonImports, ResponsivePopup, CategoriesList, NgIcon, CategoryUpsertForm],
+  imports: [
+    HlmButtonImports,
+    ResponsivePopup,
+    CategoriesList,
+    NgIcon,
+    CategoryUpsertForm,
+    DataState
+  ],
   templateUrl: "./categories-page.html",
   styleUrl: "./categories-page.css"
 })

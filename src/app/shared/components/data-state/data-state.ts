@@ -10,9 +10,7 @@ import { HlmButtonImports } from "@spartan-ng/helm/button";
 export class DataState {
   image = input<string | undefined>("/assets/svg/error_state.svg");
   title = input<string | undefined>("Something went wrong");
-  description = input<string | undefined>(
-    "We couldn't load this right now. Please try again in a moment."
-  );
+  description = input<string | undefined>("Please try again in a moment.");
   actionBtnText = input<string | undefined>();
 
   clickAction = output<void>();
