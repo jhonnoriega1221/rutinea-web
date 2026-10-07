@@ -6,7 +6,13 @@
         <ng-icon name="lucidePlus" class="w-5! h-5!" />
         New habit
       </button>
-      <button hlmBtn variant="ghost" size="icon" [hlmDropdownMenuTrigger]="menu" align="end">
+      <button
+        hlmBtn
+        class="bg-transparent text-foreground hover:bg-foreground/10"
+        size="icon"
+        [hlmDropdownMenuTrigger]="menu"
+        align="end"
+      >
         <ng-icon size="20" name="lucideEllipsisVertical" />
       </button>
       <ng-template #menu>

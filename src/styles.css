@@ -41,46 +41,46 @@
   --bottombar-padding: 18px;
 
   --background: oklch(97.2% 0.015 158);
-  --foreground: oklch(14.5% 0.02 160);
+  --foreground: oklch(21.357% 0.04368 157.679);
 
   --card: oklch(98.641% 0.01147 154.175);
   --card-shadow: 0 3px 4px color-mix(var(--foreground) 10%, transparent);
-  --card-foreground: oklch(14.5% 0.02 160);
+  --card-foreground: var(--foregound);
   --card-border: oklch(92.5% 0.01 155);
 
   --popover: var(--card);
-  --popover-foreground: oklch(14.5% 0.02 160);
+  --popover-foreground: var(--foreground);
 
-  --primary: oklch(65.5% 0.175 142);
+  --primary: oklch(68.119% 0.20626 141.997);
   --primary-border: oklch(94.2% 0.03 145);
   --primary-foreground: oklch(99% 0.005 160);
 
-  --secondary: oklch(94.2% 0.012 155);
+  --secondary: color-mix(in srgb, var(--foreground) 10%, transparent);
   --secondary-foreground: oklch(25% 0.03 155);
 
-  --muted: oklch(95.5% 0.008 155);
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
   --muted-foreground: oklch(48% 0.015 160);
 
-  --accent: oklch(94.2% 0.015 155);
-  --accent-foreground: oklch(25% 0.03 155);
+  --accent: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --accent-foreground: var(--foreground);
 
   --destructive: oklch(57.7% 0.245 27.325);
-  --success: oklch(63.2% 0.185 145);
+  --success: oklch(72.657% 0.22482 141.965);
   --warning: oklch(76.9% 0.188 70.08);
   --info: oklch(60.5% 0.142 250);
 
   --border: oklch(92.5% 0.01 155);
-  --input: oklch(92.5% 0.01 155);
+  --input: color-mix(in srgb, var(--foreground) 10%, transparent);
   --ring: oklch(65.5% 0.175 142 / 0.5);
 
   /* Sidebar */
   --sidebar: oklch(96.948% 0.00986 155.673);
-  --sidebar-foreground: var(--foreground);
+  --sidebar-foreground: color-mix(in srgb, var(--foreground) 60%, transparent);
   --sidebar-hover: color-mix(in srgb, var(--sidebar-foreground) 8%, transparent);
   --sidebar-primary: color-mix(in srgb, var(--sidebar-primary-foreground) 10%, transparent);
   --sidebar-primary-foreground: var(--primary);
   --sidebar-border: color-mix(in srgb, var(--sidebar-foreground) 8%, transparent);
-  --sidebar-shadow: 0 4px 5px color-mix(in srgb, var(--primary) 10%, transparent);
+  --sidebar-shadow: 0 6px 10px color-mix(in srgb, var(--primary) 20%, transparent);
 
   --cat-red: oklch(0.65 0.22 25);
   --cat-orange: oklch(0.7 0.18 50);
@@ -108,24 +108,24 @@
   --foreground: oklch(98.2% 0.008 160);
 
   --card: oklch(22.342% 0.02504 158.563);
-  --card-shadow: 0 2px 5px color-mix(var(--background) 30%, transparent);
+  --card-shadow: 0 3px 4px color-mix(var(--background) 10%, transparent);
   --card-foreground: var(--foreground);
 
-  --popover: oklch(16.5% 0.025 160);
-  --popover-foreground: oklch(98.2% 0.008 160);
+  --popover: var(--card);
+  --popover-foreground: var(--card-foreground);
 
   --primary: oklch(64.827% 0.17363 142.984);
   --primary-border: oklch(1 0 0 / 8%);
   --primary-foreground: oklch(93.5% 0.015 160);
 
-  --secondary: oklch(21.5% 0.02 160);
+  --secondary: color-mix(in srgb, var(--foreground) 10%, transparent);
   --secondary-foreground: oklch(93.5% 0.015 160);
 
-  --muted: oklch(20% 0.018 160);
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
   --muted-foreground: oklch(68% 0.015 160);
 
-  --accent: oklch(21.5% 0.02 160);
-  --accent-foreground: oklch(93.5% 0.015 160);
+  --accent: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --accent-foreground: var(--foreground);
 
   --destructive: oklch(64% 0.191 22.2);
   --success: oklch(68.5% 0.185 143);
@@ -133,16 +133,16 @@
   --info: oklch(60.5% 0.142 250);
 
   --border: oklch(1 0 0 / 8%);
-  --input: oklch(1 0 0 / 12%);
+  --input: color-mix(in srgb, var(--foreground) 10%, transparent);
   --ring: oklch(68.5% 0.185 143 / 0.4);
 
   --sidebar: oklch(27.918% 0.03519 158.093);
-  --sidebar-foreground: var(--foreground);
+  --sidebar-foreground: color-mix(in srgb, var(--foreground) 100%, transparent);
   --sidebar-hover: color-mix(in srgb, var(--sidebar-foreground) 8%, transparent);
   --sidebar-primary: color-mix(in srgb, var(--sidebar-primary-foreground) 10%, transparent);
   --sidebar-primary-foreground: var(--primary);
   --sidebar-border: color-mix(in srgb, var(--sidebar-foreground) 8%, transparent);
-  --sidebar-shadow: 0 4px 5px color-mix(in srgb, var(--sidebar) 10%, transparent);
+  --sidebar-shadow: 0 6px 10px color-mix(in srgb, var(--sidebar) 20%, transparent);
 
   --cat-red: oklch(0.52 0.2 25);
   --cat-orange: oklch(0.58 0.15 50);

@@ -40,7 +40,7 @@ export class HabitWeekTracker {
 
       if (useColors) {
         if (state === "completed") {
-          statusClasses = "text-primary";
+          statusClasses = "text-success";
         } else if (state === "not-scheduled") {
           statusClasses = "text-foreground/20";
         } else {

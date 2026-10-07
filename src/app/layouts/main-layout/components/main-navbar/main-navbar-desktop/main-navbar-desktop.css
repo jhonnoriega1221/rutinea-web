@@ -39,7 +39,7 @@
 
 .sidebar-header {
   flex-shrink: 0;
-  height: 80px;
+  height: 70px;
   border-bottom: 1px solid var(--sidebar-border);
 }
 

@@ -19,10 +19,10 @@
     </section>
 
     <section class="bg-card card-shadow border rounded-2xl p-4 mb-3">
-      <header>
-        <p hlmCardTitle>Details</p>
+      <header class="mb-3">
+        <p class="text-foreground/50 font-semibold">Details</p>
       </header>
-      <div hlmCardContent class="flex flex-col gap-2">
+      <div class="flex flex-col gap-2">
         <div class="flex gap-2">
           <div class="mt-0.5">
             <ng-icon [name]="habitViewModel()?.icon" size="20px" />
@@ -68,10 +68,10 @@
     </section>
 
     <section class="bg-card card-shadow border p-4 rounded-2xl">
-      <hlm-card-header>
-        <p hlmCardTitle>History</p>
-      </hlm-card-header>
-      <div hlmCardContent>
+      <header class="mb-3">
+        <p class="text-foreground/50 font-semibold">History</p>
+      </header>
+      <div>
         <app-habit-calendar-tracker
           [frequency]="habitViewModel()?.frequencyData!.days"
           [completedDates]="completedFocusedMonthDates()"
