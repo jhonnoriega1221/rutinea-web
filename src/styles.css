@@ -6,7 +6,16 @@
 @import "@spartan-ng/brain/hlm-tailwind-preset.css";
 /* You can add global styles to this file, and also import other style files */
 
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("/fonts/plus-jakarta-sans-latin-wght-normal.woff2") format("woff2");
+}
+
 @theme {
+  --font-sans: "Plus Jakarta Sans";
   --color-success: var(--success);
   --color-destructive: var(--destructive);
   --color-warning: var(--warning);
