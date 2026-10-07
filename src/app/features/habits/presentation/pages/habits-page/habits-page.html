@@ -2,14 +2,14 @@
   <div class="mb-4 flex items-center justify-between px-2">
     <p class="mb-4 text-2xl font-bold">Habits</p>
     <div class="flex gap-2">
-      <button hlmBtn (click)="createHabitDialog.open()">
+      <button hlmBtn (click)="createHabitDialog.open()" size="lg">
         <ng-icon name="lucidePlus" class="h-5! w-5!" />
         New habit
       </button>
       <button
         hlmBtn
         class="text-foreground hover:bg-foreground/10 bg-transparent"
-        size="icon"
+        size="icon-lg"
         [hlmDropdownMenuTrigger]="menu"
         align="end"
       >
