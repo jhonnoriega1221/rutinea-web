@@ -5,10 +5,12 @@
       (click)="select(color)"
       [title]="color.label"
       type="button"
-      class="focus-visible:ring-ring focus-visible:ring-offset-background flex h-8 w-8 items-center justify-center rounded-full border-2 transition-transform outline-none hover:scale-110 focus-visible:ring-2 focus-visible:ring-offset-2"
-      [class.border-foreground]="value() === color.key"
+      class="focus-visible:ring-ring focus-visible:ring-offset-background flex h-8 w-8 items-center justify-center rounded-full border-4 ring-2 transition-transform outline-none hover:scale-130 focus-visible:ring-2 focus-visible:ring-offset-2"
+      [class.ring-foreground]="value() === color.key"
+      [class.ring-transparent]="value() !== color.key"
+      [class.border-card]="value() === color.key"
       [class.border-transparent]="value() !== color.key"
-      [style.backgroundCOlor]="'var(' + color.cssVar + ')'"
+      [style.backgroundColor]="'var(' + color.cssVar + ')'"
     ></button>
   }
 </div>
