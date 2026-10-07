@@ -4,7 +4,7 @@
       <img
         src="/assets/images/habits_logo.svg"
         alt="Logo"
-        class="w-14.5 h-16 mx-auto object-contain p-2"
+        class="mx-auto h-16 w-14.5 object-contain p-2"
       />
     </div>
     <div class="sidebar-body">
@@ -20,7 +20,7 @@
             routerLinkActive="is-active"
             [routerLinkActiveOptions]="{ exact: topItem.url === '/' }"
           >
-            <ng-icon class="w-5! h-5!" [name]="topItem.icon" />
+            <ng-icon class="h-5! w-5!" [name]="topItem.icon" />
           </a>
         }
       </div>
@@ -36,7 +36,7 @@
             routerLinkActive="is-active"
             [routerLinkActiveOptions]="{ exact: bottomItem.url === '/' }"
           >
-            <ng-icon class="w-5! h-5!" [name]="bottomItem.icon" />
+            <ng-icon class="h-5! w-5!" [name]="bottomItem.icon" />
           </a>
         }
       </div>

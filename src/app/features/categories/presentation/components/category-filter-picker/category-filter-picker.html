@@ -1,4 +1,4 @@
-<div class="flex gap-2 h-8 overflow-y-clip">
+<div class="flex h-8 gap-2 overflow-y-clip">
   <hlm-toggle-group
     (valueChange)="onChangeCategory($event)"
     type="single"
@@ -12,24 +12,24 @@
     <button
       hlmToggleGroupItem
       value="all"
-      class="flex flex-col h-full max-w-20 overflow-hidden items-start rounded-full"
+      class="flex h-full max-w-20 flex-col items-start overflow-hidden rounded-full"
     >
-      <label class="overflow-hidden text-ellipsis w-full text-xs">All</label>
+      <label class="w-full overflow-hidden text-xs text-ellipsis">All</label>
     </button>
     @for (category of categories(); track category.id) {
       <button
         hlmToggleGroupItem
         [value]="category.id"
-        class="flex flex-col h-full max-w-25 overflow-hidden items-start rounded-full"
+        class="flex h-full max-w-25 flex-col items-start overflow-hidden rounded-full"
       >
-        <label class="overflow-hidden text-ellipsis w-full text-xs">{{ category.name }}</label>
+        <label class="w-full overflow-hidden text-xs text-ellipsis">{{ category.name }}</label>
       </button>
     }
   </hlm-toggle-group>
   <button
     hlmBtn
     size="icon"
-    class="rounded-full bg-background/50! border-foreground/15! hover:bg-foreground/10!"
+    class="bg-background/50! border-foreground/15! hover:bg-foreground/10! rounded-full"
     variant="outline"
     (click)="clickCreateCategory.emit()"
   >

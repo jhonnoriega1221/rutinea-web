@@ -1,14 +1,14 @@
 <main class="mx-auto max-w-250 px-2">
   @if (habitViewModel()) {
-    <div class="flex items-center justify-between mb-4">
-      <p class="text-2xl font-bold mb-4">Habit Details</p>
+    <div class="mb-4 flex items-center justify-between">
+      <p class="mb-4 text-2xl font-bold">Habit Details</p>
       <div class="flex gap-2">
         <button hlmBtn variant="secondary" (click)="createDialog.open()">
-          <ng-icon name="lucideEdit2" class="w-4! h-4!" />
+          <ng-icon name="lucideEdit2" class="h-4! w-4!" />
           Edit
         </button>
         <button hlmBtn variant="destructive" (click)="onDelete()">
-          <ng-icon name="lucideTrash2" class="w-4! h-4!" />
+          <ng-icon name="lucideTrash2" class="h-4! w-4!" />
           Delete
         </button>
       </div>
@@ -18,7 +18,7 @@
       <app-habit-today-status-card [status]="todayStatus()" (markCompleted)="onMarkCompleted()" />
     </section>
 
-    <section class="bg-card card-shadow border rounded-2xl p-4 mb-3">
+    <section class="bg-card card-shadow mb-3 rounded-2xl border p-4">
       <header class="mb-3">
         <p class="text-foreground/50 font-semibold">Details</p>
       </header>
@@ -32,10 +32,10 @@
             <p>{{ habitViewModel()!.description }}</p>
           </div>
         </div>
-        <p class="flex gap-2 items-center">
+        <p class="flex items-center gap-2">
           <span class="font-bold">Category:</span>
           <span
-            class="py-0.5 px-3 rounded-full"
+            class="rounded-full px-3 py-0.5"
             [style.backgroundColor]="
               habitViewModel()?.categoryInfo
                 ? `var(${habitViewModel()?.categoryInfo?.color})`
@@ -67,7 +67,7 @@
       </div>
     </section>
 
-    <section class="bg-card card-shadow border p-4 rounded-2xl">
+    <section class="bg-card card-shadow rounded-2xl border p-4">
       <header class="mb-3">
         <p class="text-foreground/50 font-semibold">History</p>
       </header>

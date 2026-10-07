@@ -1,14 +1,14 @@
 <main class="mx-auto max-w-250">
-  <div class="flex items-center justify-between mb-4 px-2">
-    <p class="text-2xl font-bold mb-4">Habits</p>
+  <div class="mb-4 flex items-center justify-between px-2">
+    <p class="mb-4 text-2xl font-bold">Habits</p>
     <div class="flex gap-2">
       <button hlmBtn (click)="createHabitDialog.open()">
-        <ng-icon name="lucidePlus" class="w-5! h-5!" />
+        <ng-icon name="lucidePlus" class="h-5! w-5!" />
         New habit
       </button>
       <button
         hlmBtn
-        class="bg-transparent text-foreground hover:bg-foreground/10"
+        class="text-foreground hover:bg-foreground/10 bg-transparent"
         size="icon"
         [hlmDropdownMenuTrigger]="menu"
         align="end"
@@ -22,7 +22,7 @@
       </ng-template>
     </div>
   </div>
-  <div class="overflow-x-auto px-3 mb-3">
+  <div class="mb-3 overflow-x-auto px-3">
     <app-category-filter-picker
       [categories]="categories()"
       [selectedCategory]="filters().categoryId"

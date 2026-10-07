@@ -1,10 +1,10 @@
 @if (status() === "pending" || status() === "urgent") {
   <hlm-card
-    class="card-shadow mb-3 gap-1 overflow-hidden relative text-white"
+    class="card-shadow relative mb-3 gap-1 overflow-hidden text-white"
     [class.bg-success]="status() === 'pending'"
     [class.bg-destructive]="status() === 'urgent'"
   >
-    <hlm-card-header class="flex justify-between items-center">
+    <hlm-card-header class="flex items-center justify-between">
       <p hlmCardTitle class="text-lg">
         {{
           status() === "pending"
@@ -15,11 +15,11 @@
       <img
         src="/assets/svg/clock_calendar.svg"
         alt="Logo"
-        class="w-38 h-38 object-contain opacity-20 absolute invert right-1 top-3"
+        class="absolute top-3 right-1 h-38 w-38 object-contain opacity-20 invert"
       />
     </hlm-card-header>
     <div hlmCardContent class="flex flex-col gap-2">
-      <p class="text-sm mb-2">
+      <p class="mb-2 text-sm">
         {{
           status() === "pending"
             ? "It's scheduled for today, don't forget to register"

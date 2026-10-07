@@ -1,9 +1,9 @@
 <div
-  class="block bg-card rounded-xl card-shadow border border-l-14 h-[68px]"
+  class="bg-card card-shadow block h-[68px] rounded-xl border border-l-14"
   [style.borderLeftColor]="'var(' + categoryColor() + ')'"
 >
-  <div hlmCardContent class="flex items-center justify-between gap-4 px-3 w-full h-full">
-    <div class="flex gap-2 items-center">
+  <div hlmCardContent class="flex h-full w-full items-center justify-between gap-4 px-3">
+    <div class="flex items-center gap-2">
       <div class="flex flex-col gap-1">
         <p class="font-medium">{{ category()?.name }}</p>
       </div>
@@ -13,7 +13,7 @@
       <button
         hlmBtn
         size="icon"
-        class="bg-transparent text-foreground hover:bg-foreground/10"
+        class="text-foreground hover:bg-foreground/10 bg-transparent"
         (click)="edit.emit(category()!)"
       >
         <ng-icon size="18" name="lucideEdit2" />
@@ -21,7 +21,7 @@
       <button
         hlmBtn
         size="icon"
-        class="bg-transparent text-foreground hover:bg-foreground/10"
+        class="text-foreground hover:bg-foreground/10 bg-transparent"
         (click)="delete.emit(category()?.id!)"
       >
         <ng-icon size="18" name="lucideTrash2" />

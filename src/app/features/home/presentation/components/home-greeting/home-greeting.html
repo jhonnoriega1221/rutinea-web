@@ -1,11 +1,11 @@
-<header class="relative h-[36px] mb-6 flex items-center">
+<header class="relative mb-6 flex h-[36px] items-center">
   @if (showGreeting()) {
-    <h1 class="absolute inset-0 text-3xl font-bold tracking-tight text-foreground animate-greeting">
+    <h1 class="text-foreground animate-greeting absolute inset-0 text-3xl font-bold tracking-tight">
       {{ greeting() }}
     </h1>
   } @else {
     <h1
-      class="absolute inset-0 text-3xl font-bold tracking-tight text-foreground capitalize"
+      class="text-foreground absolute inset-0 text-3xl font-bold tracking-tight capitalize"
       [class.animate-in]="animateDate()"
       [class.fade-in]="animateDate()"
       [class.duration-500]="animateDate()"

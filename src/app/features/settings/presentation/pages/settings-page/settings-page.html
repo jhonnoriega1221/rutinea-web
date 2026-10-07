@@ -1,10 +1,10 @@
 <main class="mx-auto max-w-250 px-2">
-  <p class="text-2xl font-bold mb-4">Settings</p>
+  <p class="mb-4 text-2xl font-bold">Settings</p>
 
-  <p class="font-semibold mb-2">Appearance</p>
-  <section class="card-shadow border bg-card py-3 px-6 rounded-xl mb-6">
-    <div hlmCardContent class="flex flex-col sm:flex-row gap-3 justify-between">
-      <div class="flex gap-4 items-center">
+  <p class="mb-2 font-semibold">Appearance</p>
+  <section class="card-shadow bg-card mb-6 rounded-xl border px-6 py-3">
+    <div hlmCardContent class="flex flex-col justify-between gap-3 sm:flex-row">
+      <div class="flex items-center gap-4">
         <ng-icon name="lucideContrast" size="20" class="min-w-5" />
         <div>
           <label>Theme</label>
@@ -20,26 +20,26 @@
         (valueChange)="selectTheme(actualTheme)"
       >
         <button hlmToggleGroupItem value="system" aria-label="Toggle system">
-          <ng-icon name="lucideLaptop2" class="mt-0.5 w-4! h-4!" /> System
+          <ng-icon name="lucideLaptop2" class="mt-0.5 h-4! w-4!" /> System
         </button>
         <button hlmToggleGroupItem value="light" aria-label="Toggle light">
-          <ng-icon name="lucideSun" class="mt-0.5 w-4! h-4!" /> Light
+          <ng-icon name="lucideSun" class="mt-0.5 h-4! w-4!" /> Light
         </button>
         <button hlmToggleGroupItem value="dark" aria-label="Toggle dark">
-          <ng-icon name="lucideMoon" class="mt-0.5 w-4! h-4!" /> Dark
+          <ng-icon name="lucideMoon" class="mt-0.5 h-4! w-4!" /> Dark
         </button>
       </hlm-toggle-group>
     </div>
   </section>
 
-  <p class="font-semibold mb-2">Categories</p>
-  <section class="card-shadow border bg-card rounded-xl mb-6">
+  <p class="mb-2 font-semibold">Categories</p>
+  <section class="card-shadow bg-card mb-6 rounded-xl border">
     <a
       routerLink="/settings/categories"
       hlmCardContent
-      class="flex flex-row gap-3 py-3 px-6 rounded-xl justify-between items-center hover:bg-foreground/4"
+      class="hover:bg-foreground/4 flex flex-row items-center justify-between gap-3 rounded-xl px-6 py-3"
     >
-      <div class="flex gap-4 items-center">
+      <div class="flex items-center gap-4">
         <ng-icon name="lucideFolderBookmark" size="20" class="min-w-5" />
         <div>
           <p>Manage Categories</p>
@@ -50,24 +50,24 @@
     </a>
   </section>
 
-  <p class="font-semibold mb-2">About</p>
-  <section class="card-shadow border bg-card py-3 px-6 rounded-xl">
+  <p class="mb-2 font-semibold">About</p>
+  <section class="card-shadow bg-card rounded-xl border px-6 py-3">
     <div hlmCardContent class="flex flex-col justify-center gap-2 py-4">
       <img
         src="/assets/images/habits_logo.svg"
         alt="Logo"
-        class="w-24 h-24 object-contain mx-auto"
+        class="mx-auto h-24 w-24 object-contain"
       />
-      <p class="text-center font-medium text-lg">Habits App</p>
-      <p class="text-center text-foreground/40 text-sm">v{{ version }}</p>
+      <p class="text-center text-lg font-medium">Rutinea</p>
+      <p class="text-foreground/40 text-center text-sm">v{{ version }}</p>
 
-      <p class="text-xs text-center mt-3">2026 Made By Jhon Noriega</p>
-      <p class="text-xs text-center">
+      <p class="mt-3 text-center text-xs">2026 Made By Jhon Noriega</p>
+      <p class="text-center text-xs">
         Source code available on
         <a
           href="https://github.com/jhonnoriega/habits"
           target="_blank"
-          class="underline text-blue-600"
+          class="text-blue-600 underline"
           >GitHub</a
         >
       </p>
