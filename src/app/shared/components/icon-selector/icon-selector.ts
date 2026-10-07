@@ -4,11 +4,10 @@ import { getIconByKey, HABIT_ICON_OPTIONS, IconOption } from "../icons/habit-ico
 import { HlmPopoverImports } from "@spartan-ng/helm/popover";
 import { HlmButtonImports } from "@spartan-ng/helm/button";
 import { NgIcon } from "@ng-icons/core";
-import { HlmInputGroupButton } from "@spartan-ng/helm/input-group";
 
 @Component({
   selector: "app-icon-selector",
-  imports: [HlmPopoverImports, HlmButtonImports, NgIcon, HlmInputGroupButton],
+  imports: [HlmPopoverImports, HlmButtonImports, NgIcon],
   templateUrl: "./icon-selector.html"
 })
 export class IconSelector implements FormValueControl<string> {
