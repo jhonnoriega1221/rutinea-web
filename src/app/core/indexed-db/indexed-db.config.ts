@@ -13,7 +13,7 @@ export interface StoreConfig {
 }
 
 export const DB_CONFIG = {
-  name: "HabitsAppDB",
+  name: "RutineaDB",
   version: 1,
   stores: [
     {

@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "angular-habits": {
+    "rutinea": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -59,10 +59,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "angular-habits:build:production"
+              "buildTarget": "rutinea:build:production"
             },
             "development": {
-              "buildTarget": "angular-habits:build:development"
+              "buildTarget": "rutinea:build:development"
             }
           },
           "defaultConfiguration": "development"
