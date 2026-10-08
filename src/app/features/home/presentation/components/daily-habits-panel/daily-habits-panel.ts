@@ -6,7 +6,13 @@ import { HlmToggleGroupImports } from "@spartan-ng/helm/toggle-group";
 import { NgIcon } from "@ng-icons/core";
 
 @Component({
-  imports: [DatesHorizontalPicker, HabitAgendaList, HlmButtonImports, HlmToggleGroupImports, NgIcon],
+  imports: [
+    DatesHorizontalPicker,
+    HabitAgendaList,
+    HlmButtonImports,
+    HlmToggleGroupImports,
+    NgIcon
+  ],
   selector: "app-daily-habits-panel",
   styleUrl: "./daily-habits-panel.css",
   templateUrl: "./daily-habits-panel.html"
