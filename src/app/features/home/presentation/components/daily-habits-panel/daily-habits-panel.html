@@ -1,0 +1,46 @@
+<div class="mb-4">
+  <app-dates-horizontal-picker />
+</div>
+
+<div class="mt-2 px-2">
+  <p class="text- mb-4 text-sm font-bold">Today's Schedule</p>
+  <div class="mb-2 flex h-8 justify-between gap-2">
+    <hlm-toggle-group
+      type="single"
+      size="sm"
+      variant="outline"
+      nullable="false"
+      spacing="2"
+      class="category-filter-toggle"
+    >
+      <button
+        hlmToggleGroupItem
+        value="Due"
+        class="flex h-full flex-col items-start overflow-hidden rounded-full"
+      >
+        <label class="w-full overflow-hidden text-xs text-ellipsis"
+          >Due
+          <span class="text-foreground/60 ml-1">12</span>
+        </label>
+      </button>
+      <button
+        hlmToggleGroupItem
+        value="All"
+        class="flex h-full flex-col items-start overflow-hidden rounded-full"
+      >
+        <label class="w-full overflow-hidden text-xs text-ellipsis"
+          >Completed <span class="text-foreground/60 ml-1">10</span></label
+        >
+      </button>
+    </hlm-toggle-group>
+  </div>
+  <app-daily-habits-list />
+  <button
+    class="text-primary hover:bg-primary/20 flex w-full items-center bg-transparent"
+    hlmBtn
+    size="lg"
+  >
+    See all habits for today
+    <ng-icon class="mt-0.5" name="lucideArrowRight" size="20" />
+  </button>
+</div>

@@ -1,0 +1,13 @@
+<ul class="flex gap-2 overflow-x-scroll px-4">
+  @for (item of list(); track item) {
+    <li
+      class="hover:bg-foreground/10 hover:border-foreground/10 flex flex-col rounded-lg border border-transparent"
+    >
+      <p class="text-center text-sm font-bold">M</p>
+      <p class="mb-2 text-center text-xs">30-Oct</p>
+      <div class="mx-auto">
+        <app-circular-progress [strokeWidth]="10" [size]="55" />
+      </div>
+    </li>
+  }
+</ul>
