@@ -1,13 +1,32 @@
+<div class="relative flex">
+  <button
+    class="bg-background/50 hover:bg-foreground/10 border-foreground/40 absolute top-1/2 left-0 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border"
+    size="icon-lg"
+    [class.hidden]="!canScrollLeft()"
+    (click)="scrollByPage(-1)"
+  >
+    <ng-icon name="lucideArrowLeft" />
+  </button>
   <ul class="scrollbar-themed flex gap-2 overflow-x-scroll px-4" #strip (scroll)="updateArrows()">
-  @for (item of list(); track item) {
-    <li
-      class="hover:bg-foreground/10 hover:border-foreground/10 flex flex-col rounded-lg border border-transparent"
-    >
-      <p class="text-center text-sm font-bold">M</p>
-      <p class="mb-2 text-center text-xs">30-Oct</p>
-      <div class="mx-auto">
-        <app-circular-progress [strokeWidth]="10" [size]="55" />
-      </div>
-    </li>
-  }
-</ul>
+    @for (item of list(); track item) {
+      <li
+        class="hover:bg-foreground/10 hover:border-foreground/10 flex flex-col rounded-lg border border-transparent"
+      >
+        <p class="text-center text-sm font-bold">M</p>
+        <p class="mb-2 text-center text-xs">30-Oct</p>
+        <div class="mx-auto">
+          <app-circular-progress [strokeWidth]="10" [size]="55" />
+        </div>
+      </li>
+    }
+  </ul>
+
+  <button
+    class="bg-background border-foreground/40 absolute top-1/2 right-0 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border"
+    size="icon-lg"
+    [class.hidden]="!canScrollRight()"
+    (click)="scrollByPage(1)"
+  >
+    <ng-icon name="lucideArrowRight" />
+  </button>
+</div>
