@@ -171,9 +171,36 @@
   --cat-slate: oklch(0.4 0.04 250);
 }
 
-@layer utilities {
-  .card-shadow {
-    box-shadow: var(--card-shadow) !important;
+@utility card-shadow {
+  box-shadow: var(--card-shadow);
+}
+
+@utility scrollbar-themed {
+  &::-webkit-scrollbar {
+    background-color: var(--card);
+    width: 16px;
+    border-radius: 12px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: var(--card);
+    overflow: hidden;
+    border-radius: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--foreground) 30%, transparent);
+    border-radius: 16px;
+    border: 6px solid var(--card);
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: color-mix(in srgb, var(--foreground) 70%, transparent);
+    border: 4px solid var(--card);
+  }
+
+  &::-webkit-scrollbar-thumb:active {
+    background-color: var(--foreground);
   }
 }
 
@@ -181,6 +208,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground relative;
     background-color: var(--background);

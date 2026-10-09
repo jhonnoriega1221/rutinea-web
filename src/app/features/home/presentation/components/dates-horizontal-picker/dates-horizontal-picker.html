@@ -1,4 +1,4 @@
-<ul class="flex gap-2 overflow-x-scroll px-4">
+  <ul class="scrollbar-themed flex gap-2 overflow-x-scroll px-4" #strip (scroll)="updateArrows()">
   @for (item of list(); track item) {
     <li
       class="hover:bg-foreground/10 hover:border-foreground/10 flex flex-col rounded-lg border border-transparent"
