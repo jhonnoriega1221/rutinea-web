@@ -1,5 +1,5 @@
 <main class="mx-auto max-w-250">
-  <div class="mb-4 flex items-center justify-between px-2">
+  <header class="mb-4 flex items-center justify-between px-2">
     <p class="mb-4 text-2xl font-bold">Habits</p>
     <div class="flex gap-2">
       <button hlmBtn (click)="createHabitDialog.open()" size="lg">
@@ -21,18 +21,18 @@
         </hlm-dropdown-menu>
       </ng-template>
     </div>
-  </div>
+  </header>
   @if (habits().length > 0) {
-    <div class="mb-3 overflow-x-auto px-3">
+    <section class="mb-3 overflow-x-auto px-3">
       <app-category-filter-picker
         [categories]="categories()"
         [selectedCategory]="filters().categoryId"
         (changeCategory)="onCategoryFilterChange($event)"
         (clickCreateCategory)="createCategoryDialog.open()"
       />
-    </div>
+    </section>
   }
-  <div class="px-2">
+  <section class="px-2">
     @if (habits().length === 0) {
       <app-data-state
         [image]="'/assets/svg/empty_habits_state.svg'"
@@ -45,12 +45,12 @@
       <app-data-state
         [image]="'/assets/svg/empty_search_state.svg'"
         title="No habits found"
-        description="Nothing matches your search or filters. Try a different keyword or category."
+        description="Nothing matches your filter. Try a different category."
       />
     } @else {
       <app-habits-list [habits]="filteredHabits()" />
     }
-  </div>
+  </section>
 </main>
 
 <app-responsive-popup #createHabitDialog>

@@ -1,5 +1,8 @@
-<a [routerLink]="habit()?.id" class="bg-card block rounded-xl border">
-  <div class="hover:bg-foreground/5 flex items-center justify-between gap-4 rounded-xl p-2">
+<li class="bg-card block rounded-xl border">
+  <a
+    [routerLink]="habit()?.id"
+    class="hover:bg-foreground/5 flex items-center justify-between gap-4 rounded-xl p-2"
+  >
     <div class="flex items-center gap-2">
       <div
         class="bg-primary/40 flex aspect-square h-[48px] w-[48px] items-center justify-center rounded-lg text-white"
@@ -38,5 +41,5 @@
       <ng-icon name="lucideFlame" />
       <span class="font-bold">999</span>
     </div>
-  </div>
-</a>
+  </a>
+</li>

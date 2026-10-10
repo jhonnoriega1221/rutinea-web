@@ -1,6 +1,7 @@
-import { Component, signal } from "@angular/core";
+import { Component, input, signal } from "@angular/core";
 import { NgIcon } from "@ng-icons/core";
 import { HlmCheckboxImports } from "@spartan-ng/helm/checkbox";
+import { HabitAgentaList } from "../../models/habit-agenda-list.view-model";
 
 @Component({
   imports: [NgIcon, HlmCheckboxImports],
@@ -9,5 +10,5 @@ import { HlmCheckboxImports } from "@spartan-ng/helm/checkbox";
   templateUrl: "./habits-agenda-list.html"
 })
 export class HabitAgendaList {
-  readonly habits = signal<string[]>(["1", "1", "1", "1", "1"]);
+  readonly habits = input<HabitAgentaList[]>();
 }
