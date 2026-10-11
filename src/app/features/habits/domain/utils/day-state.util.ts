@@ -23,6 +23,11 @@ export function toDateKey(date: Date): string {
   return new Date(date.getTime() - tzOffset).toISOString().split("T")[0];
 }
 
+export function toDate(dateKey: string): Date {
+  const [year, month, day] = dateKey.split("-").map(Number);
+  return new Date(year, month - 1, day);
+}
+
 export function resolveDayState(options: ResolveDayStateOptions): DayState {
   const {
     date,

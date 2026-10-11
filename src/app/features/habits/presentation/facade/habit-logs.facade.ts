@@ -130,8 +130,8 @@ export class HabitLogsFacade {
     }
   }
 
-  async loadLogsForHabitCurrentWeek(habitId: string) {
-    const now = new Date();
+  async loadLogsForHabitCurrentWeek(habitId: string, referenceDayKey: Date) {
+    const now = referenceDayKey;
     const day = now.getDay();
     const diff = now.getDate() - day;
 

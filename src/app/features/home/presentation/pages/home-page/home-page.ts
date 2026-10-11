@@ -22,7 +22,7 @@ export class HomePage implements OnInit {
   readonly habitLogs = this._habitLogsFacade.listLogsMap;
 
   async ngOnInit() {
-    this._habitsFacade.loadAll();
+    await this._habitsFacade.loadAll();
 
     const habitIds = this._habitsFacade.habits().map((h) => h.id);
     if (habitIds.length > 0) {

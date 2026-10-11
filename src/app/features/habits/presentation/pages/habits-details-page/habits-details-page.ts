@@ -116,13 +116,13 @@ export class HabitsDetailsPage implements OnInit {
     this._habitsFacade.getById(this.id());
     this._habitLogsFacade.checkTodayCompletion(this.id(), toDateKey(now));
     this._habitLogsFacade.loadLogsForHabitMonth(this.id(), now.getFullYear(), now.getMonth() + 1);
-    this._habitLogsFacade.loadLogsForHabitCurrentWeek(this.id());
+    this._habitLogsFacade.loadLogsForHabitCurrentWeek(this.id(), now);
     await this._categoriesFacade.loadAll();
   }
 
   protected readonly todayStatus = computed<DayState>(() => {
     const currentHabit = this.habitViewModel();
-    const frequencyType = this.habitViewModel()?.frequencyData.type;
+    const frequencyType = currentHabit!.frequencyData.type;
     const frequencyDays = currentHabit!.frequencyData!.days;
 
     let todayLog = !!this._habitLogsFacade.todayLog();
