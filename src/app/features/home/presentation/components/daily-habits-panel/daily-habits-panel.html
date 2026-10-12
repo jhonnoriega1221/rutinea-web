@@ -39,13 +39,15 @@
       </button>
     </hlm-toggle-group>
   </div>
-  <app-habits-agenda-list [habits]="summaryHabits()" />
-  <button
-    class="text-primary hover:bg-primary/20 flex w-full items-center bg-transparent"
-    hlmBtn
-    size="lg"
-  >
-    See all habits for today
-    <ng-icon class="mt-0.5" name="lucideArrowRight" size="20" />
-  </button>
 </div>
+<div class="h-[265px]">
+  <app-habits-agenda-list [habits]="summaryHabits()" />
+</div>
+<button
+  class="text-primary hover:bg-primary/20 flex w-full items-center bg-transparent"
+  hlmBtn
+  size="lg"
+>
+  See all habits for today
+  <ng-icon class="mt-0.5" name="lucideArrowRight" size="20" />
+</button>

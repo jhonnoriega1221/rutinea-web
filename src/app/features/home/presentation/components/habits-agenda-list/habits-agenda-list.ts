@@ -1,4 +1,4 @@
-import { Component, input, signal } from "@angular/core";
+import { Component, computed, input, signal } from "@angular/core";
 import { NgIcon } from "@ng-icons/core";
 import { HlmCheckboxImports } from "@spartan-ng/helm/checkbox";
 import { HabitAgendaListViewModel } from "../../models/habit-agenda-list.view-model";
@@ -11,4 +11,12 @@ import { HabitAgendaListViewModel } from "../../models/habit-agenda-list.view-mo
 })
 export class HabitAgendaList {
   readonly habits = input<HabitAgendaListViewModel[]>();
+
+  readonly maxSlots = 5;
+
+  readonly emptySlots = computed(() => {
+    const currentLength = this.habits()!.length;
+    const remaining = Math.max(0, this.maxSlots - currentLength);
+    return Array.from({ length: remaining });
+  });
 }
