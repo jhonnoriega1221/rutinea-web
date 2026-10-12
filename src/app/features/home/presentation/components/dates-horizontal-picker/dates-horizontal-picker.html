@@ -21,7 +21,11 @@
         <p class="text-center text-sm font-bold">{{ item.dayInitial }}</p>
         <p class="mb-2 text-center text-xs">{{ item.formattedDate }}</p>
         <div class="mx-auto">
-          <app-circular-progress [strokeWidth]="10" [size]="55" />
+          <app-circular-progress
+            [strokeWidth]="10"
+            [size]="55"
+            [value]="progressMap().get(item.dateKey) ?? 0"
+          />
         </div>
       </li>
     }

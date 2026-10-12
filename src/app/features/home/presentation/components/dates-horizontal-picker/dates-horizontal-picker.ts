@@ -32,6 +32,7 @@ export class DatesHorizontalPicker {
 
   readonly list = signal<CalendarDate[]>(this.generatePast30Days());
   readonly selectedDate = input<string>();
+  readonly progressMap = input.required<Map<string, number>>();
   readonly changeDate = output<string>();
 
   protected readonly canScrollLeft = signal(false);

@@ -1,6 +1,7 @@
 <div class="mb-4">
   <app-dates-horizontal-picker
     [selectedDate]="selectedDate()"
+    [progressMap]="dailyProgressMap()"
     (changeDate)="onChangeDate($event)"
   />
 </div>

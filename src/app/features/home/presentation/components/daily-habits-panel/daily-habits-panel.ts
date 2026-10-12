@@ -5,6 +5,7 @@ import { HlmToggleGroupImports } from "@spartan-ng/helm/toggle-group";
 import { NgIcon } from "@ng-icons/core";
 import {
   getWeekDates,
+  getWeekdayKey,
   resolveDayState,
   toDate,
   toDateKey
@@ -78,6 +79,69 @@ export class DailyHabitsPanel {
     });
   });
 
+  readonly dailyProgressMap = computed<Map<string, number>>(() => {
+    const allHabits = this.habits();
+    const logsMap = this.habitLogs();
+    const progressMap = new Map<string, number>();
+
+    const today = new Date();
+    for (let i = 29; i >= 0; i--) {
+      const d = new Date(today);
+      d.setDate(today.getDate() - i);
+
+      const dateKey = toDateKey(d);
+      const currentWeekDays = getWeekDates(d);
+      const currentWeekDaysKeys = currentWeekDays.map((day) => toDateKey(day));
+
+      let scheduledCount = 0;
+      let completedCount = 0;
+
+      allHabits.forEach((habit) => {
+        const habitLogs = logsMap.get(habit.id) ?? new Set<string>();
+        const isCompleted = habitLogs.has(dateKey);
+
+        let scheduleDays = new Set<Weekday>();
+
+        if (habit.frequencyData.type === "everyday") {
+          scheduleDays = new Set(WEEKDAYS);
+        } else if (habit.frequencyData.type === "specific_days") {
+          scheduleDays = new Set(habit.frequencyData.days);
+        } else if (habit.frequencyData.type === "days_per_week") {
+          const completionsThisWeek = currentWeekDaysKeys.filter((key) =>
+            habitLogs.has(key)
+          ).length;
+          const quota = habit.frequencyData.count;
+
+          if (completionsThisWeek >= quota) {
+            scheduleDays = new Set<Weekday>();
+          } else {
+            scheduleDays = new Set(WEEKDAYS);
+          }
+        }
+
+        const dayState = resolveDayState({
+          date: d,
+          scheduled: scheduleDays,
+          completed: isCompleted,
+          createdAt: habit.createdAt
+        });
+
+        if (dayState !== "not-scheduled" && dayState !== "future-date") {
+          scheduledCount++;
+          if (dayState === "completed") {
+            completedCount++;
+          }
+        }
+      });
+
+      const percentage =
+        scheduledCount > 0 ? Math.round((completedCount / scheduledCount) * 100) : 0;
+      progressMap.set(dateKey, percentage);
+    }
+
+    return progressMap;
+  });
+
   readonly dueCount = computed(
     () =>
       this.habitsForSelectedDate().filter(
@@ -105,6 +169,8 @@ export class DailyHabitsPanel {
 
     return isDueTab ? this.dueHabits() : this.completedHabits();
   });
+
+  readonly calculateDayPercentage = computed(() => {});
 
   onChangeDate(date: string) {
     this.selectedDate.set(date);
