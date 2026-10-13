@@ -15,6 +15,7 @@ import { Habit, Weekday, WEEKDAYS } from "../../../../habits/domain/models/habit
 import { HabitAgendaListViewModel } from "../../models/habit-agenda-list.view-model";
 import { getIconByKey } from "../../../../../shared/components/icons/habit-icons";
 import { HabitAgendaList } from "../habits-agenda-list/habits-agenda-list";
+import { CreateHabitLogFormModel } from "../../../../habits/domain/models/habit-log.model";
 
 @Component({
   imports: [
@@ -37,6 +38,7 @@ export class DailyHabitsPanel {
 
   readonly changeDate = output<string>();
   readonly changeTab = output<"due" | "completed">();
+  readonly completeHabit = output<{ habitId: string; logDateKey: string; isCompleted: boolean }>();
 
   readonly habitsForSelectedDate = computed<HabitAgendaListViewModel[]>(() => {
     const allHabits = this.habits();
@@ -175,6 +177,13 @@ export class DailyHabitsPanel {
   onChangeDate(date: string) {
     this.selectedDate.set(date);
     this.changeDate.emit(date);
+  }
+
+  onToggleHabitCompletion(habitId: string) {
+    const selectedDate = this.selectedDate;
+    const isCompleted = this.selectedTab() === "completed";
+
+    this.completeHabit.emit({ habitId, logDateKey: selectedDate(), isCompleted });
   }
 
   onChangeTab(tabOption: ToggleValue<"due" | "completed">) {

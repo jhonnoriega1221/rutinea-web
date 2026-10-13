@@ -42,7 +42,10 @@
   </div>
 </div>
 <div class="h-[265px]">
-  <app-habits-agenda-list [habits]="summaryHabits()" />
+  <app-habits-agenda-list
+    [habits]="summaryHabits()"
+    (checkedChange)="onToggleHabitCompletion($event)"
+  />
 </div>
 <button
   class="text-primary hover:bg-primary/20 flex w-full items-center bg-transparent"

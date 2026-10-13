@@ -6,6 +6,7 @@ import { KpiPanel } from "../../components/kpi-panel/kpi-panel";
 import { DailyHabitsPanel } from "../../components/daily-habits-panel/daily-habits-panel";
 import { HabitsFacade } from "../../../../habits/presentation/facade/habits.facade";
 import { HabitLogsFacade } from "../../../../habits/presentation/facade/habit-logs.facade";
+import { CreateHabitLogFormModel } from "../../../../habits/domain/models/habit-log.model";
 
 @Component({
   selector: "app-home-page",
@@ -31,6 +32,15 @@ export class HomePage implements OnInit {
       thirtyDaysAgo.setDate(today.getDate() - 29);
 
       await this._habitLogsFacade.loadLogsForHabitsList(habitIds, thirtyDaysAgo, today);
+    }
+  }
+
+  async onCompleteHabit(habitLog: { habitId: string; logDateKey: string; isCompleted: boolean }) {
+    console.log(habitLog.isCompleted);
+    if (!habitLog.isCompleted) {
+      await this._habitLogsFacade.create({ habitId: habitLog.habitId, date: habitLog.logDateKey });
+    } else {
+      await this._habitLogsFacade.delete(habitLog.habitId, habitLog.logDateKey);
     }
   }
 }

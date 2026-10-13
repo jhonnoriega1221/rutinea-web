@@ -10,6 +10,8 @@
         <p class="text-sm font-medium">{{ habit.name }}</p>
       </a>
       <hlm-checkbox
+        [checked]="habit.dayState === 'completed'"
+        (checkedChange)="checkedChange.emit(habit.id)"
         class="bg-foreground/20! data-checked:bg-primary! border-foreground/50 h-7 w-7 rounded-full"
       />
     </li>
