@@ -16,6 +16,7 @@ import { HabitAgendaListViewModel } from "../../models/habit-agenda-list.view-mo
 import { getIconByKey } from "../../../../../shared/components/icons/habit-icons";
 import { HabitAgendaList } from "../habits-agenda-list/habits-agenda-list";
 import { CreateHabitLogFormModel } from "../../../../habits/domain/models/habit-log.model";
+import { DataState } from "../../../../../shared/components/data-state/data-state";
 
 @Component({
   imports: [
@@ -23,7 +24,8 @@ import { CreateHabitLogFormModel } from "../../../../habits/domain/models/habit-
     HabitAgendaList,
     HlmButtonImports,
     HlmToggleGroupImports,
-    NgIcon
+    NgIcon,
+    DataState
   ],
   selector: "app-daily-habits-panel",
   styleUrl: "./daily-habits-panel.css",
@@ -76,7 +78,7 @@ export class DailyHabitsPanel {
         completed: isCompleted,
         createdAt: habit.createdAt
       });
-
+      console.log("habhti");
       return { ...habit, icon: getIconByKey(habit.icon)!.icon, dayState };
     });
   });

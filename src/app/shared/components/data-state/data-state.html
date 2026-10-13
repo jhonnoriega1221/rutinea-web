@@ -1,10 +1,10 @@
 <div class="mx-auto max-w-150 px-12 py-6 text-center">
-  <img class="mx-auto mb-8 w-30 sm:w-36" [src]="image()" />
+  <img class="mx-auto mb-8 w-30" [src]="image()" />
 
-  <p class="mb-1 text-xl font-bold sm:text-2xl">{{ title() }}</p>
+  <p class="mb-1 text-xl font-bold sm:text-xl">{{ title() }}</p>
 
   @if (description() !== undefined || description() === "") {
-    <p class="text-foreground/60 text-sm sm:text-base">{{ description() }}</p>
+    <p class="text-foreground/60 text-sm">{{ description() }}</p>
   }
 
   @if (actionBtnText() !== undefined || actionBtnText() === "") {

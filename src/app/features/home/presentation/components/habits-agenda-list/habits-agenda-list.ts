@@ -2,10 +2,10 @@ import { Component, computed, input, output, signal } from "@angular/core";
 import { NgIcon } from "@ng-icons/core";
 import { HlmCheckboxImports } from "@spartan-ng/helm/checkbox";
 import { HabitAgendaListViewModel } from "../../models/habit-agenda-list.view-model";
-import { CreateHabitLogFormModel } from "../../../../habits/domain/models/habit-log.model";
+import { RouterLink } from "@angular/router";
 
 @Component({
-  imports: [NgIcon, HlmCheckboxImports],
+  imports: [NgIcon, HlmCheckboxImports, RouterLink],
   selector: "app-habits-agenda-list",
   styleUrl: "./habits-agenda-list.css",
   templateUrl: "./habits-agenda-list.html"

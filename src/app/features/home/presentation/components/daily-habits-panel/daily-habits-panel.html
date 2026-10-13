@@ -42,10 +42,30 @@
   </div>
 </div>
 <div class="h-[265px]">
-  <app-habits-agenda-list
-    [habits]="summaryHabits()"
-    (checkedChange)="onToggleHabitCompletion($event)"
-  />
+  @if (dueCount() === 0 && completedCount() === 0) {
+    <app-data-state
+      [image]="'/assets/svg/empty_state.svg'"
+      title="Rest day?"
+      description="You don't have any habits scheduled for today. Enjoy your downtime."
+    />
+  } @else if (selectedTab() === "due" && dueCount() === 0 && completedCount() > 0) {
+    <app-data-state
+      [image]="'/assets/svg/empty_state.svg'"
+      title="You're all caught up!"
+      description="Awesome work. You've crushed all your pending habits for today."
+    />
+  } @else if (selectedTab() === "completed" && dueCount() > 0 && completedCount() === 0) {
+    <app-data-state
+      [image]="'/assets/svg/empty_state.svg'"
+      title="Let's get to work!"
+      description="Your completed habits will appear here. Go crush your first task of the day!"
+    />
+  } @else {
+    <app-habits-agenda-list
+      [habits]="summaryHabits()"
+      (checkedChange)="onToggleHabitCompletion($event)"
+    />
+  }
 </div>
 <button
   class="text-primary hover:bg-primary/20 flex w-full items-center bg-transparent"
