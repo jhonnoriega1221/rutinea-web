@@ -36,7 +36,6 @@ export class HomePage implements OnInit {
   }
 
   async onCompleteHabit(habitLog: { habitId: string; logDateKey: string; isCompleted: boolean }) {
-    console.log(habitLog.isCompleted);
     if (!habitLog.isCompleted) {
       await this._habitLogsFacade.create({ habitId: habitLog.habitId, date: habitLog.logDateKey });
     } else {
