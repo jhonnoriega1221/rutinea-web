@@ -78,7 +78,6 @@ export class DailyHabitsPanel {
         completed: isCompleted,
         createdAt: habit.createdAt
       });
-      console.log("habhti");
       return { ...habit, icon: getIconByKey(habit.icon)!.icon, dayState };
     });
   });
