@@ -1,11 +1,11 @@
-import { Component, computed, inject, input, output, signal } from "@angular/core";
+import { Component, computed, input, output, signal } from "@angular/core";
 import { DatesHorizontalPicker } from "../dates-horizontal-picker/dates-horizontal-picker";
 import { HlmButtonImports } from "@spartan-ng/helm/button";
 import { HlmToggleGroupImports } from "@spartan-ng/helm/toggle-group";
 import { NgIcon } from "@ng-icons/core";
+import { RouterLink } from "@angular/router";
 import {
   getWeekDates,
-  getWeekdayKey,
   resolveDayState,
   toDate,
   toDateKey
@@ -15,7 +15,6 @@ import { Habit, Weekday, WEEKDAYS } from "../../../../habits/domain/models/habit
 import { HabitAgendaListViewModel } from "../../models/habit-agenda-list.view-model";
 import { getIconByKey } from "../../../../../shared/components/icons/habit-icons";
 import { HabitAgendaList } from "../habits-agenda-list/habits-agenda-list";
-import { CreateHabitLogFormModel } from "../../../../habits/domain/models/habit-log.model";
 import { DataState } from "../../../../../shared/components/data-state/data-state";
 
 @Component({
@@ -25,7 +24,8 @@ import { DataState } from "../../../../../shared/components/data-state/data-stat
     HlmButtonImports,
     HlmToggleGroupImports,
     NgIcon,
-    DataState
+    DataState,
+    RouterLink
   ],
   selector: "app-daily-habits-panel",
   styleUrl: "./daily-habits-panel.css",
@@ -80,6 +80,20 @@ export class DailyHabitsPanel {
       });
       return { ...habit, icon: getIconByKey(habit.icon)!.icon, dayState };
     });
+  });
+
+  readonly scheduleTitle = computed(() => {
+    const selectedKey = this.selectedDate();
+    const todayKey = toDateKey(new Date());
+
+    if (selectedKey === todayKey) {
+      return "Today's Schedule";
+    }
+
+    const date = toDate(selectedKey);
+    const formatter = new Intl.DateTimeFormat("en-US", { day: "2-digit", month: "short" });
+
+    return `${formatter.format(date)} Schedule`;
   });
 
   readonly dailyProgressMap = computed<Map<string, number>>(() => {

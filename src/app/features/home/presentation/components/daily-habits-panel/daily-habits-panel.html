@@ -7,7 +7,7 @@
 </div>
 
 <div class="mt-2 px-2">
-  <p class="text- mb-4 text-sm font-bold">Today's Schedule</p>
+  <p class="text- mb-4 text-sm font-bold">{{ scheduleTitle() }}</p>
   <div class="mb-2 flex h-8 justify-between gap-2">
     <hlm-toggle-group
       [value]="selectedTab()"
@@ -52,7 +52,7 @@
     <app-data-state
       [image]="'/assets/svg/empty_state.svg'"
       title="You're all caught up!"
-      description="Awesome work. You've crushed all your pending habits for today."
+      description="Awesome work. You've crushed all your pending habits for this day."
     />
   } @else if (selectedTab() === "completed" && dueCount() > 0 && completedCount() === 0) {
     <app-data-state
@@ -67,11 +67,14 @@
     />
   }
 </div>
-<button
-  class="text-primary hover:bg-primary/20 flex w-full items-center bg-transparent"
-  hlmBtn
-  size="lg"
->
-  See all habits for today
-  <ng-icon class="mt-0.5" name="lucideArrowRight" size="20" />
-</button>
+<div class="px-2">
+  <a
+    routerLink="/habits"
+    class="text-primary hover:bg-primary/20! flex w-full items-center bg-transparent"
+    hlmBtn
+    size="lg"
+  >
+    See all habits
+    <ng-icon class="mt-0.5" name="lucideArrowRight" size="20" />
+  </a>
+</div>
