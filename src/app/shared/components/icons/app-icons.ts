@@ -28,7 +28,8 @@ import {
   lucideEllipsisVertical,
   lucideFolderBookmark,
   lucideArrowRight,
-  lucideArrowLeft
+  lucideArrowLeft,
+  lucideClock4
 } from "@ng-icons/lucide";
 
 export const APP_ICONS = {
@@ -61,5 +62,6 @@ export const APP_ICONS = {
   lucideEllipsisVertical,
   lucideFolderBookmark,
   lucideArrowRight,
-  lucideArrowLeft
+  lucideArrowLeft,
+  lucideClock4
 } as const;

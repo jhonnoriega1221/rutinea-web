@@ -10,12 +10,12 @@
         (completeHabit)="onCompleteHabit($event)"
       />
     </section>
-    <section class="bg-card card-shadow col-span-2 row-span-1 h-40 w-full rounded-xl border">
-      <app-kpi-panel />
+    <section class="bg-card card-shadow col-span-2 row-span-1 h-40 w-full rounded-xl border p-2">
+      <app-kpi-panel title="Pending habits" [value]="dueCount()" icon="lucideCheck" />
     </section>
-    <section
-      class="bg-card card-shadow col-span-2 row-span-1 h-40 w-full rounded-xl border"
-    ></section>
+    <section class="bg-card card-shadow col-span-2 row-span-1 h-40 w-full rounded-xl border p-2">
+      <app-kpi-panel title="Completed habits" [value]="completedCount()" icon="lucideClock4" />
+    </section>
     <section
       class="bg-card card-shadow col-span-4 row-span-3 h-120 w-full rounded-xl border"
     ></section>

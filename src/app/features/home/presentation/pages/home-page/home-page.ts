@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from "@angular/core";
+import { Component, computed, inject, OnInit } from "@angular/core";
 import { HlmButtonImports } from "@spartan-ng/helm/button";
 import { HomeGreeting } from "../../components/home-greeting/home-greeting";
 import { HlmCardImports } from "@spartan-ng/helm/card";
@@ -7,6 +7,14 @@ import { DailyHabitsPanel } from "../../components/daily-habits-panel/daily-habi
 import { HabitsFacade } from "../../../../habits/presentation/facade/habits.facade";
 import { HabitLogsFacade } from "../../../../habits/presentation/facade/habit-logs.facade";
 import { CreateHabitLogFormModel } from "../../../../habits/domain/models/habit-log.model";
+import {
+  getWeekDates,
+  resolveDayState,
+  toDateKey
+} from "../../../../habits/domain/utils/day-state.util";
+import { HabitAgendaListViewModel } from "../../models/habit-agenda-list.view-model";
+import { Weekday, WEEKDAYS } from "../../../../habits/domain/models/habit.model";
+import { getIconByKey } from "../../../../../shared/components/icons/habit-icons";
 
 @Component({
   selector: "app-home-page",
@@ -42,4 +50,55 @@ export class HomePage implements OnInit {
       await this._habitLogsFacade.delete(habitLog.habitId, habitLog.logDateKey);
     }
   }
+
+  readonly habitsForSelectedDate = computed<HabitAgendaListViewModel[]>(() => {
+    const allHabits = this.habits();
+    const today = new Date();
+    const todayKey = toDateKey(today);
+    const logsMap = this.habitLogs();
+
+    const currentWeekDays = getWeekDates(today);
+    const currentWeekDaysKeys = currentWeekDays.map((day) => toDateKey(day));
+
+    return allHabits.map((habit) => {
+      const habitLogs = logsMap.get(habit.id) ?? new Set<string>();
+      const isCompleted = habitLogs.has(todayKey);
+
+      let scheduleDays = new Set<Weekday>();
+
+      if (habit.frequencyData.type === "everyday") {
+        scheduleDays = new Set(WEEKDAYS);
+      } else if (habit.frequencyData.type === "specific_days") {
+        scheduleDays = new Set(habit.frequencyData.days);
+      } else if (habit.frequencyData.type === "days_per_week") {
+        const completionsThisWeek = currentWeekDaysKeys.filter((key) => habitLogs.has(key)).length;
+        const quota = habit.frequencyData.count;
+
+        if (completionsThisWeek >= quota) {
+          scheduleDays = new Set<Weekday>();
+        } else {
+          scheduleDays = new Set(WEEKDAYS);
+        }
+      }
+
+      const dayState = resolveDayState({
+        date: today,
+        scheduled: scheduleDays,
+        completed: isCompleted,
+        createdAt: habit.createdAt
+      });
+
+      return { ...habit, icon: getIconByKey(habit.icon)!.icon, dayState };
+    });
+  });
+
+  readonly dueCount = computed(
+    () =>
+      this.habitsForSelectedDate().filter(
+        (h) => h.dayState === "pending" || h.dayState === "urgent" || h.dayState === "missed"
+      ).length
+  );
+  readonly completedCount = computed(
+    () => this.habitsForSelectedDate().filter((h) => h.dayState === "completed").length
+  );
 }

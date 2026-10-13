@@ -1,1 +1,15 @@
-<p>kpi-panel works!</p>
+<div class="h-full">
+  <div class="flex h-[48px] items-center gap-2">
+    <div
+      class="bg-primary/20 text-primary! flex aspect-square h-[36px] w-[36px] items-center justify-center rounded-lg text-white"
+    >
+      <ng-icon [name]="icon()" size="18" />
+    </div>
+    <p class="text-base font-bold">
+      {{ title() }}
+    </p>
+  </div>
+  <div class="h-max">
+    <p class="mt-6 text-center text-4xl font-bold">{{ value() }}</p>
+  </div>
+</div>
