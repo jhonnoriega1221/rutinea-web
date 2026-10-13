@@ -15,6 +15,7 @@ import {
 import { HabitAgendaListViewModel } from "../../models/habit-agenda-list.view-model";
 import { Weekday, WEEKDAYS } from "../../../../habits/domain/models/habit.model";
 import { getIconByKey } from "../../../../../shared/components/icons/habit-icons";
+import { CategoriesFacade } from "../../../../categories/presentation/facade/categories.facade";
 
 @Component({
   selector: "app-home-page",
@@ -26,12 +27,15 @@ import { getIconByKey } from "../../../../../shared/components/icons/habit-icons
 export class HomePage implements OnInit {
   private readonly _habitsFacade = inject(HabitsFacade);
   private readonly _habitLogsFacade = inject(HabitLogsFacade);
+  private readonly _categoriesFacade = inject(CategoriesFacade);
 
   readonly habits = this._habitsFacade.habits;
   readonly habitLogs = this._habitLogsFacade.listLogsMap;
+  readonly categories = this._categoriesFacade.categories;
 
   async ngOnInit() {
     await this._habitsFacade.loadAll();
+    await this._categoriesFacade.loadAll();
 
     const habitIds = this._habitsFacade.habits().map((h) => h.id);
     if (habitIds.length > 0) {
@@ -88,7 +92,7 @@ export class HomePage implements OnInit {
         createdAt: habit.createdAt
       });
 
-      return { ...habit, icon: getIconByKey(habit.icon)!.icon, dayState };
+      return { ...habit, icon: getIconByKey(habit.icon)!.icon, dayState, categoryInfo: null };
     });
   });
 

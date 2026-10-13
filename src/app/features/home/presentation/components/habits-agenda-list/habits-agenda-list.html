@@ -8,6 +8,7 @@
       >
         <div
           class="bg-primary/40 flex aspect-square h-[36px] w-[36px] items-center justify-center rounded-lg text-white"
+          [style.backgroundColor]="'var(' + habit.categoryInfo?.cssVar + ')'"
         >
           <ng-icon [name]="habit.icon" size="16px" />
         </div>

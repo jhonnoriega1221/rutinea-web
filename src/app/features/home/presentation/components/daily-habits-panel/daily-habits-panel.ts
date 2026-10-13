@@ -16,6 +16,8 @@ import { HabitAgendaListViewModel } from "../../models/habit-agenda-list.view-mo
 import { getIconByKey } from "../../../../../shared/components/icons/habit-icons";
 import { HabitAgendaList } from "../habits-agenda-list/habits-agenda-list";
 import { DataState } from "../../../../../shared/components/data-state/data-state";
+import { Category } from "../../../../categories/domain/models/category.model";
+import { getColorByKey } from "../../../../../shared/components/color-picker/app-colors";
 
 @Component({
   imports: [
@@ -34,6 +36,7 @@ import { DataState } from "../../../../../shared/components/data-state/data-stat
 export class DailyHabitsPanel {
   readonly habits = input.required<Habit[]>();
   readonly habitLogs = input.required<Map<string, Set<string>>>();
+  readonly categories = input.required<Category[]>();
 
   protected readonly selectedTab = signal<"due" | "completed">("due");
   protected readonly selectedDate = signal<string>(toDateKey(new Date()));
@@ -53,6 +56,8 @@ export class DailyHabitsPanel {
 
     return allHabits.map((habit) => {
       const habitLogs = logsMap.get(habit.id) ?? new Set<string>();
+      const category = this.categories().find((c) => c.id === habit.categoryId);
+
       const isCompleted = habitLogs.has(dateKey);
 
       let scheduleDays = new Set<Weekday>();
@@ -78,7 +83,19 @@ export class DailyHabitsPanel {
         completed: isCompleted,
         createdAt: habit.createdAt
       });
-      return { ...habit, icon: getIconByKey(habit.icon)!.icon, dayState };
+      return {
+        ...habit,
+        icon: getIconByKey(habit.icon)!.icon,
+        dayState,
+        categoryInfo: category
+          ? {
+              id: habit.categoryId,
+              name: category.name,
+              color: category.color,
+              cssVar: getColorByKey(category.color)?.cssVar!
+            }
+          : null
+      };
     });
   });
 

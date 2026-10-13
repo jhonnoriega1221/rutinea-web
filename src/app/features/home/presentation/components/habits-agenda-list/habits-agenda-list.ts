@@ -3,6 +3,7 @@ import { NgIcon } from "@ng-icons/core";
 import { HlmCheckboxImports } from "@spartan-ng/helm/checkbox";
 import { HabitAgendaListViewModel } from "../../models/habit-agenda-list.view-model";
 import { RouterLink } from "@angular/router";
+import { getColorByKey } from "../../../../../shared/components/color-picker/app-colors";
 
 @Component({
   imports: [NgIcon, HlmCheckboxImports, RouterLink],
