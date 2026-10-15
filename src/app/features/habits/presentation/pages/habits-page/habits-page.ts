@@ -24,7 +24,6 @@ import { DataState } from "../../../../../shared/components/data-state/data-stat
     HlmButtonImports,
     HlmDropdownMenuImports,
     NgIcon,
-    ResponsivePopup,
     HabitsCreateForm,
     HabitsList,
     ResponsivePopup,

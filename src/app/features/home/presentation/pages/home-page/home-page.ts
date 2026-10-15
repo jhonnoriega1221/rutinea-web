@@ -16,6 +16,7 @@ import { HabitAgendaListViewModel } from "../../models/habit-agenda-list.view-mo
 import { Weekday, WEEKDAYS } from "../../../../habits/domain/models/habit.model";
 import { getIconByKey } from "../../../../../shared/components/icons/habit-icons";
 import { CategoriesFacade } from "../../../../categories/presentation/facade/categories.facade";
+import { getColorByKey } from "../../../../../shared/components/color-picker/app-colors";
 
 @Component({
   selector: "app-home-page",
@@ -65,6 +66,8 @@ export class HomePage implements OnInit {
     const currentWeekDaysKeys = currentWeekDays.map((day) => toDateKey(day));
 
     return allHabits.map((habit) => {
+      const category = this.categories().find((c) => c.id === habit.categoryId);
+
       const habitLogs = logsMap.get(habit.id) ?? new Set<string>();
       const isCompleted = habitLogs.has(todayKey);
 
@@ -92,7 +95,19 @@ export class HomePage implements OnInit {
         createdAt: habit.createdAt
       });
 
-      return { ...habit, icon: getIconByKey(habit.icon)!.icon, dayState, categoryInfo: null };
+      return {
+        ...habit,
+        icon: getIconByKey(habit.icon)!.icon,
+        dayState,
+        categoryInfo: category
+          ? {
+              id: habit.categoryId,
+              name: category.name,
+              color: category.color,
+              cssVar: getColorByKey(category.color)?.cssVar!
+            }
+          : null
+      };
     });
   });
 

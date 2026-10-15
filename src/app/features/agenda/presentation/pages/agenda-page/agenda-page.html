@@ -1,0 +1,112 @@
+<main class="mx-auto max-w-250">
+  <header class="mb-4 flex items-center justify-between px-2">
+    <p class="mb-4 text-2xl font-bold">Agenda</p>
+    <div class="flex gap-2">
+      <button hlmBtn (click)="createHabitDialog.open()" size="lg">
+        <ng-icon name="lucidePlus" class="h-5! w-5!" />
+        New habit
+      </button>
+      <button
+        hlmBtn
+        class="text-foreground hover:bg-foreground/10 bg-transparent"
+        size="icon-lg"
+        [hlmDropdownMenuTrigger]="menu"
+        align="end"
+      >
+        <ng-icon size="20" name="lucideEllipsisVertical" />
+      </button>
+      <ng-template #menu>
+        <hlm-dropdown-menu>
+          <a hlmDropdownMenuItem routerLink="/settings/habits"> Manage Habits </a>
+          <a hlmDropdownMenuItem routerLink="/settings/categories"> Manage Categories </a>
+        </hlm-dropdown-menu>
+      </ng-template>
+    </div>
+  </header>
+  <section class="mb-4">
+    <app-horizontal-date-picker
+      [selectedDate]="selectedDate()"
+      [progressMap]="dailyProgressMap()"
+      (changeDate)="onChangeDate($event)"
+    />
+  </section>
+
+  <section class="mt-2 px-2">
+    <p class="text- mb-4 text-sm font-bold">{{ scheduleTitle() }}</p>
+    <div class="mb-2 flex h-8 justify-between gap-2">
+      <hlm-toggle-group
+        [value]="selectedTab()"
+        (valueChange)="onChangeTab($event)"
+        type="single"
+        size="sm"
+        variant="outline"
+        nullable="false"
+        spacing="2"
+        class="category-filter-toggle"
+      >
+        <button
+          hlmToggleGroupItem
+          value="due"
+          class="flex h-full flex-col items-start overflow-hidden rounded-full"
+        >
+          <label class="w-full overflow-hidden text-xs text-ellipsis"
+            >Due
+            <span class="text-foreground/60 ml-1">{{ dueCount() }}</span>
+          </label>
+        </button>
+        <button
+          hlmToggleGroupItem
+          value="completed"
+          class="flex h-full flex-col items-start overflow-hidden rounded-full"
+        >
+          <label class="w-full overflow-hidden text-xs text-ellipsis"
+            >Completed <span class="text-foreground/60 ml-1">{{ completedCount() }}</span></label
+          >
+        </button>
+      </hlm-toggle-group>
+    </div>
+  </section>
+  <section class="h-[265px]">
+    @if (dueCount() === 0 && completedCount() === 0) {
+      <app-data-state
+        [image]="'/assets/svg/empty_state.svg'"
+        title="Rest day?"
+        description="You don't have any habits scheduled for today. Enjoy your downtime."
+      />
+    } @else if (selectedTab() === "due" && dueCount() === 0 && completedCount() > 0) {
+      <app-data-state
+        [image]="'/assets/svg/empty_state.svg'"
+        title="You're all caught up!"
+        description="Awesome work. You've crushed all your pending habits for this day."
+      />
+    } @else if (selectedTab() === "completed" && dueCount() > 0 && completedCount() === 0) {
+      <app-data-state
+        [image]="'/assets/svg/empty_state.svg'"
+        title="Let's get to work!"
+        description="Your completed habits will appear here. Go crush your first task of the day!"
+      />
+    } @else {
+      <app-agenda-list
+        [habits]="summaryHabits()"
+        (checkedChange)="onToggleHabitCompletion($event)"
+      />
+    }
+  </section>
+</main>
+
+<app-responsive-popup #createHabitDialog>
+  @if (createHabitDialog.state() === "open") {
+    <app-habits-create-form
+      #createHabitForm
+      [categories]="categories()"
+      (clickNewCategory)="createCategoryDialog.open()"
+      (submitted)="onHabitSubmitted($event)"
+    />
+  }
+</app-responsive-popup>
+
+<app-responsive-popup #createCategoryDialog>
+  @if (createCategoryDialog.state() === "open") {
+    <app-category-upsert-form (submitted)="onCategorySubmitted($event)" />
+  }
+</app-responsive-popup>

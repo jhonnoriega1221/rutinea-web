@@ -29,7 +29,8 @@ import {
   lucideFolderBookmark,
   lucideArrowRight,
   lucideArrowLeft,
-  lucideClock4
+  lucideClock4,
+  lucideCalendarFold
 } from "@ng-icons/lucide";
 
 export const APP_ICONS = {
@@ -63,5 +64,6 @@ export const APP_ICONS = {
   lucideFolderBookmark,
   lucideArrowRight,
   lucideArrowLeft,
-  lucideClock4
+  lucideClock4,
+  lucideCalendarFold
 } as const;

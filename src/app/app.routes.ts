@@ -29,11 +29,19 @@ export const routes: Routes = [
           )
       },
       {
-        path: "habits",
+        path: "settings/habits",
         pathMatch: "full",
         loadComponent: () =>
           import("./features/habits/presentation/pages/habits-page/habits-page").then(
             (m) => m.HabitsPage
+          )
+      },
+      {
+        path: "agenda",
+        pathMatch: "full",
+        loadComponent: () =>
+          import("./features/agenda/presentation/pages/agenda-page/agenda-page").then(
+            (m) => m.AgendaPage
           )
       },
       {

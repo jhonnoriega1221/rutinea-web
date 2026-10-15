@@ -9,10 +9,11 @@ import {
   signal,
   viewChild
 } from "@angular/core";
+import { toDateKey } from "../../../../habits/domain/utils/day-state.util";
 import { CircularProgress } from "../../../../../shared/components/circular-progress/circular-progress";
 import { HlmButtonImports } from "@spartan-ng/helm/button";
 import { NgIcon } from "@ng-icons/core";
-import { toDateKey } from "../../../../habits/domain/utils/day-state.util";
+
 export interface CalendarDate {
   dateKey: string;
   dayInitial: string;
@@ -23,11 +24,11 @@ export interface CalendarDate {
 
 @Component({
   imports: [CircularProgress, HlmButtonImports, NgIcon],
-  selector: "app-dates-horizontal-picker",
-  styleUrl: "./dates-horizontal-picker.css",
-  templateUrl: "./dates-horizontal-picker.html"
+  selector: "app-horizontal-date-picker",
+  styleUrl: "./horizontal-date-picker.css",
+  templateUrl: "./horizontal-date-picker.html"
 })
-export class DatesHorizontalPicker {
+export class HorizontalDatePicker {
   private readonly _strip = viewChild.required<ElementRef<HTMLElement>>("strip");
 
   readonly list = signal<CalendarDate[]>(this.generatePast30Days());

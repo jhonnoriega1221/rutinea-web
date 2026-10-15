@@ -5,9 +5,9 @@
   <div class="grid w-full grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-12">
     <section class="bg-card card-shadow col-span-4 row-span-2 w-full rounded-xl border py-4">
       <app-daily-habits-panel
-        [habits]="habits()"
-        [habitLogs]="habitLogs()"
-        [categories]="categories()"
+        [habitsForSelectedDate]="habitsForSelectedDate()"
+        [dueCount]="dueCount()"
+        [completedCount]="completedCount()"
         (completeHabit)="onCompleteHabit($event)"
       />
     </section>
