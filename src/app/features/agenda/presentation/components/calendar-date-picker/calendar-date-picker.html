@@ -1,14 +1,6 @@
 <div class="flex flex-col gap-4">
   <div class="flex w-full items-center justify-between gap-1.5">
-    <button
-      #prevBtn
-      brnCalendarPreviousButton
-      (click)="onFocusedDateChange()"
-      hlmBtn
-      variant="ghost"
-      size="icon"
-      type="button"
-    >
+    <button #prevBtn brnCalendarPreviousButton hlmBtn variant="ghost" size="icon" type="button">
       <ng-icon name="lucideChevronLeft" />
     </button>
 
@@ -20,9 +12,7 @@
         <hlm-select-content *hlmSelectPortal>
           <hlm-select-group>
             @for (month of _i18n.config().months(); track month) {
-              <hlm-select-item (click)="onFocusedDateChange()" [value]="month">
-                {{ month }}</hlm-select-item
-              >
+              <hlm-select-item [value]="month"> {{ month }}</hlm-select-item>
             }
           </hlm-select-group>
         </hlm-select-content>
@@ -35,9 +25,7 @@
         <hlm-select-content *hlmSelectPortal class="max-h-80">
           <hlm-select-group>
             @for (year of _i18n.config().years(); track year) {
-              <hlm-select-item (click)="onFocusedDateChange()" [value]="year">
-                {{ year }}</hlm-select-item
-              >
+              <hlm-select-item [value]="year"> {{ year }}</hlm-select-item>
             }
           </hlm-select-group>
         </hlm-select-content>
@@ -45,15 +33,7 @@
       <button hlmBtn variant="outline" type="button" (click)="goToToday()">Today</button>
     </div>
 
-    <button
-      #nextBtn
-      brnCalendarNextButton
-      (click)="onFocusedDateChange()"
-      hlmBtn
-      variant="ghost"
-      size="icon"
-      type="button"
-    >
+    <button #nextBtn brnCalendarNextButton hlmBtn variant="ghost" size="icon" type="button">
       <ng-icon name="lucideChevronRight" />
     </button>
   </div>
@@ -71,18 +51,19 @@
       </tr>
     </thead>
     <tbody>
-      <tr *brnCalendarWeek="let week" class="mt-2 flex w-full rounded-full">
+      <tr *brnCalendarWeek="let week" class="flex w-full rounded-full">
         @for (date of week; track _dateAdapter.getTime(date)) {
           <td class="aspect-square w-full p-0.5 text-center">
             <button
               type="button"
               brnCalendarCellButton
               [date]="date"
-              class="hover:bg-foreground/10 data-[disabled=true]:text-foreground/10 flex aspect-square w-full items-center justify-center rounded-full text-xs data-[outside=true]:hidden"
+              class="hover:bg-foreground/10 data-[disabled=true]:text-foreground/10 flex h-[60px] w-full flex-col items-center justify-center gap-1 rounded-full text-xs data-[outside=true]:hidden"
               [class.bg-foreground/20]="isSelectedDay(date)"
               (click)="onDayClick(date)"
             >
-              {{ _dateAdapter.getDate(date) }}
+              <label> {{ _dateAdapter.getDate(date) }}</label>
+              <app-circular-progress [value]="30" [size]="20" [hidePercent]="true" />
             </button>
           </td>
         }

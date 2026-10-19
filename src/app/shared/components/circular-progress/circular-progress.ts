@@ -9,6 +9,7 @@ import { Component, computed, input } from "@angular/core";
 export class CircularProgress {
   readonly value = input<number>(0);
   readonly size = input<number>(80);
+  readonly hidePercent = input<boolean>(false);
   readonly strokeWidth = input<number>(8);
 
   protected readonly radius = 40;

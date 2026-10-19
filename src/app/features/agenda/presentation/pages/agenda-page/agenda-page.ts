@@ -58,6 +58,8 @@ export class AgendaPage {
   private readonly _habitsFacade = inject(HabitsFacade);
   private readonly _habitLogsFacade = inject(HabitLogsFacade);
   private readonly _categoriesFacade = inject(CategoriesFacade);
+  protected readonly today = new Date();
+  protected readonly todayKey = toDateKey(new Date());
 
   readonly habits = this._habitsFacade.habits;
   readonly habitLogs = this._habitLogsFacade.listLogsMap;
@@ -65,13 +67,13 @@ export class AgendaPage {
 
   protected readonly selectedTab = signal<"due" | "completed">("due");
   protected readonly selectedDate = signal<string>(toDateKey(new Date()));
-  protected readonly today = signal<Date>(new Date());
 
   readonly changeDate = output<string>();
   readonly changeTab = output<"due" | "completed">();
   readonly completeHabit = output<{ habitId: string; logDateKey: string; isCompleted: boolean }>();
 
   protected readonly createHabitDialog = viewChild.required<ResponsivePopup>("createHabitDialog");
+  protected readonly calendarDialog = viewChild.required<ResponsivePopup>("calendarDialog");
   protected readonly createCategoryDialog =
     viewChild.required<ResponsivePopup>("createCategoryDialog");
   protected readonly createHabitForm = viewChild<HabitsCreateForm>("createHabitForm");
@@ -86,11 +88,10 @@ export class AgendaPage {
 
     const habitIds = this._habitsFacade.habits().map((h) => h.id);
     if (habitIds.length > 0) {
-      const today = new Date();
-      const thirtyDaysAgo = new Date(today);
-      thirtyDaysAgo.setDate(today.getDate() - 29);
+      const thirtyDaysAgo = new Date(this.today);
+      thirtyDaysAgo.setDate(this.today.getDate() - 29);
 
-      await this._habitLogsFacade.loadLogsForHabitsList(habitIds, thirtyDaysAgo, today);
+      await this._habitLogsFacade.loadLogsForHabitsList(habitIds, thirtyDaysAgo, this.today);
     }
   }
 
@@ -150,9 +151,8 @@ export class AgendaPage {
 
   readonly scheduleTitle = computed(() => {
     const selectedKey = this.selectedDate();
-    const todayKey = toDateKey(new Date());
 
-    if (selectedKey === todayKey) {
+    if (selectedKey === this.todayKey) {
       return "Today's Schedule";
     }
 
@@ -167,10 +167,9 @@ export class AgendaPage {
     const logsMap = this.habitLogs();
     const progressMap = new Map<string, number>();
 
-    const today = new Date();
     for (let i = 29; i >= 0; i--) {
-      const d = new Date(today);
-      d.setDate(today.getDate() - i);
+      const d = new Date(this.today);
+      d.setDate(this.today.getDate() - i);
 
       const dateKey = toDateKey(d);
       const currentWeekDays = getWeekDates(d);
@@ -254,6 +253,7 @@ export class AgendaPage {
   readonly calculateDayPercentage = computed(() => {});
 
   onChangeDate(date: string) {
+    this.calendarDialog().close();
     this.selectedDate.set(date);
     this.changeDate.emit(date);
   }
@@ -279,6 +279,20 @@ export class AgendaPage {
     await this._habitsFacade.create(model);
     toast.success("Habit has been created");
     this.createHabitDialog().close();
+  }
+
+  onPreviousDay() {
+    const current = toDate(this.selectedDate());
+    current.setDate(current.getDate() - 1);
+    this.onChangeDate(toDateKey(current));
+  }
+
+  onNextDay() {
+    if (this.todayKey === this.selectedDate()) return;
+
+    const current = toDate(this.selectedDate());
+    current.setDate(current.getDate() + 1);
+    this.onChangeDate(toDateKey(current));
   }
 
   protected async onCategorySubmitted(model: UpsertCategoryFormModel): Promise<void> {

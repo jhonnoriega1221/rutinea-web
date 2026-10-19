@@ -25,25 +25,45 @@
   </header>
   <div class="flex flex-col gap-4 sm:flex-row">
     <div>
-      <section class="s mb-4 block sm:hidden">
+      <section class="block sm:hidden">
         <app-horizontal-date-picker
           [selectedDate]="selectedDate()"
           [progressMap]="dailyProgressMap()"
           (changeDate)="onChangeDate($event)"
         />
       </section>
-      <section class="s mb-4 hidden w-[300px] sm:block">
+      <section class="mb-4 hidden h-auto sm:block md:w-[320px]">
         <app-calendar-date-picker
-          [max]="today()"
+          [max]="today"
           [selectedDate]="selectedDate()"
           (changeDate)="onChangeDate($event)"
         />
       </section>
     </div>
     <div class="w-full">
-      <section>
+      <section class="mb-4 flex justify-center gap-2 sm:hidden">
+        <button hlmBtn (click)="onPreviousDay()" variant="ghost" size="icon-lg" type="button">
+          <ng-icon name="lucideChevronLeft" />
+        </button>
+        <button (click)="calendarDialog.open()" variant="secondary" hlmBtn size="lg">
+          {{ scheduleTitle() }}
+        </button>
+        <button
+          hlmBtn
+          variant="ghost"
+          size="icon-lg"
+          type="button"
+          (click)="onNextDay()"
+          [disabled]="selectedDate() === todayKey"
+        >
+          <ng-icon name="lucideChevronRight" />
+        </button>
+      </section>
+      <section class="mb-4 hidden justify-center gap-2 sm:flex">
         <p class="text- mb-4 text-sm font-bold">{{ scheduleTitle() }}</p>
-        <div class="mb-2 flex h-8 justify-between gap-2">
+      </section>
+      <section>
+        <div class="mb-2 flex h-8 justify-between gap-2 px-2">
           <hlm-toggle-group
             [value]="selectedTab()"
             (valueChange)="onChangeTab($event)"
@@ -122,4 +142,17 @@
   @if (createCategoryDialog.state() === "open") {
     <app-category-upsert-form (submitted)="onCategorySubmitted($event)" />
   }
+</app-responsive-popup>
+
+<app-responsive-popup #calendarDialog>
+  <div class="mt-5 h-[460px]">
+    @if (calendarDialog.state() === "open") {
+      <app-calendar-date-picker
+        [max]="today"
+        [defaultFocusedDate]="selectedDate()"
+        [selectedDate]="selectedDate()"
+        (changeDate)="onChangeDate($event)"
+      />
+    }
+  </div>
 </app-responsive-popup>
