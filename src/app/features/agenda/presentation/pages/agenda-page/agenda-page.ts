@@ -31,6 +31,7 @@ import { ToggleValue } from "@spartan-ng/brain/toggle-group";
 import { toast } from "@spartan-ng/brain/sonner";
 import { UpsertCategoryFormModel } from "../../../../categories/domain/models/category.model";
 import { HabitListFilters } from "../../../../habits/presentation/models/habit-list.view-model";
+import { CalendarDatePicker } from "../../components/calendar-date-picker/calendar-date-picker";
 
 @Component({
   imports: [
@@ -41,13 +42,13 @@ import { HabitListFilters } from "../../../../habits/presentation/models/habit-l
     NgIcon,
     DataState,
     RouterLink,
-
     HlmDropdownMenuImports,
     ResponsivePopup,
     HabitsCreateForm,
     CategoryUpsertForm,
     RouterLink,
-    DataState
+    DataState,
+    CalendarDatePicker
   ],
   selector: "app-agenda-page",
   styleUrl: "./agenda-page.css",
@@ -64,6 +65,7 @@ export class AgendaPage {
 
   protected readonly selectedTab = signal<"due" | "completed">("due");
   protected readonly selectedDate = signal<string>(toDateKey(new Date()));
+  protected readonly today = signal<Date>(new Date());
 
   readonly changeDate = output<string>();
   readonly changeTab = output<"due" | "completed">();

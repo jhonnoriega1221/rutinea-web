@@ -23,75 +23,88 @@
       </ng-template>
     </div>
   </header>
-  <section class="mb-4">
-    <app-horizontal-date-picker
-      [selectedDate]="selectedDate()"
-      [progressMap]="dailyProgressMap()"
-      (changeDate)="onChangeDate($event)"
-    />
-  </section>
-
-  <section class="mt-2 px-2">
-    <p class="text- mb-4 text-sm font-bold">{{ scheduleTitle() }}</p>
-    <div class="mb-2 flex h-8 justify-between gap-2">
-      <hlm-toggle-group
-        [value]="selectedTab()"
-        (valueChange)="onChangeTab($event)"
-        type="single"
-        size="sm"
-        variant="outline"
-        nullable="false"
-        spacing="2"
-        class="category-filter-toggle"
-      >
-        <button
-          hlmToggleGroupItem
-          value="due"
-          class="flex h-full flex-col items-start overflow-hidden rounded-full"
-        >
-          <label class="w-full overflow-hidden text-xs text-ellipsis"
-            >Due
-            <span class="text-foreground/60 ml-1">{{ dueCount() }}</span>
-          </label>
-        </button>
-        <button
-          hlmToggleGroupItem
-          value="completed"
-          class="flex h-full flex-col items-start overflow-hidden rounded-full"
-        >
-          <label class="w-full overflow-hidden text-xs text-ellipsis"
-            >Completed <span class="text-foreground/60 ml-1">{{ completedCount() }}</span></label
-          >
-        </button>
-      </hlm-toggle-group>
+  <div class="flex flex-col gap-4 sm:flex-row">
+    <div>
+      <section class="s mb-4 block sm:hidden">
+        <app-horizontal-date-picker
+          [selectedDate]="selectedDate()"
+          [progressMap]="dailyProgressMap()"
+          (changeDate)="onChangeDate($event)"
+        />
+      </section>
+      <section class="s mb-4 hidden w-[300px] sm:block">
+        <app-calendar-date-picker
+          [max]="today()"
+          [selectedDate]="selectedDate()"
+          (changeDate)="onChangeDate($event)"
+        />
+      </section>
     </div>
-  </section>
-  <section class="h-[265px]">
-    @if (dueCount() === 0 && completedCount() === 0) {
-      <app-data-state
-        [image]="'/assets/svg/empty_state.svg'"
-        title="Rest day?"
-        description="You don't have any habits scheduled for today. Enjoy your downtime."
-      />
-    } @else if (selectedTab() === "due" && dueCount() === 0 && completedCount() > 0) {
-      <app-data-state
-        [image]="'/assets/svg/empty_state.svg'"
-        title="You're all caught up!"
-        description="Awesome work. You've crushed all your pending habits for this day."
-      />
-    } @else if (selectedTab() === "completed" && dueCount() > 0 && completedCount() === 0) {
-      <app-data-state
-        [image]="'/assets/svg/empty_state.svg'"
-        title="Let's get to work!"
-        description="Your completed habits will appear here. Go crush your first task of the day!"
-      />
-    } @else {
-      <app-agenda-list
-        [habits]="summaryHabits()"
-        (checkedChange)="onToggleHabitCompletion($event)"
-      />
-    }
-  </section>
+    <div class="w-full">
+      <section>
+        <p class="text- mb-4 text-sm font-bold">{{ scheduleTitle() }}</p>
+        <div class="mb-2 flex h-8 justify-between gap-2">
+          <hlm-toggle-group
+            [value]="selectedTab()"
+            (valueChange)="onChangeTab($event)"
+            type="single"
+            size="sm"
+            variant="outline"
+            nullable="false"
+            spacing="2"
+            class="category-filter-toggle"
+          >
+            <button
+              hlmToggleGroupItem
+              value="due"
+              class="flex h-full flex-col items-start overflow-hidden rounded-full"
+            >
+              <label class="w-full overflow-hidden text-xs text-ellipsis"
+                >Due
+                <span class="text-foreground/60 ml-1">{{ dueCount() }}</span>
+              </label>
+            </button>
+            <button
+              hlmToggleGroupItem
+              value="completed"
+              class="flex h-full flex-col items-start overflow-hidden rounded-full"
+            >
+              <label class="w-full overflow-hidden text-xs text-ellipsis"
+                >Completed
+                <span class="text-foreground/60 ml-1">{{ completedCount() }}</span></label
+              >
+            </button>
+          </hlm-toggle-group>
+        </div>
+      </section>
+      <section>
+        @if (dueCount() === 0 && completedCount() === 0) {
+          <app-data-state
+            [image]="'/assets/svg/empty_state.svg'"
+            title="Rest day?"
+            description="You don't have any habits scheduled for today. Enjoy your downtime."
+          />
+        } @else if (selectedTab() === "due" && dueCount() === 0 && completedCount() > 0) {
+          <app-data-state
+            [image]="'/assets/svg/empty_state.svg'"
+            title="You're all caught up!"
+            description="Awesome work. You've crushed all your pending habits for this day."
+          />
+        } @else if (selectedTab() === "completed" && dueCount() > 0 && completedCount() === 0) {
+          <app-data-state
+            [image]="'/assets/svg/empty_state.svg'"
+            title="Let's get to work!"
+            description="Your completed habits will appear here. Go crush your first task of the day!"
+          />
+        } @else {
+          <app-agenda-list
+            [habits]="summaryHabits()"
+            (checkedChange)="onToggleHabitCompletion($event)"
+          />
+        }
+      </section>
+    </div>
+  </div>
 </main>
 
 <app-responsive-popup #createHabitDialog>

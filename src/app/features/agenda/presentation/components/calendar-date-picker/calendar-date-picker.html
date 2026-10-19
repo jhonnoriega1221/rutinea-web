@@ -1,0 +1,92 @@
+<div class="flex flex-col gap-4">
+  <div class="flex w-full items-center justify-between gap-1.5">
+    <button
+      #prevBtn
+      brnCalendarPreviousButton
+      (click)="onFocusedDateChange()"
+      hlmBtn
+      variant="ghost"
+      size="icon"
+      type="button"
+    >
+      <ng-icon name="lucideChevronLeft" />
+    </button>
+
+    <div class="flex gap-1">
+      <hlm-select brnCalendarMonthSelect>
+        <hlm-select-trigger>
+          <hlm-select-value />
+        </hlm-select-trigger>
+        <hlm-select-content *hlmSelectPortal>
+          <hlm-select-group>
+            @for (month of _i18n.config().months(); track month) {
+              <hlm-select-item (click)="onFocusedDateChange()" [value]="month">
+                {{ month }}</hlm-select-item
+              >
+            }
+          </hlm-select-group>
+        </hlm-select-content>
+      </hlm-select>
+
+      <hlm-select brnCalendarYearSelect>
+        <hlm-select-trigger>
+          <hlm-select-value />
+        </hlm-select-trigger>
+        <hlm-select-content *hlmSelectPortal class="max-h-80">
+          <hlm-select-group>
+            @for (year of _i18n.config().years(); track year) {
+              <hlm-select-item (click)="onFocusedDateChange()" [value]="year">
+                {{ year }}</hlm-select-item
+              >
+            }
+          </hlm-select-group>
+        </hlm-select-content>
+      </hlm-select>
+      <button hlmBtn variant="outline" type="button" (click)="goToToday()">Today</button>
+    </div>
+
+    <button
+      #nextBtn
+      brnCalendarNextButton
+      (click)="onFocusedDateChange()"
+      hlmBtn
+      variant="ghost"
+      size="icon"
+      type="button"
+    >
+      <ng-icon name="lucideChevronRight" />
+    </button>
+  </div>
+
+  <table class="w-full border-collapse select-none" brnCalendarGrid>
+    <thead aria-hidden="true">
+      <tr class="flex">
+        <th
+          *brnCalendarWeekday="let weekday"
+          scope="col"
+          class="text-muted-foreground flex-1 text-center text-[0.8rem] font-normal"
+        >
+          {{ _i18n.config().formatWeekdayName(weekday) }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *brnCalendarWeek="let week" class="mt-2 flex w-full rounded-full">
+        @for (date of week; track _dateAdapter.getTime(date)) {
+          <td class="aspect-square w-full p-0.5 text-center">
+            <button
+              type="button"
+              brnCalendarCellButton
+              [date]="date"
+              class="hover:bg-foreground/10 data-[disabled=true]:text-foreground/10 flex aspect-square w-full items-center justify-center rounded-full text-xs data-[outside=true]:hidden"
+              [class.bg-foreground/20]="isSelectedDay(date)"
+              (click)="onDayClick(date)"
+            >
+              {{ _dateAdapter.getDate(date) }}
+            </button>
+          </td>
+        }
+      </tr>
+    </tbody>
+  </table>
+</div>
