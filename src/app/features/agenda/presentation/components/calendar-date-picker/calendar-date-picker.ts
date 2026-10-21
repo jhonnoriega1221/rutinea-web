@@ -23,7 +23,10 @@ import { CircularProgress } from "../../../../../shared/components/circular-prog
 export class CalendarDatePicker {
   private readonly _calendar = inject(BrnCalendar);
   readonly selectedDate = input<string>();
+  readonly progressMap = input<Map<string, number>>(new Map());
+  readonly focusedMonthYear = input<Date>();
   readonly changeDate = output<string>();
+  readonly changeFocusedMonthYear = output<{ month: number; year: number }>();
 
   protected readonly _i18n = injectBrnCalendarI18n();
   protected readonly _dateAdapter = injectDateAdapter<Date>();
@@ -34,6 +37,7 @@ export class CalendarDatePicker {
     const today = new Date();
     this._calendar.date.set(today);
     this.changeDate.emit(toDateKey(today));
+    this.onFocusedMonthChange();
   }
 
   constructor() {
@@ -46,11 +50,31 @@ export class CalendarDatePicker {
         this._calendar.focusedDate.set(selectedDate);
       }
     });
+
+    effect(() => {
+      const focus = this.focusedMonthYear();
+      if (focus) {
+        this._calendar.focusedDate.set(focus);
+      }
+    });
+  }
+
+  protected onFocusedMonthChange() {
+    const actualDate = this._calendar.focusedDate() as Date;
+    this.changeFocusedMonthYear.emit({
+      month: actualDate.getMonth(),
+      year: actualDate.getFullYear()
+    });
   }
 
   protected onDayClick(date: Date): void {
     this._calendar.date.set(date);
     this.changeDate.emit(toDateKey(date));
+  }
+
+  protected getProgressForDate(date: Date) {
+    const key = toDateKey(date);
+    return this.progressMap().get(key) ?? 0;
   }
 
   protected isSelectedDay(date: Date): boolean {

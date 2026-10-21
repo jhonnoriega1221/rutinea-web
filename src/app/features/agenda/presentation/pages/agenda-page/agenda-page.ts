@@ -67,6 +67,73 @@ export class AgendaPage {
 
   protected readonly selectedTab = signal<"due" | "completed">("due");
   protected readonly selectedDate = signal<string>(toDateKey(new Date()));
+  protected readonly calendarFocusMonthYear = signal<Date>(new Date());
+
+  protected readonly calendarProgressMap = computed<Map<string, number>>(() => {
+    const allHabits = this.habits();
+    const logsMap = this.habitLogs();
+    const progressMap = new Map<string, number>();
+
+    const focus = this.calendarFocusMonthYear();
+    const year = focus.getFullYear();
+    const month = focus.getMonth();
+
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    for (let i = 1; i <= daysInMonth; i++) {
+      const d = new Date(year, month, i);
+      const dateKey = toDateKey(d);
+      const currentWeekDays = getWeekDates(d);
+      const currentWeekDaysKeys = currentWeekDays.map((day) => toDateKey(day));
+
+      let scheduledCount = 0;
+      let completedCount = 0;
+
+      allHabits.forEach((habit) => {
+        const habitLogs = logsMap.get(habit.id) ?? new Set<string>();
+        const isCompleted = habitLogs.has(dateKey);
+
+        let scheduleDays = new Set<Weekday>();
+
+        if (habit.frequencyData.type === "everyday") {
+          scheduleDays = new Set(WEEKDAYS);
+        } else if (habit.frequencyData.type === "specific_days") {
+          scheduleDays = new Set(habit.frequencyData.days);
+        } else if (habit.frequencyData.type === "days_per_week") {
+          const completionsThisWeek = currentWeekDaysKeys.filter((key) =>
+            habitLogs.has(key)
+          ).length;
+          const quota = habit.frequencyData.count;
+
+          if (completionsThisWeek >= quota) {
+            scheduleDays = new Set<Weekday>();
+          } else {
+            scheduleDays = new Set(WEEKDAYS);
+          }
+        }
+
+        const dayState = resolveDayState({
+          date: d,
+          scheduled: scheduleDays,
+          completed: isCompleted,
+          createdAt: habit.createdAt
+        });
+
+        if (dayState !== "not-scheduled" && dayState !== "future-date") {
+          scheduledCount++;
+          if (dayState === "completed") {
+            completedCount++;
+          }
+        }
+      });
+
+      const percentage =
+        scheduledCount > 0 ? Math.round((completedCount / scheduledCount) * 100) : 0;
+      progressMap.set(dateKey, percentage);
+    }
+
+    return progressMap;
+  });
 
   readonly changeDate = output<string>();
   readonly changeTab = output<"due" | "completed">();
@@ -269,6 +336,16 @@ export class AgendaPage {
     }
   }
 
+  async onChangeCalendarFocusMonthYear(event: { month: number; year: number }) {
+    const newFocus = new Date(event.year, event.month, 1);
+    this.calendarFocusMonthYear.set(newFocus);
+
+    const endOfMonth = new Date(event.year, event.month + 1, 0);
+    const habitIds = this.habits().map((h) => h.id);
+
+    await this._habitLogsFacade.loadLogsForHabitsList(habitIds, newFocus, endOfMonth);
+  }
+
   onChangeTab(tabOption: ToggleValue<"due" | "completed">) {
     const selectedTab = tabOption!.toString() as "due" | "completed";
     this.selectedTab.set(selectedTab);
@@ -285,6 +362,7 @@ export class AgendaPage {
     const current = toDate(this.selectedDate());
     current.setDate(current.getDate() - 1);
     this.onChangeDate(toDateKey(current));
+    this.onChangeCalendarFocusMonthYear({ month: current.getMonth(), year: current.getFullYear() });
   }
 
   onNextDay() {
@@ -293,6 +371,7 @@ export class AgendaPage {
     const current = toDate(this.selectedDate());
     current.setDate(current.getDate() + 1);
     this.onChangeDate(toDateKey(current));
+    this.onChangeCalendarFocusMonthYear({ month: current.getMonth(), year: current.getFullYear() });
   }
 
   protected async onCategorySubmitted(model: UpsertCategoryFormModel): Promise<void> {

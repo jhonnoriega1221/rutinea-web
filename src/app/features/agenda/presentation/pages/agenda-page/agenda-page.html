@@ -36,7 +36,10 @@
         <app-calendar-date-picker
           [max]="today"
           [selectedDate]="selectedDate()"
+          [focusedMonthYear]="calendarFocusMonthYear()"
+          [progressMap]="calendarProgressMap()"
           (changeDate)="onChangeDate($event)"
+          (changeFocusedMonthYear)="onChangeCalendarFocusMonthYear($event)"
         />
       </section>
     </div>
@@ -146,13 +149,13 @@
 
 <app-responsive-popup #calendarDialog>
   <div class="mt-5 h-[460px]">
-    @if (calendarDialog.state() === "open") {
-      <app-calendar-date-picker
-        [max]="today"
-        [defaultFocusedDate]="selectedDate()"
-        [selectedDate]="selectedDate()"
-        (changeDate)="onChangeDate($event)"
-      />
-    }
+    <app-calendar-date-picker
+      [max]="today"
+      [selectedDate]="selectedDate()"
+      [focusedMonthYear]="calendarFocusMonthYear()"
+      [progressMap]="calendarProgressMap()"
+      (changeDate)="onChangeDate($event)"
+      (changeFocusedMonthYear)="onChangeCalendarFocusMonthYear($event)"
+    />
   </div>
 </app-responsive-popup>
