@@ -32,7 +32,9 @@
           (changeDate)="onChangeDate($event)"
         />
       </section>
-      <section class="mb-4 hidden h-auto sm:block md:w-[320px]">
+      <section
+        class="bg-card mb-4 hidden h-auto min-h-[470px] rounded-2xl border p-2 sm:block md:w-[320px]"
+      >
         <app-calendar-date-picker
           [max]="today"
           [selectedDate]="selectedDate()"
