@@ -147,7 +147,7 @@
   }
 </app-responsive-popup>
 
-<app-responsive-popup #calendarDialog>
+<app-responsive-popup #calendarDialog (closedEvent)="closeCalendarDialog()">
   <div class="mt-5 h-[460px]">
     <app-calendar-date-picker
       [max]="today"

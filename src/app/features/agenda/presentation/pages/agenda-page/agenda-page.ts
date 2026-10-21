@@ -374,6 +374,11 @@ export class AgendaPage {
     this.onChangeCalendarFocusMonthYear({ month: current.getMonth(), year: current.getFullYear() });
   }
 
+  closeCalendarDialog() {
+    const current = toDate(this.selectedDate());
+    this.onChangeCalendarFocusMonthYear({ month: current.getMonth(), year: current.getFullYear() });
+  }
+
   protected async onCategorySubmitted(model: UpsertCategoryFormModel): Promise<void> {
     const newCategory = await this._categoriesFacade.create(model);
     toast.success("Category has been created");
