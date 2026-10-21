@@ -27,7 +27,9 @@
     />
   </svg>
   @if (!hidePercent()) {
-    <div class="absolute inset-0 flex items-center justify-center text-xs font-medium">
+    <div
+      class="text-foreground/40 absolute inset-0 flex items-center justify-center text-xs font-medium"
+    >
       {{ value() }}%
     </div>
   }
