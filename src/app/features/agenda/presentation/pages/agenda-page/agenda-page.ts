@@ -183,6 +183,10 @@ export class AgendaPage implements OnInit {
     const startOfMonth = new Date(targetDate.getFullYear(), targetDate.getMonth(), 1);
     const endOfMonth = new Date(targetDate.getFullYear(), targetDate.getMonth() + 1, 0);
 
+    const thirtyDaysAgo = new Date(this.today);
+    thirtyDaysAgo.setDate(this.today.getDate() - 29);
+
+    await this._habitLogsFacade.loadLogsForHabitsList(habitIds, thirtyDaysAgo, this.today);
     await this._habitLogsFacade.loadLogsForHabitsList(habitIds, startOfMonth, endOfMonth);
   }
 
