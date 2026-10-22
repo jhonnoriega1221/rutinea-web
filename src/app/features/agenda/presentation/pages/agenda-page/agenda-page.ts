@@ -1,4 +1,13 @@
-import { Component, computed, effect, inject, output, signal, viewChild } from "@angular/core";
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  OnInit,
+  output,
+  signal,
+  viewChild
+} from "@angular/core";
 import { HlmButtonImports } from "@spartan-ng/helm/button";
 import { HlmToggleGroupImports } from "@spartan-ng/helm/toggle-group";
 import { NgIcon } from "@ng-icons/core";
@@ -55,7 +64,7 @@ import { toSignal } from "@angular/core/rxjs-interop";
   styleUrl: "./agenda-page.css",
   templateUrl: "./agenda-page.html"
 })
-export class AgendaPage {
+export class AgendaPage implements OnInit {
   private readonly _route = inject(ActivatedRoute);
   private readonly _router = inject(Router);
   private readonly _queryParamMap = toSignal(this._route.queryParamMap);
@@ -74,12 +83,12 @@ export class AgendaPage {
   protected readonly calendarFocusMonthYear = signal<Date>(new Date());
 
   constructor() {
-    // Escucha cambios en la URL (al entrar o navegar) y actualiza el Signal selectedDate
     effect(() => {
       const dayParam = this._queryParamMap()?.get("day");
       const targetDate = dayParam || this.todayKey;
 
       if (this.selectedDate() !== targetDate) {
+        this.calendarFocusMonthYear.set(toDate(targetDate));
         this.selectedDate.set(targetDate);
       }
     });
@@ -165,12 +174,16 @@ export class AgendaPage {
     await this._categoriesFacade.loadAll();
 
     const habitIds = this._habitsFacade.habits().map((h) => h.id);
-    if (habitIds.length > 0) {
-      const thirtyDaysAgo = new Date(this.today);
-      thirtyDaysAgo.setDate(this.today.getDate() - 29);
+    if (habitIds.length === 0) return;
 
-      await this._habitLogsFacade.loadLogsForHabitsList(habitIds, thirtyDaysAgo, this.today);
-    }
+    const dayParam = this._queryParamMap()?.get("day");
+    const targetDateKey = dayParam || this.todayKey;
+    const targetDate = toDate(targetDateKey);
+
+    const startOfMonth = new Date(targetDate.getFullYear(), targetDate.getMonth(), 1);
+    const endOfMonth = new Date(targetDate.getFullYear(), targetDate.getMonth() + 1, 0);
+
+    await this._habitLogsFacade.loadLogsForHabitsList(habitIds, startOfMonth, endOfMonth);
   }
 
   readonly habitsForSelectedDate = computed<HabitAgendaListViewModel[]>(() => {
