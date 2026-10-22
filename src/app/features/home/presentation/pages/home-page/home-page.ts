@@ -17,10 +17,20 @@ import { Weekday, WEEKDAYS } from "../../../../habits/domain/models/habit.model"
 import { getIconByKey } from "../../../../../shared/components/icons/habit-icons";
 import { CategoriesFacade } from "../../../../categories/presentation/facade/categories.facade";
 import { getColorByKey } from "../../../../../shared/components/color-picker/app-colors";
+import { HabitHeatmap } from "../../components/habit-heatmap/habit-heatmap";
+import { NgIcon } from "@ng-icons/core";
 
 @Component({
   selector: "app-home-page",
-  imports: [HlmButtonImports, HomeGreeting, HlmCardImports, KpiPanel, DailyHabitsPanel],
+  imports: [
+    HlmButtonImports,
+    HomeGreeting,
+    HlmCardImports,
+    KpiPanel,
+    DailyHabitsPanel,
+    HabitHeatmap,
+    NgIcon
+  ],
   standalone: true,
   templateUrl: "./home-page.html",
   styleUrl: "./home-page.css"
