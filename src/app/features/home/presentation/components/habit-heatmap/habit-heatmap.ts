@@ -10,19 +10,21 @@ import {
 import { toDateKey } from "../../../../habits/domain/utils/day-state.util";
 import { DatePipe } from "@angular/common";
 import { HlmTooltipImports } from "@spartan-ng/helm/tooltip";
+import { RouterLink } from "@angular/router";
 
 interface HeatmapDay {
-  dateKey: string;
-  date: Date;
-  completionCount: number;
-  level: 0 | 1 | 2 | 3 | 4;
+  dateKey?: string;
+  date?: Date;
+  completionCount?: number;
+  level?: 0 | 1 | 2 | 3 | 4;
   isPadding: boolean;
+  tooltipLabel?: string;
 }
 
 const HEATMAP_RANGE = 200;
 
 @Component({
-  imports: [DatePipe, HlmTooltipImports],
+  imports: [HlmTooltipImports, RouterLink],
   selector: "app-habit-heatmap",
   styleUrl: "./habit-heatmap.css",
   templateUrl: "./habit-heatmap.html",
@@ -30,9 +32,10 @@ const HEATMAP_RANGE = 200;
 })
 export class HabitHeatmap {
   private readonly _heatmap = viewChild.required<ElementRef<HTMLElement>>("heatmap");
+  protected readonly today = new Date();
+  protected readonly todayKey = toDateKey(new Date());
 
   readonly completionData = input<Map<string, number>>(new Map());
-  readonly dayClick = output<string>();
 
   constructor(private datePipe: DatePipe) {
     afterNextRender(() => {
@@ -43,28 +46,29 @@ export class HabitHeatmap {
   }
 
   readonly heatmapDays = computed(() => {
+    const dateFormatter = new Intl.DateTimeFormat("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric"
+    });
+
     const days: HeatmapDay[] = [];
     const data = this.completionData();
-    const today = new Date();
 
-    const startDay = new Date(today);
-    startDay.setDate(today.getDate() - HEATMAP_RANGE);
+    const startDay = new Date(this.today);
+    startDay.setDate(this.today.getDate() - HEATMAP_RANGE);
 
     const paddingDays = startDay.getDay();
 
     for (let i = 0; i < paddingDays; i++) {
       days.push({
-        isPadding: true,
-        dateKey: `pad-${i}`,
-        date: new Date(),
-        completionCount: 0,
-        level: 0
+        isPadding: true
       });
     }
 
     for (let i = HEATMAP_RANGE; i >= 0; i--) {
-      const d = new Date(today);
-      d.setDate(today.getDate() - i);
+      const d = new Date(this.today);
+      d.setDate(this.today.getDate() - i);
 
       const dateKey = toDateKey(d);
       const count = data.get(dateKey) ?? 0;
@@ -75,7 +79,21 @@ export class HabitHeatmap {
       else if (count === 5 || count === 6) level = 3;
       else if (count >= 7) level = 4;
 
-      days.push({ isPadding: false, dateKey, date: d, completionCount: count, level });
+      const formattedDate = dateFormatter.format(d);
+      const habitsLabel = count === 1 ? "1 habit" : `${count} habits`;
+      const tooltipText =
+        count === 0
+          ? `No habits completed on ${formattedDate}`
+          : `${habitsLabel} completed on ${formattedDate}`;
+
+      days.push({
+        isPadding: false,
+        dateKey,
+        date: d,
+        completionCount: count,
+        level,
+        tooltipLabel: tooltipText
+      });
     }
     return days;
   });
@@ -88,7 +106,7 @@ export class HabitHeatmap {
     days.forEach((day, index) => {
       if (day.isPadding) return;
 
-      const month = day.date.getMonth();
+      const month = day.date!.getMonth();
       if (month != currentMonth) {
         currentMonth = month;
         const colIndex = Math.floor(index / 7);

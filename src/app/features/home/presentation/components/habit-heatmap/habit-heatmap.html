@@ -20,8 +20,8 @@
       </div>
       <div class="grid w-max grid-flow-col grid-rows-7 gap-1">
         @for (day of heatmapDays(); track day.dateKey) {
-          <div
-            [hlmTooltip]="day.dateKey"
+          <a
+            [hlmTooltip]="day.tooltipLabel!"
             class="group relative h-5 w-5 rounded transition-colors duration-200"
             [class.bg-transparent]="day.isPadding"
             [class.pointer-events-none]="day.isPadding"
@@ -31,8 +31,9 @@
             [class.bg-primary/50]="!day.isPadding && day.level === 2"
             [class.bg-primary/70]="!day.isPadding && day.level === 3"
             [class.bg-primary]="!day.isPadding && day.level === 4"
-            (click)="!day.isPadding && dayClick.emit(day.dateKey)"
-          ></div>
+            [routerLink]="['/agenda']"
+            [queryParams]="{ day: day.dateKey === this.todayKey ? null : day.dateKey }"
+          ></a>
         }
       </div>
     </div>
