@@ -1,9 +1,9 @@
-import { Component, computed, inject, output, signal, viewChild } from "@angular/core";
+import { Component, computed, effect, inject, output, signal, viewChild } from "@angular/core";
 import { HlmButtonImports } from "@spartan-ng/helm/button";
 import { HlmToggleGroupImports } from "@spartan-ng/helm/toggle-group";
 import { NgIcon } from "@ng-icons/core";
 import { DataState } from "../../../../../shared/components/data-state/data-state";
-import { RouterLink } from "@angular/router";
+import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { AgendaList } from "../../components/agenda-list/agenda-list";
 import { HorizontalDatePicker } from "../../components/horizontal-date-picker/horizontal-date-picker";
 import { HlmDropdownMenuImports } from "@spartan-ng/helm/dropdown-menu";
@@ -32,6 +32,7 @@ import { toast } from "@spartan-ng/brain/sonner";
 import { UpsertCategoryFormModel } from "../../../../categories/domain/models/category.model";
 import { HabitListFilters } from "../../../../habits/presentation/models/habit-list.view-model";
 import { CalendarDatePicker } from "../../components/calendar-date-picker/calendar-date-picker";
+import { toSignal } from "@angular/core/rxjs-interop";
 
 @Component({
   imports: [
@@ -55,6 +56,9 @@ import { CalendarDatePicker } from "../../components/calendar-date-picker/calend
   templateUrl: "./agenda-page.html"
 })
 export class AgendaPage {
+  private readonly _route = inject(ActivatedRoute);
+  private readonly _router = inject(Router);
+  private readonly _queryParamMap = toSignal(this._route.queryParamMap);
   private readonly _habitsFacade = inject(HabitsFacade);
   private readonly _habitLogsFacade = inject(HabitLogsFacade);
   private readonly _categoriesFacade = inject(CategoriesFacade);
@@ -66,8 +70,20 @@ export class AgendaPage {
   readonly categories = this._categoriesFacade.categories;
 
   protected readonly selectedTab = signal<"due" | "completed">("due");
-  protected readonly selectedDate = signal<string>(toDateKey(new Date()));
+  protected readonly selectedDate = signal<string>(this.todayKey);
   protected readonly calendarFocusMonthYear = signal<Date>(new Date());
+
+  constructor() {
+    // Escucha cambios en la URL (al entrar o navegar) y actualiza el Signal selectedDate
+    effect(() => {
+      const dayParam = this._queryParamMap()?.get("day");
+      const targetDate = dayParam || this.todayKey;
+
+      if (this.selectedDate() !== targetDate) {
+        this.selectedDate.set(targetDate);
+      }
+    });
+  }
 
   protected readonly calendarProgressMap = computed<Map<string, number>>(() => {
     const allHabits = this.habits();
@@ -134,11 +150,6 @@ export class AgendaPage {
 
     return progressMap;
   });
-
-  readonly changeDate = output<string>();
-  readonly changeTab = output<"due" | "completed">();
-  readonly completeHabit = output<{ habitId: string; logDateKey: string; isCompleted: boolean }>();
-
   protected readonly createHabitDialog = viewChild.required<ResponsivePopup>("createHabitDialog");
   protected readonly calendarDialog = viewChild.required<ResponsivePopup>("calendarDialog");
   protected readonly createCategoryDialog =
@@ -322,7 +333,13 @@ export class AgendaPage {
   onChangeDate(date: string) {
     this.calendarDialog().close();
     this.selectedDate.set(date);
-    this.changeDate.emit(date);
+
+    this._router.navigate([], {
+      relativeTo: this._route,
+      queryParams: { day: date === this.todayKey ? null : date },
+      queryParamsHandling: "merge",
+      replaceUrl: true
+    });
   }
 
   async onToggleHabitCompletion(habitId: string) {
@@ -349,7 +366,6 @@ export class AgendaPage {
   onChangeTab(tabOption: ToggleValue<"due" | "completed">) {
     const selectedTab = tabOption!.toString() as "due" | "completed";
     this.selectedTab.set(selectedTab);
-    this.changeTab.emit(selectedTab);
   }
 
   protected async onHabitSubmitted(model: CreateHabitFormModel): Promise<void> {

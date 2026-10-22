@@ -6,7 +6,6 @@ import { KpiPanel } from "../../components/kpi-panel/kpi-panel";
 import { DailyHabitsPanel } from "../../components/daily-habits-panel/daily-habits-panel";
 import { HabitsFacade } from "../../../../habits/presentation/facade/habits.facade";
 import { HabitLogsFacade } from "../../../../habits/presentation/facade/habit-logs.facade";
-import { CreateHabitLogFormModel } from "../../../../habits/domain/models/habit-log.model";
 import {
   getWeekDates,
   resolveDayState,
@@ -17,10 +16,20 @@ import { Weekday, WEEKDAYS } from "../../../../habits/domain/models/habit.model"
 import { getIconByKey } from "../../../../../shared/components/icons/habit-icons";
 import { CategoriesFacade } from "../../../../categories/presentation/facade/categories.facade";
 import { getColorByKey } from "../../../../../shared/components/color-picker/app-colors";
+import { HabitHeatmap } from "../../components/habit-heatmap/habit-heatmap";
+import { NgIcon } from "@ng-icons/core";
 
 @Component({
   selector: "app-home-page",
-  imports: [HlmButtonImports, HomeGreeting, HlmCardImports, KpiPanel, DailyHabitsPanel],
+  imports: [
+    HlmButtonImports,
+    HomeGreeting,
+    HlmCardImports,
+    KpiPanel,
+    DailyHabitsPanel,
+    HabitHeatmap,
+    NgIcon
+  ],
   standalone: true,
   templateUrl: "./home-page.html",
   styleUrl: "./home-page.css"
@@ -35,18 +44,33 @@ export class HomePage implements OnInit {
   readonly categories = this._categoriesFacade.categories;
 
   async ngOnInit() {
+    const LOGS_RANGE = 200;
     await this._habitsFacade.loadAll();
     await this._categoriesFacade.loadAll();
 
     const habitIds = this._habitsFacade.habits().map((h) => h.id);
     if (habitIds.length > 0) {
       const today = new Date();
-      const thirtyDaysAgo = new Date(today);
-      thirtyDaysAgo.setDate(today.getDate() - 29);
+      const logsDateRange = new Date(today);
+      logsDateRange.setDate(today.getDate() - LOGS_RANGE);
 
-      await this._habitLogsFacade.loadLogsForHabitsList(habitIds, thirtyDaysAgo, today);
+      await this._habitLogsFacade.loadLogsForHabitsList(habitIds, logsDateRange, today);
     }
   }
+
+  readonly heatmapData = computed<Map<string, number>>(() => {
+    const logsMap = this.habitLogs();
+    const completionCounts = new Map<string, number>();
+
+    for (const datesSet of logsMap.values()) {
+      for (const dateKey of datesSet) {
+        const currentCount = completionCounts.get(dateKey) ?? 0;
+        completionCounts.set(dateKey, currentCount + 1);
+      }
+    }
+
+    return completionCounts;
+  });
 
   async onCompleteHabit(habitLog: { habitId: string; logDateKey: string; isCompleted: boolean }) {
     if (!habitLog.isCompleted) {

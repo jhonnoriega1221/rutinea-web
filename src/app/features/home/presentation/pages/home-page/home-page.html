@@ -20,9 +20,17 @@
     <section
       class="bg-card card-shadow col-span-4 row-span-3 h-120 w-full rounded-xl border"
     ></section>
-    <section
-      class="bg-card card-shadow col-span-4 row-span-2 h-80 w-full rounded-xl border"
-    ></section>
+    <section class="bg-card card-shadow col-span-4 row-span-2 h-68 w-full rounded-xl border py-2">
+      <div class="mb-2 flex h-[48px] items-center gap-2 px-2">
+        <div
+          class="bg-primary/20 text-primary! flex aspect-square h-[36px] w-[36px] items-center justify-center rounded-lg text-white"
+        >
+          <ng-icon name="lucideCheckCircle2" size="18" />
+        </div>
+        <p class="text-base font-bold">Heatmap</p>
+      </div>
+      <app-habit-heatmap [completionData]="heatmapData()" />
+    </section>
     <section
       class="bg-card card-shadow col-span-4 row-span-2 h-80 w-full rounded-xl border"
     ></section>

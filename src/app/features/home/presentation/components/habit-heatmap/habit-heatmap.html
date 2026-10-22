@@ -1,0 +1,41 @@
+<div class="flex w-full">
+  <div class="text-foreground/40 grid grid-rows-7 gap-1 pt-5 pr-2 pb-4 pl-3 text-right text-xs">
+    <div class="flex h-5 items-center justify-end">Su</div>
+    <div class="flex h-5 items-center justify-end">Mo</div>
+    <div class="flex h-5 items-center justify-end">Tu</div>
+    <div class="flex h-5 items-center justify-end">We</div>
+    <div class="flex h-5 items-center justify-end">Th</div>
+    <div class="flex h-5 items-center justify-end">Fr</div>
+    <div class="flex h-5 items-center justify-end">Sa</div>
+  </div>
+
+  <div class="scrollbar-themed w-full overflow-x-auto pr-3" #heatmap>
+    <div class="w-max">
+      <div class="relative h-5 w-full">
+        @for (month of monthLabels(); track month.text + month.colIndex) {
+          <span class="text-foreground/60 absolute text-xs" [style.left.px]="month.colIndex * 24">
+            {{ month.text }}
+          </span>
+        }
+      </div>
+      <div class="grid w-max grid-flow-col grid-rows-7 gap-1">
+        @for (day of heatmapDays(); track day.dateKey) {
+          <a
+            [hlmTooltip]="day.tooltipLabel!"
+            class="group relative h-5 w-5 rounded transition-colors duration-200"
+            [class.bg-transparent]="day.isPadding"
+            [class.pointer-events-none]="day.isPadding"
+            [class.cursor-pointer]="!day.isPadding"
+            [class.bg-foreground/10]="!day.isPadding && day.level === 0"
+            [class.bg-primary/30]="!day.isPadding && day.level === 1"
+            [class.bg-primary/50]="!day.isPadding && day.level === 2"
+            [class.bg-primary/70]="!day.isPadding && day.level === 3"
+            [class.bg-primary]="!day.isPadding && day.level === 4"
+            [routerLink]="['/agenda']"
+            [queryParams]="{ day: day.dateKey === this.todayKey ? null : day.dateKey }"
+          ></a>
+        }
+      </div>
+    </div>
+  </div>
+</div>
