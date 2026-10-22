@@ -45,18 +45,33 @@ export class HomePage implements OnInit {
   readonly categories = this._categoriesFacade.categories;
 
   async ngOnInit() {
+    const LOGS_RANGE = 200;
     await this._habitsFacade.loadAll();
     await this._categoriesFacade.loadAll();
 
     const habitIds = this._habitsFacade.habits().map((h) => h.id);
     if (habitIds.length > 0) {
       const today = new Date();
-      const thirtyDaysAgo = new Date(today);
-      thirtyDaysAgo.setDate(today.getDate() - 29);
+      const logsDateRange = new Date(today);
+      logsDateRange.setDate(today.getDate() - LOGS_RANGE);
 
-      await this._habitLogsFacade.loadLogsForHabitsList(habitIds, thirtyDaysAgo, today);
+      await this._habitLogsFacade.loadLogsForHabitsList(habitIds, logsDateRange, today);
     }
   }
+
+  readonly heatmapData = computed<Map<string, number>>(() => {
+    const logsMap = this.habitLogs();
+    const completionCounts = new Map<string, number>();
+
+    for (const datesSet of logsMap.values()) {
+      for (const dateKey of datesSet) {
+        const currentCount = completionCounts.get(dateKey) ?? 0;
+        completionCounts.set(dateKey, currentCount + 1);
+      }
+    }
+
+    return completionCounts;
+  });
 
   async onCompleteHabit(habitLog: { habitId: string; logDateKey: string; isCompleted: boolean }) {
     if (!habitLog.isCompleted) {
