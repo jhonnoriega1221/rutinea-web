@@ -2,7 +2,8 @@ import {
   ApplicationConfig,
   inject,
   provideAppInitializer,
-  provideBrowserGlobalErrorListeners
+  provideBrowserGlobalErrorListeners,
+  isDevMode
 } from "@angular/core";
 import { provideRouter, withComponentInputBinding } from "@angular/router";
 import { APP_ICONS } from "./shared/components/icons/app-icons";
@@ -15,6 +16,7 @@ import { HabitLogRepository } from "./features/habits/domain/repositories/habit-
 import { IndexedDbHabitLogRepository } from "./features/habits/data/repositories/habit-log-indexed-db.repository";
 import { CategoryRepository } from "./features/categories/domain/repositories/category.repository";
 import { IndexedDbCategoryRepository } from "./features/categories/data/repositories/category-indexed-db.repository";
+import { provideServiceWorker } from "@angular/service-worker";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -36,6 +38,10 @@ export const appConfig: ApplicationConfig = {
     {
       provide: CategoryRepository,
       useClass: IndexedDbCategoryRepository
-    }
+    },
+    provideServiceWorker("ngsw-worker.js", {
+      enabled: !isDevMode(),
+      registrationStrategy: "registerWhenStable:30000"
+    })
   ]
 };

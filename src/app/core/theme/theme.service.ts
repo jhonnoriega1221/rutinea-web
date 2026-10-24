@@ -1,46 +1,46 @@
 import { Injectable } from "@angular/core";
 import { ThemeMode } from "./theme.types";
 
+const THEME_COLORS = {
+  light: "#dff9ee",
+  dark: "#090f09"
+} as const;
+
 @Injectable({ providedIn: "root" })
 export class ThemeService {
   private readonly storageKey = "theme-preference";
   private readonly root = document.documentElement;
-  private readonly systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
+  private readonly systemQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
-  initialize(): void {
-    this.applyTheme(this.getPreferredTheme());
+  private mode: ThemeMode = "system";
+
+  initialize() {
+    this.mode = this.getPreferredTheme();
+    this.applyTheme();
+
+    this.systemQuery.addEventListener("change", () => {
+      if (this.mode === "system") this.applyTheme();
+    });
   }
 
-  getPreferredTheme(): ThemeMode {
+  getPreferredTheme() {
     const saved = localStorage.getItem(this.storageKey) as ThemeMode;
-    if (saved !== "dark" && saved !== "light" && saved !== "system") {
-      this.setTheme("system");
-      return "system";
-    }
-    return saved;
+    return saved === "dark" || saved === "light" || saved === "system" ? saved : "system";
   }
 
-  setTheme(theme: ThemeMode): void {
-    if (theme === "light" || theme === "dark") {
-      localStorage.setItem(this.storageKey, theme);
-      this.applyTheme(theme);
-      return;
-    }
-
-    localStorage.setItem(this.storageKey, "system");
-    this.applyTheme(this.systemTheme);
+  setTheme(theme: ThemeMode) {
+    this.mode = theme;
+    localStorage.setItem(this.storageKey, theme);
+    this.applyTheme();
   }
 
-  private applyTheme(theme: ThemeMode) {
-    this.root.classList.toggle(
-      "dark",
-      theme === "system" ? this.systemTheme === "dark" : theme === "dark"
-    );
-    this.root.classList.toggle(
-      "light",
-      theme === "system" ? this.systemTheme === "light" : theme === "light"
-    );
+  private applyTheme() {
+    const isDark = this.mode === "system" ? this.systemQuery.matches : this.mode === "dark";
+    this.root.classList.toggle("dark", isDark);
+    this.root.classList.toggle("light", !isDark);
+
+    document
+      .querySelector("meta[name=theme-color]")
+      ?.setAttribute("content", isDark ? THEME_COLORS.dark : THEME_COLORS.light);
   }
 }
