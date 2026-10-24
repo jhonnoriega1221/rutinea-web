@@ -49,7 +49,7 @@
   --bottombar-height: 64px;
   --bottombar-padding: 18px;
 
-  --background: #dff9ee;
+  --background: oklch(96.02% 0.03078 168.571);
   --foreground: oklch(21.357% 0.04368 157.679);
 
   --card: oklch(98.641% 0.01147 154.175);
@@ -113,7 +113,7 @@
   color-scheme: dark;
 
   --bg-ambient: radial-gradient(100% 100% at 100% 0%, #0d2118, #090e08);
-  --background: #090f09;
+  --background: oklch(15.958% 0.01575 144.846);
   --foreground: oklch(98.2% 0.008 160);
 
   --card: oklch(22.342% 0.02504 158.563);
