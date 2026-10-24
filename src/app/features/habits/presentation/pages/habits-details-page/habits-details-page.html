@@ -1,6 +1,6 @@
 <main class="mx-auto max-w-250 px-2">
   @if (habitViewModel()) {
-    <div class="mb-4 flex items-center justify-between">
+    <header class="mb-4 flex items-center justify-between">
       <p class="mb-4 text-2xl font-bold">Habit Details</p>
       <div class="flex gap-2">
         <button hlmBtn variant="secondary" (click)="createDialog.open()">
@@ -12,75 +12,154 @@
           Delete
         </button>
       </div>
-    </div>
+    </header>
 
-    <section>
+    <!-- Alert Card Section -->
+    <!--     <section>
       <app-habit-today-status-card [status]="todayStatus()" (markCompleted)="onMarkCompleted()" />
+    </section> -->
+
+    <!-- Top section -->
+    <section class="mb-6 justify-between sm:flex">
+      <div class="mb-8 flex flex-col gap-2 sm:mb-0 sm:flex-row">
+        <div
+          class="mx-auto flex aspect-square w-12 items-center justify-center rounded-lg"
+          [style.backgroundColor]="
+            habitViewModel()?.categoryInfo
+              ? `var(${habitViewModel()?.categoryInfo?.color})`
+              : `var(--color-primary)`
+          "
+        >
+          <ng-icon [name]="habitViewModel()?.icon" size="24px" />
+        </div>
+        <div class="flex flex-col justify-center gap-2 text-center sm:gap-0 sm:text-start">
+          <p class="font-medium">{{ habitViewModel()!.name }}</p>
+          <span
+            class="text-foreground/50 bg-foreground/20 mx-auto w-fit rounded-full px-3 py-0.5 text-xs sm:mx-0"
+            >{{ todayLogExists() ? "Completed" : "No Completed" }}
+          </span>
+        </div>
+      </div>
+      <div class="flex h-10 gap-2 sm:h-auto">
+        <button
+          size="lg"
+          class="h-full w-full sm:w-[100px]"
+          (click)="todayLogExists() ? onRemoveCompleted() : onMarkCompleted()"
+          [variant]="todayLogExists() ? 'default' : 'secondary'"
+          hlmBtn
+        >
+          <ng-icon name="lucideCircleCheckBig" size="20" />
+          Done
+        </button>
+      </div>
     </section>
 
-    <section class="bg-card card-shadow mb-3 rounded-2xl border p-4">
-      <header class="mb-3">
-        <p class="text-foreground/50 font-semibold">Details</p>
-      </header>
-      <div class="flex flex-col gap-2">
-        <div class="flex gap-2">
-          <div class="mt-0.5">
-            <ng-icon [name]="habitViewModel()?.icon" size="20px" />
+    <div class="block w-full gap-3 md:flex">
+      <div class="w-full">
+        <!-- Habit description Section -->
+        @if (habitViewModel()!.description) {
+          <section class="bg-card card-shadow mb-3 rounded-2xl border p-4">
+            <header class="mb-2 flex items-center gap-2">
+              <div
+                class="bg-primary/20 text-primary! flex aspect-square h-[28px] w-[28px] items-center justify-center rounded-lg text-white"
+              >
+                <ng-icon name="lucideTextAlignStart" size="16" />
+              </div>
+              <p class="font-semibold">Description</p>
+            </header>
+            <div class="flex gap-2">
+              <p>{{ habitViewModel()!.description }}</p>
+            </div>
+          </section>
+        }
+
+        <!-- Habit info Section -->
+        <section class="bg-card card-shadow mb-3 rounded-2xl border p-4">
+          <header class="mb-2 flex items-center gap-2">
+            <div
+              class="bg-primary/20 text-primary! flex aspect-square h-[28px] w-[28px] items-center justify-center rounded-lg text-white"
+            >
+              <ng-icon name="lucideInfo" size="16" />
+            </div>
+            <p class="font-semibold">Habit info</p>
+          </header>
+          <div class="grid grid-cols-2 gap-1 text-sm">
+            <p class="text-foreground/50">Category</p>
+            <p
+              class="ml-auto w-fit rounded-full px-0 py-0.5"
+              [style.backgroundColor]="
+                habitViewModel()?.categoryInfo
+                  ? `var(${habitViewModel()?.categoryInfo?.color})`
+                  : `transparent`
+              "
+              [class.px-3]="habitViewModel()?.categoryInfo"
+            >
+              {{ habitViewModel()?.categoryInfo?.name ?? "No category" }}
+            </p>
+
+            <p class="text-foreground/50">Created</p>
+            <p class="text-end">{{ habitViewModel()?.createdAt | date }}</p>
           </div>
+        </section>
+
+        <!-- Habit frequency Section -->
+        <section class="bg-card card-shadow mb-3 rounded-2xl border p-4">
+          <header class="mb-2 flex items-center gap-2">
+            <div
+              class="bg-primary/20 text-primary! flex aspect-square h-[28px] w-[28px] items-center justify-center rounded-lg text-white"
+            >
+              <ng-icon name="lucideCalendarSync " size="16" />
+            </div>
+            <p class="font-semibold">Schedule</p>
+          </header>
+          <div class="flex flex-col gap-2">
+            <p class="text-foreground/50 text-sm">Week frequency</p>
+            @if (habitViewModel()?.frequencyData!.type === "specific_days") {
+              <div class="w-[190px]">
+                <app-habit-week-tracker
+                  [enableColors]="false"
+                  [frequency]="habitViewModel()?.frequencyData!.days"
+                />
+              </div>
+            }
+
+            @if (habitViewModel()?.frequencyData!.type === "days_per_week") {
+              <p>
+                <span class="mr-1">{{ habitViewModel()?.frequencyData!.count }}</span>
+                <span>{{ habitViewModel()?.frequencyData!.count > 1 ? "days" : "day" }}</span> at
+                week
+              </p>
+            }
+
+            @if (habitViewModel()?.frequencyData!.type === "everyday") {
+              <p>Everyday</p>
+            }
+          </div>
+        </section>
+      </div>
+      <div class="w-full md:w-[320px]">
+        <!-- Habit history Section -->
+        <section class="bg-card card-shadow rounded-2xl border p-4">
+          <header class="mb-2 flex items-center gap-2">
+            <div
+              class="bg-primary/20 text-primary! flex aspect-square h-[28px] w-[28px] items-center justify-center rounded-lg text-white"
+            >
+              <ng-icon name="lucideCalendarDays " size="16" />
+            </div>
+            <p class="text-sm font-bold">History</p>
+          </header>
           <div>
-            <p class="font-bold">{{ habitViewModel()!.name }}</p>
-            <p>{{ habitViewModel()!.description }}</p>
-          </div>
-        </div>
-        <p class="flex items-center gap-2">
-          <span class="font-bold">Category:</span>
-          <span
-            class="rounded-full px-3 py-0.5"
-            [style.backgroundColor]="
-              habitViewModel()?.categoryInfo
-                ? `var(${habitViewModel()?.categoryInfo?.color})`
-                : `transparent`
-            "
-            >{{ habitViewModel()?.categoryInfo?.name ?? "No category" }}</span
-          >
-        </p>
-        <p class="font-bold">Week frequency:</p>
-        @if (habitViewModel()?.frequencyData!.type === "specific_days") {
-          <div class="w-[190px]">
-            <app-habit-week-tracker
-              [enableColors]="false"
+            <app-habit-calendar-tracker
               [frequency]="habitViewModel()?.frequencyData!.days"
+              [completedDates]="completedFocusedMonthDates()"
+              [trackStart]="habit()!.createdAt"
+              (dayClicked)="onSelectDay($event)"
+              (focusedDateChange)="onChangeCalendarFocusDate($event)"
             />
           </div>
-        }
-
-        @if (habitViewModel()?.frequencyData!.type === "days_per_week") {
-          <p>
-            <span class="mr-1">{{ habitViewModel()?.frequencyData!.count }}</span>
-            <span>{{ habitViewModel()?.frequencyData!.count > 1 ? "days" : "day" }}</span> at week
-          </p>
-        }
-
-        @if (habitViewModel()?.frequencyData!.type === "everyday") {
-          <p>Everyday</p>
-        }
+        </section>
       </div>
-    </section>
-
-    <section class="bg-card card-shadow rounded-2xl border p-4">
-      <header class="mb-3">
-        <p class="text-foreground/50 font-semibold">History</p>
-      </header>
-      <div>
-        <app-habit-calendar-tracker
-          [frequency]="habitViewModel()?.frequencyData!.days"
-          [completedDates]="completedFocusedMonthDates()"
-          [trackStart]="habit()!.createdAt"
-          (dayClicked)="onSelectDay($event)"
-          (focusedDateChange)="onChangeCalendarFocusDate($event)"
-        />
-      </div>
-    </section>
+    </div>
   }
 </main>
 

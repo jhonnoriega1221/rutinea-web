@@ -1,5 +1,5 @@
 import { Component, computed, inject, input, OnInit, signal, viewChild } from "@angular/core";
-import { Location } from "@angular/common";
+import { DatePipe, Location } from "@angular/common";
 import { HlmCardImports } from "@spartan-ng/helm/card";
 import { NgIcon } from "@ng-icons/core";
 import { HabitWeekTracker } from "../../components/habit-week-tracker/habit-week-tracker";
@@ -40,7 +40,8 @@ import { getColorByKey } from "../../../../../shared/components/color-picker/app
     ResponsivePopup,
     HabitDateInfo,
     HabitsCreateForm,
-    CategoryUpsertForm
+    CategoryUpsertForm,
+    DatePipe
   ],
   templateUrl: "./habits-details-page.html",
   styleUrl: "./habits-details-page.css"
@@ -141,6 +142,10 @@ export class HabitsDetailsPage implements OnInit {
       createdAt: currentHabit!.createdAt,
       urgentThresholdHours: URGENT_DATE_THRESHOLD
     });
+  });
+
+  protected readonly todayLogExists = computed<boolean>(() => {
+    return !!this._habitLogsFacade.todayLog();
   });
 
   protected async onMarkCompleted(date?: Date) {
