@@ -7,7 +7,6 @@ import { HabitCalendarTracker } from "../../components/habit-calendar-tracker/ha
 import { HabitsFacade } from "../../facade/habits.facade";
 import { getIconByKey } from "../../../../../shared/components/icons/habit-icons";
 import { HlmButtonImports } from "@spartan-ng/helm/button";
-import { HabitTodayStatusCard } from "../../components/habit-today-status-card/habit-today-status-card";
 import {
   completionsThisWeek,
   resolveDayState,
@@ -36,7 +35,6 @@ import { getColorByKey } from "../../../../../shared/components/color-picker/app
     HabitWeekTracker,
     HabitCalendarTracker,
     HlmButtonImports,
-    HabitTodayStatusCard,
     ResponsivePopup,
     HabitDateInfo,
     HabitsCreateForm,

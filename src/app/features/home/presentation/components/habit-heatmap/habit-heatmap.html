@@ -19,7 +19,7 @@
         }
       </div>
       <div class="grid w-max grid-flow-col grid-rows-7 gap-1">
-        @for (day of heatmapDays(); track day.dateKey) {
+        @for (day of heatmapDays(); track day.dateKey || $index) {
           <a
             [hlmTooltip]="day.tooltipLabel!"
             class="group relative h-5 w-5 rounded transition-colors duration-200"

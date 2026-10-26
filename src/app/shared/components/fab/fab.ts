@@ -8,6 +8,6 @@ import { Ripple } from "../../directives/ripple.directive";
   templateUrl: "./fab.html"
 })
 export class Fab {
-  protected readonly icon = input<string>();
-  protected readonly click = output<void>();
+  readonly icon = input<string>();
+  readonly click = output<void>();
 }

@@ -8,10 +8,9 @@ import { RouterLink } from "@angular/router";
 import { HabitListViewModel } from "../../models/habit-list.view-model";
 import { getColorByKey } from "../../../../../shared/components/color-picker/app-colors";
 import { HabitNumericTracker } from "../habit-numeric-tracker/habit-numeric-tracker";
-import { Ripple } from "../../../../../shared/directives/ripple.directive";
 @Component({
   selector: "app-habits-list-item",
-  imports: [HlmCardImports, NgIcon, HabitWeekTracker, RouterLink, HabitNumericTracker, Ripple],
+  imports: [HlmCardImports, NgIcon, HabitWeekTracker, RouterLink, HabitNumericTracker],
   templateUrl: "./habits-list-item.html",
   styleUrl: "./habits-list-item.css"
 })
