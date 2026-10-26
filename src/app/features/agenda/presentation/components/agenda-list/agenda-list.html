@@ -1,10 +1,13 @@
-<ul class="full flex flex-col divide-y">
+<ul class="full flex flex-col divide-y sm:gap-2">
   @for (habit of habits(); track habit.id) {
-    <li class="flex items-center">
+    <li
+      class="sm:bg-card sm:border-border flex items-center bg-transparent sm:rounded-xl sm:border"
+      appRipple
+    >
       <a
         [routerLink]="'/habits/' + habit.id"
-        class="hover:bg-foreground/10 flex w-full items-center gap-2 py-2 pr-6 pl-4"
-        [class.opacaity-30]="habit.dayState === 'completed'"
+        class="hover:bg-foreground/10 flex w-full items-center gap-2 rounded-tl-xl rounded-bl-xl py-4 pl-4 sm:py-3 sm:pl-3"
+        [class.opacity-30]="habit.dayState === 'completed'"
       >
         <div
           class="bg-primary/40 flex aspect-square h-[36px] w-[36px] items-center justify-center rounded-lg text-white"
@@ -16,11 +19,13 @@
           {{ habit.name }}
         </p>
       </a>
-      <hlm-checkbox
-        [checked]="habit.dayState === 'completed'"
-        (checkedChange)="checkedChange.emit(habit.id)"
-        class="bg-foreground/20! data-checked:bg-primary! border-foreground/50 mx-3 h-7 w-7 rounded-full"
-      />
+      <div class="py-2 pr-6 pl-3 sm:pr-4">
+        <hlm-checkbox
+          [checked]="habit.dayState === 'completed'"
+          (checkedChange)="checkedChange.emit(habit.id)"
+          class="bg-primary/10! data-checked:bg-primary! border-foreground/20 h-7 w-7 rounded-full"
+        />
+      </div>
     </li>
   }
 </ul>

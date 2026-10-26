@@ -1,0 +1,9 @@
+<button
+  type="button"
+  size="icon"
+  appRipple
+  class="bg-primary cubic-bezier(0, 0, 0.2, 1) fixed right-4 bottom-[calc(12px+var(--bottombar-height)+var(--bottombar-padding)+env(safe-area-inset-bottom))] z-40 flex size-14 items-center justify-center rounded-full text-white shadow-lg transition-transform duration-200 active:scale-95 sm:right-6 sm:bottom-7"
+  (click)="click.emit()"
+>
+  <ng-icon [name]="icon()" size="22" />
+</button>

@@ -6,9 +6,9 @@ import { toDateKey } from "../../../../habits/domain/utils/day-state.util";
 import { HabitAgendaListViewModel } from "../../models/habit-agenda-list.view-model";
 import { HabitAgendaList } from "../habits-agenda-list/habits-agenda-list";
 import { DataState } from "../../../../../shared/components/data-state/data-state";
-
+import { Ripple } from "../../../../../shared/directives/ripple.directive";
 @Component({
-  imports: [HabitAgendaList, HlmButtonImports, NgIcon, DataState, RouterLink],
+  imports: [HabitAgendaList, HlmButtonImports, NgIcon, DataState, RouterLink, Ripple],
   selector: "app-daily-habits-panel",
   styleUrl: "./daily-habits-panel.css",
   templateUrl: "./daily-habits-panel.html"

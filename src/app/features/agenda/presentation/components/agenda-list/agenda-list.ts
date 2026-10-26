@@ -3,9 +3,10 @@ import { HabitAgendaListViewModel } from "../../../../home/presentation/models/h
 import { NgIcon } from "@ng-icons/core";
 import { HlmCheckboxImports } from "@spartan-ng/helm/checkbox";
 import { RouterLink } from "@angular/router";
+import { Ripple } from "../../../../../shared/directives/ripple.directive";
 
 @Component({
-  imports: [NgIcon, HlmCheckboxImports, RouterLink],
+  imports: [NgIcon, HlmCheckboxImports, RouterLink, Ripple],
   selector: "app-agenda-list",
   styleUrl: "./agenda-list.css",
   templateUrl: "./agenda-list.html"
