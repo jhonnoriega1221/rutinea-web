@@ -5,7 +5,7 @@
       (click)="select(color)"
       [title]="color.label"
       type="button"
-      class="focus-visible:ring-ring focus-visible:ring-offset-background flex h-8 w-8 items-center justify-center rounded-full border-4 ring-2 transition-transform outline-none hover:scale-130 focus-visible:ring-2 focus-visible:ring-offset-2"
+      class="focus-visible:ring-ring focus-visible:ring-offset-background flex h-8 w-8 items-center justify-center rounded-full border-4 ring-2 transition-transform outline-none hover:scale-120 focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-90"
       [class.ring-foreground]="value() === color.key"
       [class.ring-transparent]="value() !== color.key"
       [class.border-card]="value() === color.key"

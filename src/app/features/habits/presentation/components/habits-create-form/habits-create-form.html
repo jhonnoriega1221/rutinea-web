@@ -1,165 +1,166 @@
-<form
-  [formGroup]="form"
-  (ngSubmit)="onSubmit()"
-  id="form-habit-creation"
-  class="box-border w-full max-w-full min-w-20 p-6 sm:w-100"
->
-  <hlm-field-group>
-    <div class="flex flex-row">
-      <!-- Habit icon -->
-      <hlm-field class="w-[60px]">
-        <label hlmFieldLabel for="icon">Icon</label>
-        <app-icon-selector id="icon" formControlName="icon" />
-      </hlm-field>
+<form [formGroup]="form" (ngSubmit)="onSubmit()" id="form-habit-creation">
+  <hlm-field-group class="max-h-[80vh] w-full max-w-full min-w-20 gap-0 sm:max-h-[90vh] sm:w-110">
+    <main class="flex flex-1 flex-col gap-4 overflow-y-auto px-4 pt-16 pb-4 sm:pt-9">
+      <div class="flex flex-row">
+        <!-- Habit icon -->
+        <hlm-field class="w-[60px]">
+          <label hlmFieldLabel for="icon">Icon</label>
+          <app-icon-selector id="icon" formControlName="icon" />
+        </hlm-field>
 
-      <!-- Habit name -->
-      <hlm-field>
-        <label hlmFieldLabel for="name">Habit name</label>
-        <input
-          id="name"
-          hlmInput
-          placeholder="Drink a glass of water"
-          autocomplete="off"
-          formControlName="name"
-        />
-        <hlm-field-error validator="required">Habit name must be entered.</hlm-field-error>
-        <hlm-field-error validator="minlength"
-          >Habit name must be at least 5 characters.</hlm-field-error
-        >
-        <hlm-field-error validator="maxlength">Habit cannot exceed 100 characters.</hlm-field-error>
-      </hlm-field>
-    </div>
-
-    <!-- Habit category -->
-    <hlm-field>
-      <label hlmFieldLabel for="category">Category</label>
-      <div class="flex gap-2">
-        <hlm-select
-          id="category"
-          formControlName="categoryId"
-          [itemToString]="itemToString"
-          class="w-full"
-        >
-          <hlm-select-trigger buttonId="category" class="w-full" 1>
-            <hlm-select-value />
-          </hlm-select-trigger>
-          <hlm-select-content *hlmSelectPortal>
-            <hlm-select-group>
-              <hlm-select-item value="none">No category</hlm-select-item>
-              @for (category of categories(); track category.id) {
-                <hlm-select-item [value]="category.id">{{ category.name }}</hlm-select-item>
-              }
-            </hlm-select-group>
-          </hlm-select-content>
-        </hlm-select>
-        <button
-          hlmBtn
-          type="button"
-          size="icon"
-          variant="outline"
-          (click)="clickNewCategory.emit()"
-        >
-          <ng-icon name="lucidePlus" />
-        </button>
+        <!-- Habit name -->
+        <hlm-field>
+          <label hlmFieldLabel for="name">Habit name</label>
+          <input
+            id="name"
+            hlmInput
+            placeholder="Drink a glass of water"
+            autocomplete="off"
+            formControlName="name"
+          />
+          <hlm-field-error validator="required">Habit name must be entered.</hlm-field-error>
+          <hlm-field-error validator="minlength"
+            >Habit name must be at least 5 characters.</hlm-field-error
+          >
+          <hlm-field-error validator="maxlength"
+            >Habit cannot exceed 100 characters.</hlm-field-error
+          >
+        </hlm-field>
       </div>
-    </hlm-field>
 
-    <!-- Habit description -->
-    <hlm-field>
-      <label hlmFieldLabel for="description">Habit description</label>
-      <textarea
-        hlmTextarea
-        id="description"
-        class="min-h-32"
-        placeholder="Write about this habit"
-        formControlName="description"
-      ></textarea>
-      <hlm-field-error validator="maxlength"
-        >Description cannot exceed 300 characters.</hlm-field-error
-      >
-    </hlm-field>
+      <!-- Habit category -->
+      <hlm-field>
+        <label hlmFieldLabel for="category">Category</label>
+        <div class="flex gap-2">
+          <hlm-select
+            id="category"
+            formControlName="categoryId"
+            [itemToString]="itemToString"
+            class="w-full"
+          >
+            <hlm-select-trigger buttonId="category" class="w-full" 1>
+              <hlm-select-value />
+            </hlm-select-trigger>
+            <hlm-select-content *hlmSelectPortal>
+              <hlm-select-group>
+                <hlm-select-item value="none">No category</hlm-select-item>
+                @for (category of categories(); track category.id) {
+                  <hlm-select-item [value]="category.id">{{ category.name }}</hlm-select-item>
+                }
+              </hlm-select-group>
+            </hlm-select-content>
+          </hlm-select>
+          <button
+            hlmBtn
+            type="button"
+            size="icon"
+            variant="outline"
+            (click)="clickNewCategory.emit()"
+          >
+            <ng-icon name="lucidePlus" />
+          </button>
+        </div>
+      </hlm-field>
 
-    <!-- Habit frencuency type -->
-    <hlm-field>
-      <label hlmFieldLabel for="frequency">Habit frequency</label>
-      <hlm-radio-group formControlName="frequencyType">
-        <!-- Everyday -->
-        <div class="flex items-center gap-3">
-          <hlm-radio value="everyday" inputId="everyday">
-            <hlm-radio-indicator indicator />
-          </hlm-radio>
-          <label hlmLabel for="everyday"> Everyday</label>
-        </div>
-        <!-- Specific weekdays -->
-        <div class="flex items-center gap-3">
-          <hlm-radio value="specific_days" inputId="specific_days">
-            <hlm-radio-indicator indicator />
-          </hlm-radio>
-          <label hlmLabel for="specific_days">Specific days of week</label>
-        </div>
-        @if (form.controls.frequencyType.value === "specific_days") {
-          <!-- Habit Frencuency specific days -->
-          <hlm-field>
-            <hlm-toggle-group
-              class="weekday-toggle flex justify-center align-middle"
-              aria-labelledby="frequency-week-days-label"
-              id="frequency-week-days"
-              type="multiple"
-              variant="outline"
-              spacing="1"
-              formControlName="frequencyDays"
-            >
-              @for (weekDay of weekdayOptions; track weekDay.key) {
-                <button
-                  [class.border-destructive]="
-                    form.controls.frequencyDays.invalid && form.controls.frequencyDays.touched
-                  "
-                  hlmToggleGroupItem
-                  [value]="weekDay.key"
-                >
-                  {{ weekDay.label }}
-                </button>
+      <!-- Habit description -->
+      <hlm-field>
+        <label hlmFieldLabel for="description">Habit description</label>
+        <textarea
+          hlmTextarea
+          id="description"
+          class="min-h-32"
+          placeholder="Write about this habit"
+          formControlName="description"
+        ></textarea>
+        <hlm-field-error validator="maxlength"
+          >Description cannot exceed 300 characters.</hlm-field-error
+        >
+      </hlm-field>
+
+      <!-- Habit frencuency type -->
+      <hlm-field>
+        <label hlmFieldLabel for="frequency">Habit frequency</label>
+        <hlm-radio-group formControlName="frequencyType" class="gap-4 sm:gap-3">
+          <!-- Everyday -->
+          <div class="flex items-center gap-3">
+            <hlm-radio value="everyday" inputId="everyday">
+              <hlm-radio-indicator indicator />
+            </hlm-radio>
+            <label hlmLabel for="everyday"> Everyday</label>
+          </div>
+          <!-- Specific weekdays -->
+          <div class="flex items-center gap-3">
+            <hlm-radio value="specific_days" inputId="specific_days">
+              <hlm-radio-indicator indicator />
+            </hlm-radio>
+            <label hlmLabel for="specific_days">Specific days of week</label>
+          </div>
+          @if (form.controls.frequencyType.value === "specific_days") {
+            <!-- Habit Frencuency specific days -->
+            <hlm-field>
+              <hlm-toggle-group
+                class="weekday-toggle flex justify-center align-middle"
+                aria-labelledby="frequency-week-days-label"
+                id="frequency-week-days"
+                type="multiple"
+                variant="outline"
+                spacing="1"
+                formControlName="frequencyDays"
+              >
+                @for (weekDay of weekdayOptions; track weekDay.key) {
+                  <button
+                    [class.border-destructive]="
+                      form.controls.frequencyDays.invalid && form.controls.frequencyDays.touched
+                    "
+                    class="aspect-square h-[40px] sm:h-[36px]"
+                    hlmToggleGroupItem
+                    [value]="weekDay.key"
+                  >
+                    {{ weekDay.label }}
+                  </button>
+                }
+              </hlm-toggle-group>
+              @if (form.controls.frequencyDays.invalid && form.controls.frequencyDays.touched) {
+                <p class="text-destructive">Select at least 1 weekday</p>
               }
-            </hlm-toggle-group>
-            @if (form.controls.frequencyDays.invalid && form.controls.frequencyDays.touched) {
-              <p class="text-destructive">Select at least 1 weekday</p>
-            }
-          </hlm-field>
-        }
-        <!-- Certain amount of days at week -->
-        <div class="flex items-center gap-3">
-          <hlm-radio value="days_per_week" inputId="days_per_week">
-            <hlm-radio-indicator indicator />
-          </hlm-radio>
-          <label hlmLabel for="days_per_week">Some days per week</label>
-        </div>
-        @if (form.controls.frequencyType.value === "days_per_week") {
-          <!-- Habit Frencuency days count -->
-          <hlm-field>
-            <div class="flex items-center gap-5">
-              <input
-                id="frequency-week-count"
-                class="w-15"
-                hlmInput
-                type="number"
-                placeholder="7"
-                autocomplete="off"
-                max="7"
-                min="1"
-                formControlName="frequencyCount"
-              />
-              <p class="whitespace-nowrap">days per week</p>
-            </div>
-            <hlm-field-error validator="required">Frequency count must be entered.</hlm-field-error>
-            <hlm-field-error validator="min">Days must be between 1 and 7</hlm-field-error>
-            <hlm-field-error validator="max">Days must be between 1 and 7</hlm-field-error>
-          </hlm-field>
-        }
-      </hlm-radio-group>
-    </hlm-field>
-
+            </hlm-field>
+          }
+          <!-- Certain amount of days at week -->
+          <div class="flex items-center gap-3">
+            <hlm-radio value="days_per_week" inputId="days_per_week">
+              <hlm-radio-indicator indicator />
+            </hlm-radio>
+            <label hlmLabel for="days_per_week">Some days per week</label>
+          </div>
+          @if (form.controls.frequencyType.value === "days_per_week") {
+            <!-- Habit Frencuency days count -->
+            <hlm-field>
+              <div class="flex items-center gap-5">
+                <input
+                  id="frequency-week-count"
+                  class="w-15"
+                  hlmInput
+                  type="number"
+                  placeholder="7"
+                  autocomplete="off"
+                  max="7"
+                  min="1"
+                  formControlName="frequencyCount"
+                />
+                <p class="whitespace-nowrap">days per week</p>
+              </div>
+              <hlm-field-error validator="required"
+                >Frequency count must be entered.</hlm-field-error
+              >
+              <hlm-field-error validator="min">Days must be between 1 and 7</hlm-field-error>
+              <hlm-field-error validator="max">Days must be between 1 and 7</hlm-field-error>
+            </hlm-field>
+          }
+        </hlm-radio-group>
+      </hlm-field>
+    </main>
     <!-- Habit form submit -->
-    <hlm-field class="mt-4">
+    <hlm-field class="flex shrink-0 justify-end border-t p-4">
       <button hlmBtn type="submit" form="form-habit-creation" size="lg">
         {{ habitToEdit() ? "Edit Habit" : "Create Habit" }}
       </button>

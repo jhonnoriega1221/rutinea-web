@@ -209,6 +209,11 @@
     @apply border-border outline-ring/50;
   }
 
+  html,
+  body {
+    overscroll-behavior-y: contain;
+  }
+
   body {
     @apply bg-background text-foreground relative;
     background-color: var(--background);
@@ -234,11 +239,10 @@
 
 /* Menu*/
 .cdk-overlay-container [role="menu"] {
-  animation-duration: 200ms !important;
-  transition-duration: 200ms !important;
+  animation-duration: 200ms;
+  transition-duration: 200ms;
 }
 
-/* Menu item */
 .cdk-overlay-container [role="menuitem"] {
   @apply h-[52px] px-3! sm:h-[36px];
 }
@@ -246,27 +250,63 @@
 /* Anula el hover automático en móviles (la regla anterior) */
 @media (hover: none) and (pointer: coarse) {
   .cdk-overlay-container [role="menuitem"]:focus:not(:active) {
-    background-color: transparent !important;
-    color: var(--popover-foreground) !important;
+    background-color: transparent;
+    color: var(--popover-foreground);
   }
 }
 
+/* Button */
+
 [data-slot="button"] {
-  @apply h-[44px]! px-4 duration-100 active:scale-95 active:not-aria-[haspopup]:translate-none! sm:h-[36px]! sm:px-3;
+  @apply h-[44px] px-4 duration-100 active:scale-95 active:not-aria-[haspopup]:translate-none! sm:h-[36px] sm:px-3;
 }
 [data-slot="button"][size="icon"] {
-  @apply aspect-square w-auto p-0 active:scale-90!;
+  @apply aspect-square w-auto p-0 active:scale-90;
 }
 
+/* Select */
 [data-slot="select-trigger"] {
-  @apply h-[44px]! px-4! sm:h-[36px]! sm:px-3!;
+  @apply h-[44px]! px-4 sm:h-[36px]! sm:px-3;
 }
 
 [data-slot="select-item"] {
-  @apply h-[52px] px-3! sm:h-[36px];
+  @apply h-[52px] px-3 sm:h-[36px];
 }
 
 .cdk-overlay-container hlm-select-content {
-  animation-duration: 200ms !important;
-  transition-duration: 200ms !important;
+  animation-duration: 200ms;
+  transition-duration: 200ms;
+}
+
+/* Input */
+
+[data-slot="input"] {
+  @apply h-[44px] sm:h-[36px];
+}
+
+/* RADIO */
+
+[data-slot="radio-group-indicator"] {
+  @apply h-[24px] w-[24px] sm:h-[18px] sm:w-[18px];
+}
+[data-slot="radio-group-indicator"] > div {
+  @apply h-[12px] w-[12px] sm:h-[10px] sm:w-[10px];
+}
+/* Drawer - dialog backdrop */
+
+.cdk-overlay-container .cdk-overlay-backdrop {
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: none;
+}
+
+/* Drawer */
+
+hlm-drawer-content[data-slot="drawer-content"] {
+  @apply rounded-tl-4xl! rounded-tr-4xl! border-none!;
+
+  transition-duration: 400ms;
+  animation-duration: 400ms;
+
+  transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+  animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
 }
