@@ -21,7 +21,7 @@
         <div class="mx-auto max-w-80">
           <app-color-picker id="color" [formField]="form.color" />
         </div>
-        @for (error of form.name().errors(); track $index) {
+        @for (error of form.color().errors(); track $index) {
           <hlm-field-error [validator]="error.kind">
             {{ error.message }}
           </hlm-field-error>
