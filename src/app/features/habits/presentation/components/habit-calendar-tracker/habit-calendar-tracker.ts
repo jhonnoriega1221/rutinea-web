@@ -1,4 +1,12 @@
-import { Component, computed, inject, input, output, viewChild } from "@angular/core";
+import {
+  afterNextRender,
+  Component,
+  computed,
+  inject,
+  input,
+  output,
+  viewChild
+} from "@angular/core";
 import { NgIcon } from "@ng-icons/core";
 import { BrnCalendar, BrnCalendarImports, injectBrnCalendarI18n } from "@spartan-ng/brain/calendar";
 import { injectDateAdapter } from "@spartan-ng/brain/date-time";
@@ -29,6 +37,12 @@ export class HabitCalendarTracker {
   focusedDateChange = output<{ month: number; year: number }>();
 
   prevBtn = viewChild.required<HlmButton>("prevBtn");
+
+  constructor() {
+    afterNextRender(() => {
+      window.scrollTo(0, 0);
+    });
+  }
 
   protected readonly _i18n = injectBrnCalendarI18n();
   protected readonly _dateAdapter = injectDateAdapter<Date>();

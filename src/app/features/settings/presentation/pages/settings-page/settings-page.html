@@ -1,31 +1,41 @@
-<main class="mx-auto max-w-250 px-2">
-  <p class="mb-4 text-2xl font-bold">Settings</p>
+<main class="mx-auto max-w-250 px-4 sm:px-8">
+  <header class="mb-5 flex h-[44px] justify-between sm:h-[36px]">
+    <p class="content-center text-2xl font-bold">Settings</p>
+  </header>
 
   <p class="mb-2 font-semibold">Appearance</p>
-  <section class="card-shadow bg-card mb-6 rounded-xl border px-6 py-3">
-    <div hlmCardContent class="flex flex-col justify-between gap-3 sm:flex-row">
+  <section class="card-shadow bg-card mb-6 items-center rounded-xl border px-4 py-3">
+    <div hlmCardContent class="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
       <div class="flex items-center gap-4">
         <ng-icon name="lucideContrast" size="20" class="min-w-5" />
         <div>
-          <label>Theme</label>
-          <p class="text-foreground/50 text-sm">Set your theme preference</p>
+          <label class="mb-1 sm:mb-0">Theme</label>
+          <p class="text-foreground/50 mt-1 text-xs sm:mt-0 sm:text-sm">
+            Set your theme preference
+          </p>
         </div>
       </div>
       <hlm-toggle-group
-        class="settings-theme-toggle mx-auto sm:mx-0"
+        class="settings-theme-toggle mx-auto h-11 sm:mx-0 sm:h-9"
         spacing="1"
         nullable="false"
         variant="outline"
         [(value)]="actualTheme"
         (valueChange)="selectTheme(actualTheme)"
       >
-        <button hlmToggleGroupItem value="system" aria-label="Toggle system">
+        <button
+          hlmToggleGroupItem
+          value="system"
+          aria-label="Toggle system"
+          class="h-full"
+          appRipple
+        >
           <ng-icon name="lucideLaptop2" class="mt-0.5 h-4! w-4!" /> System
         </button>
-        <button hlmToggleGroupItem value="light" aria-label="Toggle light">
+        <button hlmToggleGroupItem value="light" aria-label="Toggle light" class="h-full" appRipple>
           <ng-icon name="lucideSun" class="mt-0.5 h-4! w-4!" /> Light
         </button>
-        <button hlmToggleGroupItem value="dark" aria-label="Toggle dark">
+        <button hlmToggleGroupItem value="dark" aria-label="Toggle dark" class="h-full" appRipple>
           <ng-icon name="lucideMoon" class="mt-0.5 h-4! w-4!" /> Dark
         </button>
       </hlm-toggle-group>
@@ -37,13 +47,16 @@
     <a
       routerLink="/settings/habits"
       hlmCardContent
-      class="hover:bg-foreground/4 flex flex-row items-center justify-between gap-3 px-6 py-3"
+      class="hover:bg-foreground/4 flex flex-row items-center justify-between gap-3 rounded-tl-xl rounded-tr-xl px-4 py-3"
+      appRipple
     >
       <div class="flex items-center gap-4">
         <ng-icon name="lucideListChecks" size="20" class="min-w-5" />
         <div>
           <p>Manage Habits</p>
-          <p class="text-foreground/50 text-sm">View your general habits list.</p>
+          <p class="text-foreground/50 mt-1 text-xs sm:mt-0 sm:text-sm">
+            Create, edit, or remove all habits
+          </p>
         </div>
       </div>
       <ng-icon size="22" name="lucideChevronRight" class="min-w-5" />
@@ -51,13 +64,16 @@
     <a
       routerLink="/settings/categories"
       hlmCardContent
-      class="hover:bg-foreground/4 flex flex-row items-center justify-between gap-3 px-6 py-3"
+      class="hover:bg-foreground/4 flex flex-row items-center justify-between gap-3 rounded-br-xl rounded-bl-xl px-4 py-3"
+      appRipple
     >
       <div class="flex items-center gap-4">
         <ng-icon name="lucideFolderBookmark" size="20" class="min-w-5" />
         <div>
           <p>Manage Categories</p>
-          <p class="text-foreground/50 text-sm">View, add, and edit categories for your habits.</p>
+          <p class="text-foreground/50 mt-1 text-xs sm:mt-0 sm:text-sm">
+            Organize habits categories
+          </p>
         </div>
       </div>
       <ng-icon size="22" name="lucideChevronRight" class="min-w-5" />
@@ -79,9 +95,9 @@
       <p class="text-center text-xs">
         Source code available on
         <a
-          href="https://github.com/jhonnoriega/habits"
+          href="https://github.com/jhonnoriega1221/rutinea-web"
           target="_blank"
-          class="text-blue-600 underline"
+          class="text-primary underline"
           >GitHub</a
         >
       </p>

@@ -8,6 +8,7 @@
       variant="ghost"
       size="icon"
       type="button"
+      class="active:bg-foreground/10"
     >
       <ng-icon name="lucideChevronLeft" />
     </button>
@@ -42,7 +43,6 @@
           </hlm-select-group>
         </hlm-select-content>
       </hlm-select>
-      <button hlmBtn variant="outline" type="button" (click)="goToToday()">Today</button>
     </div>
 
     <button
@@ -53,6 +53,7 @@
       variant="ghost"
       size="icon"
       type="button"
+      class="active:bg-foreground/10"
     >
       <ng-icon name="lucideChevronRight" />
     </button>
@@ -73,8 +74,8 @@
     <tbody>
       <tr
         *brnCalendarWeek="let week"
-        class="mt-2 flex w-full rounded-full"
-        [class.bg-primary/10]="isCurrentWeek(week)"
+        class="mt-2 flex w-full rounded-lg"
+        [class.bg-foreground/10]="isCurrentWeek(week)"
       >
         @for (date of week; track _dateAdapter.getTime(date)) {
           @let state = resolveState(date);
@@ -85,17 +86,15 @@
               type="button"
               brnCalendarCellButton
               [date]="date"
-              class="flex aspect-square w-full items-center justify-center rounded-full text-xs data-[outside=true]:hidden"
+              class="active:bg-foreground/10 flex aspect-square w-full items-center justify-center rounded-lg text-xs duration-100 active:scale-80 data-[outside=true]:hidden"
               [class.text-sm]="isToday(date)"
               [class.font-bold]="isToday(date)"
               [class.ring-2]="isToday(date)"
-              [class.ring-foreground/80]="isToday(date)"
-              [class.text-white]="state !== 'not-scheduled'"
-              [class.bg-foreground/10]="state === 'not-scheduled'"
+              [class.ring-foreground/20]="isToday(date)"
+              [class.bg-foreground/10]="isToday(date)"
+              [class.text-foreground]="state !== 'not-scheduled'"
               [class.text-foreground/20]="state === 'not-scheduled'"
-              [class.bg-foreground/40]="state === 'pending'"
               [class.bg-success]="state === 'completed'"
-              [class.bg-destructive]="state === 'missed'"
             >
               {{ _dateAdapter.getDate(date) }}
             </button>

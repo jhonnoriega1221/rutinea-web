@@ -4,9 +4,10 @@ import { HlmToggleGroupImports } from "@spartan-ng/helm/toggle-group";
 import { NgIcon } from "@ng-icons/core";
 import { Category } from "../../../domain/models/category.model";
 import { ToggleValue } from "@spartan-ng/brain/toggle-group";
+import { Ripple } from "../../../../../shared/directives/ripple.directive";
 @Component({
   selector: "app-category-filter-picker",
-  imports: [HlmToggleGroupImports, HlmButtonImports, NgIcon],
+  imports: [HlmToggleGroupImports, HlmButtonImports, NgIcon, Ripple],
   templateUrl: "./category-filter-picker.html",
   styleUrl: "./category-filter-picker.css"
 })

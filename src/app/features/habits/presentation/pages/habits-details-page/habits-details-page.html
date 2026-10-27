@@ -1,14 +1,39 @@
-<main class="mx-auto max-w-250 px-2">
+<main class="mx-auto max-w-250 px-4 sm:px-8">
   @if (habitViewModel()) {
-    <header class="mb-4 flex items-center justify-between">
-      <p class="mb-4 text-2xl font-bold">Habit Details</p>
-      <div class="flex gap-2">
+    <header class="mb-5 flex h-[44px] justify-between sm:h-[36px]">
+      <div class="flex w-full items-center justify-between gap-2 sm:justify-start">
+        <button hlmBtn variant="ghost" size="icon" appRipple (click)="goBack()">
+          <ng-icon name="lucideArrowLeft" class="size-6! sm:size-5!" />
+        </button>
+        <p class="content-center text-xl font-bold sm:text-2xl">Habit Details</p>
+        <button
+          hlmBtn
+          appRipple
+          class="text-foreground hover:bg-foreground/10 flex bg-transparent sm:hidden"
+          size="icon"
+          [hlmDropdownMenuTrigger]="menu"
+          align="end"
+        >
+          <ng-icon class="size-6! sm:size-5!" name="lucideEllipsisVertical" />
+        </button>
+        <ng-template #menu>
+          <hlm-dropdown-menu sideOffset="2" class="w-50 sm:w-auto">
+            <button hlmDropdownMenuItem appRipple (click)="createDialog.open()">
+              <ng-icon name="lucideEdit2" size="20" class="mr-1" /> Edit
+            </button>
+            <button hlmDropdownMenuItem appRipple (click)="onDelete()">
+              <ng-icon name="lucideTrash2" size="20" class="mr-1" /> Delete
+            </button>
+          </hlm-dropdown-menu>
+        </ng-template>
+      </div>
+      <div class="hidden gap-2 sm:flex">
         <button hlmBtn variant="secondary" (click)="createDialog.open()">
-          <ng-icon name="lucideEdit2" class="h-4! w-4!" />
+          <ng-icon name="lucideEdit2" />
           Edit
         </button>
         <button hlmBtn variant="destructive" (click)="onDelete()">
-          <ng-icon name="lucideTrash2" class="h-4! w-4!" />
+          <ng-icon name="lucideTrash2" />
           Delete
         </button>
       </div>
@@ -36,26 +61,26 @@
           <p class="font-medium">{{ habitViewModel()!.name }}</p>
           <span
             class="text-foreground/50 bg-foreground/20 mx-auto w-fit rounded-full px-3 py-0.5 text-xs sm:mx-0"
-            >{{ todayLogExists() ? "Completed" : "No Completed" }}
+            >{{ todayLogExists() ? "Completed today" : "No Completed today" }}
           </span>
         </div>
       </div>
       <div class="flex h-10 gap-2 sm:h-auto">
         <button
           size="lg"
-          class="h-full w-full sm:w-[100px]"
+          class="h-full! w-full"
           (click)="todayLogExists() ? onRemoveCompleted() : onMarkCompleted()"
           [variant]="todayLogExists() ? 'default' : 'secondary'"
           hlmBtn
         >
           <ng-icon name="lucideCircleCheckBig" size="20" />
-          Done
+          Done today
         </button>
       </div>
     </section>
 
     <div class="block w-full gap-3 md:flex">
-      <div class="w-full">
+      <div class="w-full flex-1">
         <!-- Habit description Section -->
         @if (habitViewModel()!.description) {
           <section class="bg-card card-shadow mb-3 rounded-2xl border p-4">
@@ -65,7 +90,7 @@
               >
                 <ng-icon name="lucideTextAlignStart" size="16" />
               </div>
-              <p class="font-semibold">Description</p>
+              <p class="text-sm font-semibold">Description</p>
             </header>
             <div class="flex gap-2">
               <p>{{ habitViewModel()!.description }}</p>
@@ -81,7 +106,7 @@
             >
               <ng-icon name="lucideInfo" size="16" />
             </div>
-            <p class="font-semibold">Habit info</p>
+            <p class="text-sm font-semibold">Habit info</p>
           </header>
           <div class="grid grid-cols-2 gap-1 text-sm">
             <p class="text-foreground/50">Category</p>
@@ -110,7 +135,7 @@
             >
               <ng-icon name="lucideCalendarSync " size="16" />
             </div>
-            <p class="font-semibold">Schedule</p>
+            <p class="text-sm font-semibold">Schedule</p>
           </header>
           <div class="flex flex-col gap-2">
             <p class="text-foreground/50 text-sm">Week frequency</p>
@@ -137,7 +162,7 @@
           </div>
         </section>
       </div>
-      <div class="w-full md:w-[320px]">
+      <div class="w-full md:w-[330px]">
         <!-- Habit history Section -->
         <section class="bg-card card-shadow rounded-2xl border p-4">
           <header class="mb-2 flex items-center gap-2">

@@ -35,7 +35,8 @@ import {
   lucideInfo,
   lucideCalendarSync,
   lucideCalendarDays,
-  lucideCircleCheckBig
+  lucideCircleCheckBig,
+  lucideGrid
 } from "@ng-icons/lucide";
 
 export const APP_ICONS = {
@@ -75,5 +76,6 @@ export const APP_ICONS = {
   lucideInfo,
   lucideCalendarSync,
   lucideCalendarDays,
-  lucideCircleCheckBig
+  lucideCircleCheckBig,
+  lucideGrid
 } as const;

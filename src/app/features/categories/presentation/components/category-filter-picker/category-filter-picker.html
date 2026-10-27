@@ -1,4 +1,4 @@
-<div class="flex h-8 gap-2 overflow-y-clip">
+<div class="mb-2 flex h-8 gap-2 overflow-y-clip">
   <hlm-toggle-group
     (valueChange)="onChangeCategory($event)"
     type="single"
@@ -13,6 +13,7 @@
       hlmToggleGroupItem
       value="all"
       class="flex h-full max-w-20 flex-col items-start overflow-hidden rounded-full"
+      appRipple
     >
       <label class="w-full overflow-hidden text-xs text-ellipsis">All</label>
     </button>
@@ -21,6 +22,7 @@
         hlmToggleGroupItem
         [value]="category.id"
         class="flex h-full max-w-25 flex-col items-start overflow-hidden rounded-full"
+        appRipple
       >
         <label class="w-full overflow-hidden text-xs text-ellipsis">{{ category.name }}</label>
       </button>
@@ -29,8 +31,9 @@
   <button
     hlmBtn
     size="icon"
-    class="bg-background/50! border-foreground/15! hover:bg-foreground/10! rounded-full"
+    class="bg-background/50! border-foreground/15! hover:bg-foreground/10! size-8! rounded-full"
     variant="outline"
+    appRipple
     (click)="clickCreateCategory.emit()"
   >
     <ng-icon size="18" name="lucidePlus" />

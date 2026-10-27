@@ -3,10 +3,10 @@ import { NgIcon } from "@ng-icons/core";
 import { HlmCheckboxImports } from "@spartan-ng/helm/checkbox";
 import { HabitAgendaListViewModel } from "../../models/habit-agenda-list.view-model";
 import { RouterLink } from "@angular/router";
-import { getColorByKey } from "../../../../../shared/components/color-picker/app-colors";
+import { Ripple } from "../../../../../shared/directives/ripple.directive";
 
 @Component({
-  imports: [NgIcon, HlmCheckboxImports, RouterLink],
+  imports: [NgIcon, HlmCheckboxImports, RouterLink, Ripple],
   selector: "app-habits-agenda-list",
   styleUrl: "./habits-agenda-list.css",
   templateUrl: "./habits-agenda-list.html"

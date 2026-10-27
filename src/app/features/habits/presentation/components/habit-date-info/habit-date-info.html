@@ -1,4 +1,4 @@
-<div class="box-border flex w-full max-w-full min-w-20 flex-col gap-3 pt-4 sm:w-100">
+<div class="box-border flex w-full max-w-full min-w-20 flex-col gap-3 pt-10 sm:w-100 sm:pt-4">
   <header class="flex items-start gap-4 px-6">
     <div class="flex flex-col items-center justify-center gap-0">
       <p class="text-center text-2xl font-medium">{{ dayNumber() }}</p>
@@ -24,8 +24,8 @@
     {{ config().description(habit().name) }}
   </div>
   @if (config().footerHint) {
-    <footer class="bg-card-foreground/5 px-6 pt-2 pb-4">
-      <small class="text-muted-foreground mb-3 block text-center">
+    <footer class="bg-card-foreground/5 px-4 pt-4 pb-[calc(16px+env(safe-area-inset-bottom))]">
+      <small class="text-muted-foreground mb-3 block text-center text-xs">
         {{ config().footerHint }}
       </small>
 

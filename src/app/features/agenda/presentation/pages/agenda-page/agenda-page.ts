@@ -42,7 +42,8 @@ import { UpsertCategoryFormModel } from "../../../../categories/domain/models/ca
 import { HabitListFilters } from "../../../../habits/presentation/models/habit-list.view-model";
 import { CalendarDatePicker } from "../../components/calendar-date-picker/calendar-date-picker";
 import { toSignal } from "@angular/core/rxjs-interop";
-
+import { Ripple } from "../../../../../shared/directives/ripple.directive";
+import { Fab } from "../../../../../shared/components/fab/fab";
 @Component({
   imports: [
     AgendaList,
@@ -58,7 +59,9 @@ import { toSignal } from "@angular/core/rxjs-interop";
     CategoryUpsertForm,
     RouterLink,
     DataState,
-    CalendarDatePicker
+    CalendarDatePicker,
+    Ripple,
+    Fab
   ],
   selector: "app-agenda-page",
   styleUrl: "./agenda-page.css",

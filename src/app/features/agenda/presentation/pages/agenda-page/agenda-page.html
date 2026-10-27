@@ -1,29 +1,42 @@
-<main class="mx-auto max-w-250">
-  <header class="mb-4 flex items-center justify-between px-2">
-    <p class="mb-4 text-2xl font-bold">Agenda</p>
+<main class="mx-auto max-w-316 pb-(--bottom-fab-padding)">
+  <header class="mb-5 flex h-[44px] justify-between px-4 sm:h-[36px] sm:px-8">
+    <p class="content-center text-2xl font-bold">Agenda</p>
     <div class="flex gap-2">
-      <button hlmBtn (click)="createHabitDialog.open()" size="lg">
-        <ng-icon name="lucidePlus" class="h-5! w-5!" />
+      <button
+        appRipple
+        hlmBtn
+        class="hover:bg-primary/80 hidden sm:flex"
+        (click)="createHabitDialog.open()"
+        size="lg"
+      >
+        <ng-icon name="lucidePlus" size="20px" />
         New habit
       </button>
+      <app-fab
+        class="absolute flex sm:hidden"
+        icon="lucidePlus"
+        (click)="createHabitDialog.open()"
+      />
       <button
         hlmBtn
+        appRipple
         class="text-foreground hover:bg-foreground/10 bg-transparent"
-        size="icon-lg"
+        size="icon"
         [hlmDropdownMenuTrigger]="menu"
         align="end"
       >
-        <ng-icon size="20" name="lucideEllipsisVertical" />
+        <ng-icon class="size-6! sm:size-5!" name="lucideEllipsisVertical" />
       </button>
       <ng-template #menu>
-        <hlm-dropdown-menu>
-          <a hlmDropdownMenuItem routerLink="/settings/habits"> Manage Habits </a>
-          <a hlmDropdownMenuItem routerLink="/settings/categories"> Manage Categories </a>
+        <hlm-dropdown-menu sideOffset="2" class="w-50 sm:w-auto">
+          <a hlmDropdownMenuItem appRipple routerLink="/settings/habits"> Manage Habits </a>
+          <a hlmDropdownMenuItem appRipple routerLink="/settings/categories"> Manage Categories </a>
         </hlm-dropdown-menu>
       </ng-template>
     </div>
   </header>
-  <div class="flex flex-col gap-4 sm:flex-row">
+
+  <div class="flex flex-col gap-3 sm:flex-row sm:gap-4 sm:px-8">
     <div>
       <section class="block sm:hidden">
         <app-horizontal-date-picker
@@ -46,20 +59,35 @@
       </section>
     </div>
     <div class="w-full">
-      <section class="mb-4 flex justify-center gap-2 sm:hidden">
-        <button hlmBtn (click)="onPreviousDay()" variant="ghost" size="icon-lg" type="button">
+      <section class="mb-4 flex justify-center gap-4 sm:hidden">
+        <button
+          hlmBtn
+          (click)="onPreviousDay()"
+          variant="ghost"
+          size="icon"
+          type="button"
+          class="active:bg-foreground/10"
+        >
           <ng-icon name="lucideChevronLeft" />
         </button>
-        <button (click)="calendarDialog.open()" variant="secondary" hlmBtn size="lg">
+        <button
+          (click)="calendarDialog.open()"
+          variant="secondary"
+          hlmBtn
+          size="lg"
+          appRipple
+          class="active:bg-foreground/10"
+        >
           {{ scheduleTitle() }}
         </button>
         <button
           hlmBtn
           variant="ghost"
-          size="icon-lg"
+          size="icon"
           type="button"
           (click)="onNextDay()"
           [disabled]="selectedDate() === todayKey"
+          class="active:bg-foreground/10"
         >
           <ng-icon name="lucideChevronRight" />
         </button>
@@ -68,7 +96,7 @@
         <p class="text- mb-4 text-sm font-bold">{{ scheduleTitle() }}</p>
       </section>
       <section>
-        <div class="mb-2 flex h-8 justify-between gap-2 px-2">
+        <div class="mb-2 flex h-8 justify-between gap-2 px-4 sm:px-0">
           <hlm-toggle-group
             [value]="selectedTab()"
             (valueChange)="onChangeTab($event)"
@@ -83,6 +111,7 @@
               hlmToggleGroupItem
               value="due"
               class="flex h-full flex-col items-start overflow-hidden rounded-full"
+              appRipple
             >
               <label class="w-full overflow-hidden text-xs text-ellipsis"
                 >Due
@@ -93,6 +122,7 @@
               hlmToggleGroupItem
               value="completed"
               class="flex h-full flex-col items-start overflow-hidden rounded-full"
+              appRipple
             >
               <label class="w-full overflow-hidden text-xs text-ellipsis"
                 >Completed
@@ -150,7 +180,7 @@
 </app-responsive-popup>
 
 <app-responsive-popup #calendarDialog (closedEvent)="closeCalendarDialog()">
-  <div class="mt-5 h-[460px]">
+  <div class="h-[calc(530px+env(safe-area-inset-bottom))] px-4 pt-14">
     <app-calendar-date-picker
       [max]="today"
       [selectedDate]="selectedDate()"

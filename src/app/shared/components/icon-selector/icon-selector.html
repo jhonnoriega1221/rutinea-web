@@ -1,5 +1,13 @@
 <hlm-popover [state]="state()">
-  <button hlmPopoverTrigger hlmBtn variant="outline" type="button" (click)="state.set('open')">
+  <button
+    class="bg-transparent"
+    hlmPopoverTrigger
+    hlmBtn
+    variant="outline"
+    type="button"
+    size="icon"
+    (click)="state.set('open')"
+  >
     <ng-icon [name]="iconSelected().icon"></ng-icon>
   </button>
   <hlm-popover-content *hlmPopoverPortal class="min-w-[276px]">
@@ -8,8 +16,8 @@
         <button
           type="button"
           hlmBtn
-          class="{{ icon.uiClasses }}"
-          size="icon-lg"
+          class="{{ icon.uiClasses }} active:bg-foreground/10"
+          size="icon"
           (click)="select(icon)"
         >
           <ng-icon [name]="icon.icon" size="18" />

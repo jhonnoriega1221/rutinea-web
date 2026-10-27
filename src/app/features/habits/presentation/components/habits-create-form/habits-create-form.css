@@ -10,6 +10,8 @@
   border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
 }
 
-.weekday-toggle button[data-state="off"]:hover {
-  background: color-mix(in srgb, var(--foreground) 10%, transparent);
+@media (hover: hover) {
+  .weekday-toggle button[data-state="off"]:hover {
+    background: color-mix(in srgb, var(--foreground) 10%, transparent);
+  }
 }

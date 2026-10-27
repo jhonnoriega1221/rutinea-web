@@ -14,8 +14,10 @@ import { classes } from "@spartan-ng/helm/utils";
   },
   template: `
     <div
-      class="bg-muted mx-auto mt-4 hidden h-1 w-[100px] shrink-0 rounded-full group-data-[vaul-drawer-direction=bottom]/drawer-content:block"
-    ></div>
+      class="absolute hidden w-full shrink-0 z-1 bg-card py-4 group-data-[vaul-drawer-direction=bottom]/drawer-content:block"
+    >
+      <div class="bg-muted mx-auto h-1 w-[100px] rounded-full"></div>
+    </div>
     <ng-content />
   `
 })
