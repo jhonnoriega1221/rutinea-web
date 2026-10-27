@@ -3,10 +3,11 @@ import { Category } from "../../../domain/models/category.model";
 import { NgIcon } from "@ng-icons/core";
 import { HlmButtonImports } from "@spartan-ng/helm/button";
 import { getColorByKey } from "../../../../../shared/components/color-picker/app-colors";
+import { Ripple } from "../../../../../shared/directives/ripple.directive";
 
 @Component({
   selector: "app-categories-list-item",
-  imports: [NgIcon, HlmButtonImports],
+  imports: [NgIcon, HlmButtonImports, Ripple],
   templateUrl: "./categories-list-item.html",
   styleUrl: "./categories-list-item.css"
 })

@@ -1,13 +1,12 @@
-<section class="navbar-container">
+<section class="navbar-container" [class.hidden]="hideBottomNav()">
   <div class="navbar-body">
     @for (bottomItem of items; track $index) {
       <a
-        hlmBtn
         variant="ghost"
-        class="navbar-item"
+        class="navbar-item transition-[transform, color] active:bg-foreground/10 cubic-bezier(0, 0, 0.2, 1) duration-200 active:scale-95"
         [routerLinkActiveOptions]="{ exact: bottomItem.url === '/' }"
         [routerLink]="bottomItem.url"
-        routerLinkActive="is-active"
+        routerLinkActive="bg-primary/20 text-primary!"
       >
         <ng-icon class="navbar-item-icon" [name]="bottomItem.icon" />
         <p class="navbar-item-label">

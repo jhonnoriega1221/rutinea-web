@@ -1,14 +1,33 @@
-<main class="mx-auto max-w-250">
-  <div class="mb-4 flex items-center justify-between px-2">
-    <p class="mb-4 text-2xl font-bold">Categories</p>
+<main class="mx-auto max-w-250 px-4 sm:px-8">
+  <header class="mb-5 flex h-[44px] justify-between sm:h-[36px]">
     <div class="flex gap-2">
-      <button hlmBtn (click)="createCategoryDialog.open()" size="lg">
-        <ng-icon name="lucidePlus" class="h-5! w-5!" />
-        New category
+      <button hlmBtn variant="ghost" size="icon" appRipple (click)="goBack()">
+        <ng-icon name="lucideArrowLeft" class="size-6! sm:size-5!" />
       </button>
+      <p class="hidden content-center text-xl font-bold sm:block sm:text-2xl">Manage Categories</p>
     </div>
-  </div>
-  <div class="px-2">
+    <p class="block content-center text-xl font-bold sm:hidden sm:text-2xl">Manage Categories</p>
+
+    <app-fab
+      class="absolute flex sm:hidden"
+      icon="lucidePlus"
+      [hasBottomBar]="false"
+      (click)="createCategoryDialog.open()"
+    />
+
+    <button
+      appRipple
+      hlmBtn
+      class="hover:bg-primary/80 hidden sm:flex"
+      (click)="createCategoryDialog.open()"
+      size="lg"
+    >
+      <ng-icon name="lucidePlus" class="h-5! w-5!" />
+      New category
+    </button>
+    <div class="block size-11 sm:hidden"></div>
+  </header>
+  <div>
     @if (categories().length === 0) {
       <app-data-state
         [image]="'/assets/svg/empty_state.svg'"

@@ -7,7 +7,7 @@ import { HabitCalendarTracker } from "../../components/habit-calendar-tracker/ha
 import { HabitsFacade } from "../../facade/habits.facade";
 import { getIconByKey } from "../../../../../shared/components/icons/habit-icons";
 import { HlmButtonImports } from "@spartan-ng/helm/button";
-import { HabitTodayStatusCard } from "../../components/habit-today-status-card/habit-today-status-card";
+import { Ripple } from "../../../../../shared/directives/ripple.directive";
 import {
   completionsThisWeek,
   resolveDayState,
@@ -27,7 +27,7 @@ import { CategoryUpsertForm } from "../../../../categories/presentation/componen
 import { UpsertCategoryFormModel } from "../../../../categories/domain/models/category.model";
 import { HabitDetailsViewModel } from "../../models/habit-details.view-model";
 import { getColorByKey } from "../../../../../shared/components/color-picker/app-colors";
-
+import { HlmDropdownMenuImports } from "@spartan-ng/helm/dropdown-menu";
 @Component({
   selector: "app-habits-details-page",
   imports: [
@@ -36,12 +36,13 @@ import { getColorByKey } from "../../../../../shared/components/color-picker/app
     HabitWeekTracker,
     HabitCalendarTracker,
     HlmButtonImports,
-    HabitTodayStatusCard,
     ResponsivePopup,
     HabitDateInfo,
     HabitsCreateForm,
     CategoryUpsertForm,
-    DatePipe
+    HlmDropdownMenuImports,
+    DatePipe,
+    Ripple
   ],
   templateUrl: "./habits-details-page.html",
   styleUrl: "./habits-details-page.css"
@@ -190,6 +191,12 @@ export class HabitsDetailsPage implements OnInit {
   protected async confirmDelete() {
     await this._habitsFacade.delete(this.id());
     toast.success("Habit has been deleted succefully");
+    window.history.replaceState(null, "", document.referrer);
+
+    this.location.back();
+  }
+
+  protected goBack() {
     this.location.back();
   }
 

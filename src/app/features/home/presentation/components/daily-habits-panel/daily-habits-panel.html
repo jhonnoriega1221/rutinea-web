@@ -1,7 +1,12 @@
-<div class="mt-2 px-2">
-  <p class="text- mb-4 text-sm font-bold">Today's Schedule</p>
+<div class="s mb-4 flex h-[30px] items-center gap-2 px-3 sm:px-4">
+  <div
+    class="bg-primary/20 text-primary! flex aspect-square h-[28px] w-[28px] items-center justify-center rounded-lg"
+  >
+    <ng-icon name="lucideList" size="16" />
+  </div>
+  <p class="text-sm font-bold">Today's Schedule</p>
 </div>
-<div class="h-[265px]">
+<div class="h-[310px] sm:h-[265px]">
   @if (dueCount() === 0 && completedCount() === 0) {
     <app-data-state
       [image]="'/assets/svg/empty_state.svg'"
@@ -24,11 +29,15 @@
 <div class="px-2">
   <a
     routerLink="/agenda"
-    class="text-primary hover:bg-primary/20! flex w-full items-center bg-transparent"
+    class="text-primary hover:bg-primary/20! w-full bg-transparent"
     hlmBtn
-    size="lg"
+    appRipple
   >
-    See all habits
+    {{
+      dueCount() > 5
+        ? "See " + (dueCount() - 5) + " habit" + (dueCount() - 5 === 1 ? "" : "s") + " more"
+        : "Go to agenda"
+    }}
     <ng-icon class="mt-0.5" name="lucideArrowRight" size="20" />
   </a>
 </div>

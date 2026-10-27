@@ -60,7 +60,7 @@ export class HabitDateInfo {
         icon: "lucideCheck",
         description: (n) => `You completed ${n} on this day.`,
         footerHint: "Made a mistake? You can remove this completion record.",
-        buttonLabel: "Mark as missed",
+        buttonLabel: "Remove completion",
         buttonVariant: "destructive",
         action: () => this.removeCompleted.emit(this.dateSelected())!
       },

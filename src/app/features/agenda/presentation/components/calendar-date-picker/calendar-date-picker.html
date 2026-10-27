@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-4">
-  <div class="flex w-full items-center justify-between gap-1.5">
+  <div class="flex h-[44px] w-full items-center justify-between gap-1.5 sm:h-[36px]">
     <button
       #prevBtn
       (click)="onFocusedMonthChange()"
@@ -8,6 +8,7 @@
       variant="ghost"
       size="icon"
       type="button"
+      class="active:bg-foreground/10"
     >
       <ng-icon name="lucideChevronLeft" />
     </button>
@@ -42,7 +43,6 @@
           </hlm-select-group>
         </hlm-select-content>
       </hlm-select>
-      <button hlmBtn variant="outline" type="button" (click)="goToToday()">Today</button>
     </div>
 
     <button
@@ -53,6 +53,7 @@
       variant="ghost"
       size="icon"
       type="button"
+      class="active:bg-foreground/10"
     >
       <ng-icon name="lucideChevronRight" />
     </button>
@@ -78,7 +79,7 @@
               type="button"
               brnCalendarCellButton
               [date]="date"
-              class="hover:bg-foreground/10 data-[disabled=true]:text-foreground/10 flex h-[60px] w-full flex-col items-center justify-center gap-1 rounded-full text-xs data-[outside=true]:hidden"
+              class="transition-[transform, color] active:bg-foreground/10 cubic-bezier(0, 0, 0.2, 1) hover:bg-foreground/10 data-[disabled=true]:text-foreground/10 flex h-[60px] w-full flex-col items-center justify-center gap-1 rounded-full text-xs duration-200 active:scale-90 data-[outside=true]:hidden"
               [class.bg-foreground/20]="isSelectedDay(date)"
               (click)="onDayClick(date)"
             >

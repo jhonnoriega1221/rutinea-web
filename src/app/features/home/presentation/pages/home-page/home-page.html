@@ -1,9 +1,11 @@
-<main class="mx-auto max-w-400 px-2">
-  <header>
+<main class="mx-auto max-w-316 px-4 sm:px-8">
+  <header class="mb-8 sm:mb-5">
     <app-home-greeting />
   </header>
   <div class="grid w-full grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-12">
-    <section class="bg-card card-shadow col-span-4 row-span-2 w-full rounded-xl border py-4">
+    <section
+      class="bg-card card-shadow col-span-4 row-span-2 w-full rounded-xl border py-3 sm:py-4"
+    >
       <app-daily-habits-panel
         [habitsForSelectedDate]="habitsForSelectedDate()"
         [dueCount]="dueCount()"
@@ -11,28 +13,36 @@
         (completeHabit)="onCompleteHabit($event)"
       />
     </section>
-    <section class="bg-card card-shadow col-span-2 row-span-1 h-40 w-full rounded-xl border p-2">
-      <app-kpi-panel title="Pending habits" [value]="dueCount()" icon="lucideCheck" />
-    </section>
-    <section class="bg-card card-shadow col-span-2 row-span-1 h-40 w-full rounded-xl border p-2">
-      <app-kpi-panel title="Completed habits" [value]="completedCount()" icon="lucideClock4" />
+    <section
+      class="bg-card card-shadow col-span-2 row-span-1 h-40 w-full rounded-xl border p-3 sm:p-4"
+    >
+      <app-kpi-panel title="Pending" [value]="dueCount()" icon="lucideClock4" />
     </section>
     <section
-      class="bg-card card-shadow col-span-4 row-span-3 h-120 w-full rounded-xl border"
+      class="bg-card card-shadow col-span-2 row-span-1 h-40 w-full rounded-xl border p-3 sm:p-4"
+    >
+      <app-kpi-panel title="Completed" [value]="completedCount()" icon="lucideCheck" />
+    </section>
+    <section
+      class="bg-card card-shadow col-span-4 row-span-3 h-120 w-full rounded-xl border p-3 sm:p-4"
     ></section>
-    <section class="bg-card card-shadow col-span-4 row-span-2 h-68 w-full rounded-xl border py-2">
-      <div class="mb-2 flex h-[48px] items-center gap-2 px-2">
+    <section
+      class="bg-card card-shadow col-span-4 row-span-2 h-72 w-full rounded-xl border py-3 sm:py-4"
+    >
+      <div class="mb-4 flex h-[30px] items-center gap-2 px-3 sm:px-4">
         <div
-          class="bg-primary/20 text-primary! flex aspect-square h-[36px] w-[36px] items-center justify-center rounded-lg text-white"
+          class="bg-primary/20 text-primary! flex aspect-square h-[28px] w-[28px] items-center justify-center rounded-lg"
         >
-          <ng-icon name="lucideCheckCircle2" size="18" />
+          <ng-icon name="lucideGrid" size="16" />
         </div>
-        <p class="text-base font-bold">Heatmap</p>
+        <p class="text-sm font-bold">Heatmap</p>
       </div>
-      <app-habit-heatmap [completionData]="heatmapData()" />
+      <div class="pl-3 sm:pl-4">
+        <app-habit-heatmap [completionData]="heatmapData()" />
+      </div>
     </section>
     <section
-      class="bg-card card-shadow col-span-4 row-span-2 h-80 w-full rounded-xl border"
+      class="bg-card card-shadow col-span-4 row-span-2 h-80 w-full rounded-xl border p-3 sm:p-4"
     ></section>
   </div>
 </main>

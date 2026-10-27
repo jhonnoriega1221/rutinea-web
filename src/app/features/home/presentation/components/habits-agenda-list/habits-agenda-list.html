@@ -1,10 +1,9 @@
 <ul class="full flex flex-col divide-y">
   @for (habit of habits(); track habit.id) {
-    <li class="flex items-center">
+    <li class="flex items-center" appRipple>
       <a
         [routerLink]="'/habits/' + habit.id"
-        class="hover:bg-foreground/10 flex w-full items-center gap-2 py-2 pr-6 pl-4"
-        [class.opacaity-30]="habit.dayState === 'completed'"
+        class="hover:bg-foreground/10 flex w-full items-center gap-2 py-3 pl-3 sm:py-2"
       >
         <div
           class="bg-primary/40 flex aspect-square h-[36px] w-[36px] items-center justify-center rounded-lg text-white"
@@ -12,19 +11,20 @@
         >
           <ng-icon [name]="habit.icon" size="16px" />
         </div>
-        <p class="text-sm font-medium" [class.line-through]="habit.dayState === 'completed'">
+        <p class="text-sm font-medium">
           {{ habit.name }}
         </p>
       </a>
-      <hlm-checkbox
-        [checked]="habit.dayState === 'completed'"
-        (checkedChange)="checkedChange.emit(habit.id)"
-        class="bg-foreground/20! data-checked:bg-primary! border-foreground/50 mx-3 h-7 w-7 rounded-full"
-      />
+      <div class="py-2 pr-5 pl-3">
+        <hlm-checkbox
+          (checkedChange)="checkedChange.emit(habit.id)"
+          class="bg-primary/10! data-checked:bg-primary! border-foreground/20 h-7 w-7 rounded-full"
+        />
+      </div>
     </li>
   }
 
   @for (_ of emptySlots(); track $index) {
-    <li class="flex h-[53px] items-center justify-between pr-6 pl-4"></li>
+    <li class="flex h-[53px]"></li>
   }
 </ul>

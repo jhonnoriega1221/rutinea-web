@@ -1,8 +1,10 @@
 .layout-shell {
   display: flex;
   min-height: 100vh;
-  padding-top: 24px;
-  padding-bottom: calc(var(--bottombar-height) + var(--bottombar-padding) + 24px);
+  padding-top: 20px;
+  padding-bottom: calc(
+    var(--bottombar-height) + var(--bottombar-padding) + env(safe-area-inset-bottom) + 24px
+  );
 }
 
 .main-container {
@@ -13,7 +15,7 @@
 @media (min-width: 640px) {
   .layout-shell {
     padding-left: calc(var(--sidebar-width) + var(--sidebar-padding));
-    padding-top: 32px;
+    padding-top: 24px;
     padding-bottom: 24px;
   }
 }

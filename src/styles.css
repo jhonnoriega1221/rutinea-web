@@ -47,12 +47,13 @@
   --sidebar-width: 72px;
   --sidebar-padding: 20px;
   --bottombar-height: 64px;
-  --bottombar-padding: 18px;
+  --bottombar-padding: 12px;
+  --bottom-fab-padding: 44px;
 
   --background: oklch(96.02% 0.03078 168.571);
-  --foreground: oklch(21.357% 0.04368 157.679);
+  --foreground: oklch(25.423% 0.06265 154.184);
 
-  --card: oklch(98.641% 0.01147 154.175);
+  --card: oklch(99.691% 0.00497 146.601);
   --card-shadow: 0 3px 4px color-mix(var(--foreground) 10%, transparent);
   --card-foreground: var(--foregound);
   --card-border: oklch(92.5% 0.01 155);
@@ -89,7 +90,7 @@
   --sidebar-primary: color-mix(in srgb, var(--sidebar-primary-foreground) 10%, transparent);
   --sidebar-primary-foreground: var(--primary);
   --sidebar-border: color-mix(in srgb, var(--sidebar-foreground) 8%, transparent);
-  --sidebar-shadow: 0 6px 10px color-mix(in srgb, var(--primary) 20%, transparent);
+  --sidebar-shadow: var(--card-shadow);
 
   --cat-red: oklch(0.65 0.22 25);
   --cat-orange: oklch(0.7 0.18 50);
@@ -209,6 +210,11 @@
     @apply border-border outline-ring/50;
   }
 
+  html,
+  body {
+    overscroll-behavior-y: contain;
+  }
+
   body {
     @apply bg-background text-foreground relative;
     background-color: var(--background);
@@ -219,8 +225,89 @@
     position: fixed;
     inset: 0;
     z-index: -1;
-    background-image: var(--bg-ambient);
+    /* background-image: var(--bg-ambient); */
 
     pointer-events: none; /* Asegura que no bloquee los clics en tu app */
   }
+}
+
+@keyframes ripple-animation {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Menu*/
+.cdk-overlay-container [role="menu"] {
+  animation-duration: 200ms;
+  transition-duration: 200ms;
+}
+
+.cdk-overlay-container [role="menuitem"] {
+  @apply h-[52px] px-3! sm:h-[36px];
+}
+
+/* Anula el hover automático en móviles (la regla anterior) */
+@media (hover: none) and (pointer: coarse) {
+  .cdk-overlay-container [role="menuitem"]:focus:not(:active) {
+    background-color: transparent;
+    color: var(--popover-foreground);
+  }
+}
+
+/* Button */
+
+[hlmBtn] {
+  @apply h-[44px] px-4 duration-100 active:scale-95 active:not-aria-[haspopup]:translate-none! sm:h-[36px] sm:px-3;
+}
+[hlmBtn][size="icon"] {
+  @apply aspect-square w-auto p-0 active:scale-90;
+}
+
+/* Select */
+[data-slot="select-trigger"] {
+  @apply h-[44px]! px-4 sm:h-[36px]! sm:px-3;
+}
+
+[data-slot="select-item"] {
+  @apply h-[52px] px-3 sm:h-[36px];
+}
+
+.cdk-overlay-container hlm-select-content {
+  animation-duration: 200ms;
+  transition-duration: 200ms;
+}
+
+/* Input */
+
+[data-slot="input"] {
+  @apply h-[44px] sm:h-[36px];
+}
+
+/* RADIO */
+
+[data-slot="radio-group-indicator"] {
+  @apply h-[24px] w-[24px] sm:h-[18px] sm:w-[18px];
+}
+[data-slot="radio-group-indicator"] > div {
+  @apply h-[12px] w-[12px] sm:h-[10px] sm:w-[10px];
+}
+/* Drawer - dialog backdrop */
+
+.cdk-overlay-container .cdk-overlay-backdrop {
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: none;
+}
+
+/* Drawer */
+
+hlm-drawer-content[data-slot="drawer-content"] {
+  @apply rounded-tl-4xl! rounded-tr-4xl! border-none!;
+
+  transition-duration: 400ms;
+  animation-duration: 400ms;
+
+  transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+  animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
 }
