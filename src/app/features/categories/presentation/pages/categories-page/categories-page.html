@@ -1,4 +1,4 @@
-<main class="mx-auto max-w-250 px-4 pb-(--bottom-fab-padding) sm:px-8">
+<main class="mx-auto max-w-250 px-4 sm:px-8">
   <header class="mb-5 flex h-[44px] justify-between sm:h-[36px]">
     <div class="flex gap-2">
       <button hlmBtn variant="ghost" size="icon" appRipple (click)="goBack()">
@@ -11,6 +11,7 @@
     <app-fab
       class="absolute flex sm:hidden"
       icon="lucidePlus"
+      [hasBottomBar]="false"
       (click)="createCategoryDialog.open()"
     />
 

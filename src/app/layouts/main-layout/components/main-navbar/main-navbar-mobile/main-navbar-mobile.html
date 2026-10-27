@@ -1,4 +1,4 @@
-<section class="navbar-container">
+<section class="navbar-container" [class.hidden]="hideBottomNav()">
   <div class="navbar-body">
     @for (bottomItem of items; track $index) {
       <a

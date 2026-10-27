@@ -10,4 +10,5 @@ import { Ripple } from "../../directives/ripple.directive";
 export class Fab {
   readonly icon = input<string>();
   readonly click = output<void>();
+  readonly hasBottomBar = input<boolean>(true);
 }

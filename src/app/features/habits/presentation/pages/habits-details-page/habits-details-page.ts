@@ -191,6 +191,8 @@ export class HabitsDetailsPage implements OnInit {
   protected async confirmDelete() {
     await this._habitsFacade.delete(this.id());
     toast.success("Habit has been deleted succefully");
+    window.history.replaceState(null, "", document.referrer);
+
     this.location.back();
   }
 

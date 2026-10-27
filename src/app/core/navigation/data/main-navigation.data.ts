@@ -9,3 +9,9 @@ export const mainNavigationItemsData: MainNavigationItem[] = [
   { icon: "lucideCalendarFold", title: "Agenda", url: "/agenda" },
   { icon: "lucideSettings", title: "Settings", url: "/settings" }
 ];
+
+export const hiddenRoutePatterns: RegExp[] = [
+  /^\/settings\/habits/,
+  /^\/settings\/categories/,
+  /^\/habits\/[^/]+$/
+];

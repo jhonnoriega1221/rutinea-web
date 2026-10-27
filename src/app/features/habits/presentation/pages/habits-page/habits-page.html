@@ -8,7 +8,12 @@
     </div>
     <p class="block content-center text-xl font-bold sm:hidden sm:text-2xl">Manage Habits</p>
 
-    <app-fab class="absolute flex sm:hidden" icon="lucidePlus" (click)="createHabitDialog.open()" />
+    <app-fab
+      class="absolute flex sm:hidden"
+      icon="lucidePlus"
+      (click)="createHabitDialog.open()"
+      [hasBottomBar]="false"
+    />
 
     <div class="flex gap-2">
       <button
