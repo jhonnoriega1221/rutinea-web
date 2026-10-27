@@ -18,7 +18,12 @@
 </ng-template>
 
 @if (isMobile()) {
-  <hlm-drawer [state]="state()" (closed)="handleClosed()" (click)="$event.stopPropagation()">
+  <hlm-drawer
+    [state]="state()"
+    (closed)="handleClosed()"
+    (click)="$event.stopPropagation()"
+    [autoFocus]="false"
+  >
     <hlm-drawer-content *hlmDrawerPortal class="touch-none gap-3 overflow-hidden p-0">
       <ng-container *ngTemplateOutlet="contentTpl" />
     </hlm-drawer-content>
