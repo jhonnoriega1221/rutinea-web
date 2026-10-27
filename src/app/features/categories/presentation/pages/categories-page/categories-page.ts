@@ -9,6 +9,9 @@ import { Category, UpsertCategoryFormModel } from "../../../domain/models/catego
 import { toast } from "@spartan-ng/brain/sonner";
 import { ResponsiveDialogService } from "../../../../../shared/services/responsive-dialog.service";
 import { DataState } from "../../../../../shared/components/data-state/data-state";
+import { Fab } from "../../../../../shared/components/fab/fab";
+import { Location } from "@angular/common";
+import { Ripple } from "../../../../../shared/directives/ripple.directive";
 
 @Component({
   selector: "app-categories-page",
@@ -18,7 +21,9 @@ import { DataState } from "../../../../../shared/components/data-state/data-stat
     CategoriesList,
     NgIcon,
     CategoryUpsertForm,
-    DataState
+    DataState,
+    Fab,
+    Ripple
   ],
   templateUrl: "./categories-page.html",
   styleUrl: "./categories-page.css"
@@ -26,6 +31,7 @@ import { DataState } from "../../../../../shared/components/data-state/data-stat
 export class CategoriesPage implements OnInit {
   private readonly _dialog = inject(ResponsiveDialogService);
   protected readonly categoryToEdit = signal<Category | undefined>(undefined);
+  private readonly location = inject(Location);
 
   private readonly _categoriesFacade = inject(CategoriesFacade);
   protected readonly categories = this._categoriesFacade.categories;
@@ -79,5 +85,9 @@ export class CategoriesPage implements OnInit {
     }
 
     this.createCategoryDialog().close();
+  }
+
+  protected goBack() {
+    this.location.back();
   }
 }

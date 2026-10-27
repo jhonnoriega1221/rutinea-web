@@ -2,10 +2,11 @@
   <a
     [routerLink]="'/habits/' + habit()?.id"
     class="hover:bg-foreground/5 flex items-center justify-between gap-4 rounded-xl p-2"
+    appRipple
   >
     <div class="flex items-center gap-2">
       <div
-        class="bg-primary/40 flex aspect-square h-[48px] w-[48px] items-center justify-center rounded-lg text-white"
+        class="bg-primary/40 flex aspect-square size-12 items-center justify-center rounded-lg text-white"
         [style.backgroundColor]="'var(' + categoryColor() + ')'"
       >
         <ng-icon [name]="habitIcon()" size="24px" />
@@ -13,7 +14,7 @@
 
       <div class="flex flex-col gap-1">
         <p class="font-medium">{{ habit()?.name }}</p>
-        <div class="h-[20px] w-[171px]">
+        <div class="h-[15px] w-[170px]">
           @if (
             habit()!.frequencyData.type === "specific_days" ||
             habit()!.frequencyData.type === "everyday"

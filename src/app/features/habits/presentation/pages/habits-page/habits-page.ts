@@ -1,4 +1,5 @@
 import { Component, computed, inject, OnInit, signal, viewChild } from "@angular/core";
+import { Location } from "@angular/common";
 import { HlmButtonImports } from "@spartan-ng/helm/button";
 import { ResponsivePopup } from "../../../../../shared/components/responsive-popup/responsive-popup";
 import { lucidePlus } from "@ng-icons/lucide";
@@ -18,6 +19,8 @@ import { RouterLink } from "@angular/router";
 import { CategoryFilterPicker } from "../../../../categories/presentation/components/category-filter-picker/category-filter-picker";
 import { HabitListFilters, HabitListViewModel } from "../../models/habit-list.view-model";
 import { DataState } from "../../../../../shared/components/data-state/data-state";
+import { Fab } from "../../../../../shared/components/fab/fab";
+import { Ripple } from "../../../../../shared/directives/ripple.directive";
 @Component({
   selector: "app-habits-page",
   imports: [
@@ -30,7 +33,9 @@ import { DataState } from "../../../../../shared/components/data-state/data-stat
     CategoryUpsertForm,
     RouterLink,
     CategoryFilterPicker,
-    DataState
+    DataState,
+    Fab,
+    Ripple
   ],
   templateUrl: "./habits-page.html",
   styleUrl: "./habits-page.css",
@@ -53,6 +58,8 @@ export class HabitsPage implements OnInit {
   protected readonly filters = signal<HabitListFilters>({
     categoryId: null
   });
+
+  private readonly location = inject(Location);
 
   //TODO: Mover esto a un mapper
   protected readonly habitsViewModel = computed<HabitListViewModel[]>(() => {
@@ -148,5 +155,9 @@ export class HabitsPage implements OnInit {
         formRef.patchCategory(newCategory.id);
       }
     }
+  }
+
+  protected goBack() {
+    this.location.back();
   }
 }

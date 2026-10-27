@@ -1,6 +1,6 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" id="form-habit-creation">
   <hlm-field-group class="max-h-[80vh] w-full max-w-full min-w-20 gap-0 sm:max-h-[90vh] sm:w-110">
-    <main class="flex flex-1 flex-col gap-4 overflow-y-auto px-4 pt-16 pb-4 sm:pt-9">
+    <main class="flex flex-1 flex-col gap-4 overflow-y-auto px-4 pt-9 pb-4 sm:pt-7">
       <div class="flex flex-row">
         <!-- Habit icon -->
         <hlm-field class="w-[60px]">
@@ -55,6 +55,7 @@
             type="button"
             size="icon"
             variant="outline"
+            class="bg-transparent"
             (click)="clickNewCategory.emit()"
           >
             <ng-icon name="lucidePlus" />
@@ -160,7 +161,9 @@
       </hlm-field>
     </main>
     <!-- Habit form submit -->
-    <hlm-field class="flex shrink-0 justify-end border-t p-4">
+    <hlm-field
+      class="flex shrink-0 justify-end border-t px-4 pt-4 pb-[calc(16px+env(safe-area-inset-bottom))]"
+    >
       <button hlmBtn type="submit" form="form-habit-creation" size="lg">
         {{ habitToEdit() ? "Edit Habit" : "Create Habit" }}
       </button>

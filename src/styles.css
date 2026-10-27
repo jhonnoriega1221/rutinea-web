@@ -47,7 +47,8 @@
   --sidebar-width: 72px;
   --sidebar-padding: 20px;
   --bottombar-height: 64px;
-  --bottombar-padding: 18px;
+  --bottombar-padding: 12px;
+  --bottom-fab-padding: 44px;
 
   --background: oklch(96.02% 0.03078 168.571);
   --foreground: oklch(25.423% 0.06265 154.184);
@@ -257,10 +258,10 @@
 
 /* Button */
 
-[data-slot="button"] {
+[hlmBtn] {
   @apply h-[44px] px-4 duration-100 active:scale-95 active:not-aria-[haspopup]:translate-none! sm:h-[36px] sm:px-3;
 }
-[data-slot="button"][size="icon"] {
+[hlmBtn][size="icon"] {
   @apply aspect-square w-auto p-0 active:scale-90;
 }
 

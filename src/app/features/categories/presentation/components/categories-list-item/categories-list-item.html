@@ -14,6 +14,7 @@
         hlmBtn
         size="icon"
         class="text-foreground hover:bg-foreground/10 bg-transparent"
+        appRipple
         (click)="edit.emit(category()!)"
       >
         <ng-icon size="18" name="lucideEdit2" />
@@ -22,6 +23,7 @@
         hlmBtn
         size="icon"
         class="text-foreground hover:bg-foreground/10 bg-transparent"
+        appRipple
         (click)="delete.emit(category()?.id!)"
       >
         <ng-icon size="18" name="lucideTrash2" />

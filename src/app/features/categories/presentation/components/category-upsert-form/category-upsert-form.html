@@ -1,6 +1,6 @@
 <form [formRoot]="form" id="form-category-upsert">
   <hlm-field-group class="max-h-[80vh] w-full max-w-full min-w-20 gap-0 sm:max-h-[90vh] sm:w-110">
-    <main class="flex flex-1 flex-col gap-4 overflow-y-auto px-4 pt-16 pb-4 sm:pt-9">
+    <main class="flex flex-1 flex-col gap-4 overflow-y-auto px-4 pt-10 pb-4 sm:pt-5">
       <hlm-field>
         <label hlmFieldLabel for="name">Category name</label>
         <input
@@ -29,7 +29,9 @@
       </hlm-field>
     </main>
 
-    <hlm-field class="flex shrink-0 justify-end border-t p-4">
+    <hlm-field
+      class="flex shrink-0 justify-end border-t px-4 pt-4 pb-[calc(16px+env(safe-area-inset-bottom))]"
+    >
       <button hlmBtn type="submit" form="form-category-upsert" size="lg">
         {{ categoryToEdit() ? "Edit Category" : "Create Category" }}
       </button>

@@ -1,29 +1,46 @@
-<main class="mx-auto max-w-250">
-  <header class="mb-4 flex items-center justify-between px-2">
-    <p class="mb-4 text-2xl font-bold">Habits</p>
+<main class="mx-auto max-w-250 pb-(--bottom-fab-padding)">
+  <header class="mb-5 flex h-[44px] justify-between px-4 sm:h-[36px] sm:px-8">
     <div class="flex gap-2">
-      <button hlmBtn (click)="createHabitDialog.open()" size="lg">
+      <button hlmBtn variant="ghost" size="icon" appRipple (click)="goBack()">
+        <ng-icon name="lucideArrowLeft" class="size-6! sm:size-5!" />
+      </button>
+      <p class="hidden content-center text-xl font-bold sm:block sm:text-2xl">Manage Habits</p>
+    </div>
+    <p class="block content-center text-xl font-bold sm:hidden sm:text-2xl">Manage Habits</p>
+
+    <app-fab class="absolute flex sm:hidden" icon="lucidePlus" (click)="createHabitDialog.open()" />
+
+    <div class="flex gap-2">
+      <button
+        appRipple
+        hlmBtn
+        class="hover:bg-primary/80 hidden sm:flex"
+        (click)="createHabitDialog.open()"
+        size="lg"
+      >
         <ng-icon name="lucidePlus" class="h-5! w-5!" />
         New habit
       </button>
       <button
         hlmBtn
+        appRipple
         class="text-foreground hover:bg-foreground/10 bg-transparent"
-        size="icon-lg"
+        size="icon"
         [hlmDropdownMenuTrigger]="menu"
         align="end"
       >
-        <ng-icon size="20" name="lucideEllipsisVertical" />
+        <ng-icon name="lucideEllipsisVertical" class="size-6! sm:size-5!" />
       </button>
       <ng-template #menu>
-        <hlm-dropdown-menu>
-          <a hlmDropdownMenuItem routerLink="/settings/categories"> Manage Categories </a>
+        <hlm-dropdown-menu sideOffset="2" class="w-50 sm:w-auto">
+          <a hlmDropdownMenuItem appRipple routerLink="/settings/categories"> Manage Categories </a>
         </hlm-dropdown-menu>
       </ng-template>
     </div>
   </header>
+
   @if (habits().length > 0) {
-    <section class="mb-3 overflow-x-auto px-3">
+    <section class="mb-3 overflow-x-auto px-4 sm:px-8">
       <app-category-filter-picker
         [categories]="categories()"
         [selectedCategory]="filters().categoryId"
@@ -32,7 +49,7 @@
       />
     </section>
   }
-  <section class="px-2">
+  <section class="px-4 sm:px-8">
     @if (habits().length === 0) {
       <app-data-state
         [image]="'/assets/svg/empty_habits_state.svg'"

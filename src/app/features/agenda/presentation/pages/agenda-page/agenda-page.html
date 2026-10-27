@@ -1,4 +1,4 @@
-<main class="mx-auto max-w-316 pb-16">
+<main class="mx-auto max-w-316 pb-(--bottom-fab-padding)">
   <header class="mb-5 flex h-[44px] justify-between px-4 sm:h-[36px] sm:px-8">
     <p class="content-center text-2xl font-bold">Agenda</p>
     <div class="flex gap-2">
@@ -9,19 +9,23 @@
         (click)="createHabitDialog.open()"
         size="lg"
       >
-        <ng-icon name="lucidePlus" class="h-5! w-5!" />
+        <ng-icon name="lucidePlus" size="20px" />
         New habit
       </button>
-      <app-fab class="flex sm:hidden" icon="lucidePlus" (click)="createHabitDialog.open()" />
+      <app-fab
+        class="absolute flex sm:hidden"
+        icon="lucidePlus"
+        (click)="createHabitDialog.open()"
+      />
       <button
         hlmBtn
         appRipple
-        class="text-foreground hover:bg-foreground/10 h-[44px] w-[44px] bg-transparent sm:h-[36px] sm:w-[36px]"
-        size="icon-lg"
+        class="text-foreground hover:bg-foreground/10 bg-transparent"
+        size="icon"
         [hlmDropdownMenuTrigger]="menu"
         align="end"
       >
-        <ng-icon size="20" name="lucideEllipsisVertical" />
+        <ng-icon class="size-6! sm:size-5!" name="lucideEllipsisVertical" />
       </button>
       <ng-template #menu>
         <hlm-dropdown-menu sideOffset="2" class="w-50 sm:w-auto">
@@ -31,6 +35,7 @@
       </ng-template>
     </div>
   </header>
+
   <div class="flex flex-col gap-3 sm:flex-row sm:gap-4 sm:px-8">
     <div>
       <section class="block sm:hidden">
@@ -175,7 +180,7 @@
 </app-responsive-popup>
 
 <app-responsive-popup #calendarDialog (closedEvent)="closeCalendarDialog()">
-  <div class="h-[530px] px-4 pt-14">
+  <div class="h-[calc(530px+env(safe-area-inset-bottom))] px-4 pt-14">
     <app-calendar-date-picker
       [max]="today"
       [selectedDate]="selectedDate()"

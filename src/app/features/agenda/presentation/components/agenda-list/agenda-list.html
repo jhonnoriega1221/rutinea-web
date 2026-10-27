@@ -6,16 +6,19 @@
     >
       <a
         [routerLink]="'/habits/' + habit.id"
-        class="hover:bg-foreground/10 flex w-full items-center gap-2 rounded-tl-xl rounded-bl-xl py-4 pl-4 sm:py-3 sm:pl-3"
+        class="hover:bg-foreground/10 flex w-full items-center gap-3 rounded-tl-xl rounded-bl-xl py-3 pl-4 sm:py-2 sm:pl-2"
         [class.opacity-30]="habit.dayState === 'completed'"
       >
         <div
-          class="bg-primary/40 flex aspect-square h-[36px] w-[36px] items-center justify-center rounded-lg text-white"
+          class="bg-primary/40 flex aspect-square h-[44px] w-[44px] items-center justify-center rounded-lg text-white"
           [style.backgroundColor]="'var(' + habit.categoryInfo?.cssVar + ')'"
         >
-          <ng-icon [name]="habit.icon" size="16px" />
+          <ng-icon [name]="habit.icon" size="20px" />
         </div>
-        <p class="text-sm font-medium" [class.line-through]="habit.dayState === 'completed'">
+        <p
+          class="text-sm font-medium sm:text-base"
+          [class.line-through]="habit.dayState === 'completed'"
+        >
           {{ habit.name }}
         </p>
       </a>

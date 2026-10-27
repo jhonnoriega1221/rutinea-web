@@ -7,6 +7,7 @@ import { HabitCalendarTracker } from "../../components/habit-calendar-tracker/ha
 import { HabitsFacade } from "../../facade/habits.facade";
 import { getIconByKey } from "../../../../../shared/components/icons/habit-icons";
 import { HlmButtonImports } from "@spartan-ng/helm/button";
+import { Ripple } from "../../../../../shared/directives/ripple.directive";
 import {
   completionsThisWeek,
   resolveDayState,
@@ -26,7 +27,7 @@ import { CategoryUpsertForm } from "../../../../categories/presentation/componen
 import { UpsertCategoryFormModel } from "../../../../categories/domain/models/category.model";
 import { HabitDetailsViewModel } from "../../models/habit-details.view-model";
 import { getColorByKey } from "../../../../../shared/components/color-picker/app-colors";
-
+import { HlmDropdownMenuImports } from "@spartan-ng/helm/dropdown-menu";
 @Component({
   selector: "app-habits-details-page",
   imports: [
@@ -39,7 +40,9 @@ import { getColorByKey } from "../../../../../shared/components/color-picker/app
     HabitDateInfo,
     HabitsCreateForm,
     CategoryUpsertForm,
-    DatePipe
+    HlmDropdownMenuImports,
+    DatePipe,
+    Ripple
   ],
   templateUrl: "./habits-details-page.html",
   styleUrl: "./habits-details-page.css"
@@ -188,6 +191,10 @@ export class HabitsDetailsPage implements OnInit {
   protected async confirmDelete() {
     await this._habitsFacade.delete(this.id());
     toast.success("Habit has been deleted succefully");
+    this.location.back();
+  }
+
+  protected goBack() {
     this.location.back();
   }
 
