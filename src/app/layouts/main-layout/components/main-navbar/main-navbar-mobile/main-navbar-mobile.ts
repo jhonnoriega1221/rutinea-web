@@ -27,10 +27,8 @@ export class MainNavbarMobile {
 
   private readonly _router = inject(Router);
 
-  // Definimos las rutas donde NO queremos que aparezca la barra en mobile
   private readonly _hiddenRoutes = hiddenRoutePatterns;
 
-  // Capturamos la URL activa
   private readonly _currentUrl = toSignal(
     this._router.events.pipe(
       filter((e): e is NavigationEnd => e instanceof NavigationEnd),
